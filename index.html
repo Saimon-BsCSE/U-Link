@@ -1,0 +1,1274 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>U-Link| UIUian's Social Hub </title>
+    <link rel="icon" type="image/png" href="Asserts/title.png">
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&amp;display=swap"
+        rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet">
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "error-container": "#ffdad6",
+                        "secondary-container": "#dae1e3",
+                        "on-surface-variant": "#584238",
+                        "on-tertiary-fixed-variant": "#004b70",
+                        "error": "#ba1a1a",
+                        "on-tertiary-fixed": "#001e2f",
+                        "inverse-primary": "#ffb694",
+                        "on-primary-fixed": "#351000",
+                        "on-primary-fixed-variant": "#7b2f00",
+                        "background": "#f8f9fa",
+                        "surface-tint": "#a14000",
+                        "on-secondary-fixed": "#161d1f",
+                        "tertiary-container": "#009ee4",
+                        "primary-fixed-dim": "#ffb694",
+                        "tertiary-fixed": "#cae6ff",
+                        "outline-variant": "#e0c0b2",
+                        "on-tertiary-container": "#00314a",
+                        "inverse-on-surface": "#f0f1f2",
+                        "secondary-fixed": "#dde4e6",
+                        "primary-fixed": "#ffdbcc",
+                        "on-secondary-fixed-variant": "#41484a",
+                        "on-secondary": "#ffffff",
+                        "on-primary": "#ffffff",
+                        "on-error": "#ffffff",
+                        "primary-container": "#f36d21",
+                        "on-secondary-container": "#5d6466",
+                        "tertiary-fixed-dim": "#8ccdff",
+                        "surface-container": "#edeeef",
+                        "inverse-surface": "#2e3132",
+                        "secondary": "#586062",
+                        "primary": "#a14000",
+                        "surface-container-low": "#f3f4f5",
+                        "surface-container-high": "#e7e8e9",
+                        "on-background": "#191c1d",
+                        "on-tertiary": "#ffffff",
+                        "surface-container-lowest": "#ffffff",
+                        "on-primary-container": "#531d00",
+                        "surface-container-highest": "#e1e3e4",
+                        "secondary-fixed-dim": "#c1c8ca",
+                        "outline": "#8c7166",
+                        "surface-variant": "#e1e3e4",
+                        "surface-bright": "#f8f9fa",
+                        "tertiary": "#006493",
+                        "surface": "#f8f9fa",
+                        "surface-dim": "#d9dadb",
+                        "on-surface": "#191c1d",
+                        "on-error-container": "#93000a"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "1.5rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Inter"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    }
+                },
+            },
+        }
+    </script>
+    <!-- Custom Stylesheet -->
+    <link rel="stylesheet" href="ulink.css">
+</head>
+
+<body class="bg-surface text-on-surface selection:bg-primary-container/30">
+
+    <!-- AUTHENTICATION VIEW -->
+    <div class="fixed inset-0 z-[100] bg-surface-container-low flex items-center justify-center p-6" id="auth-view">
+        <div
+            class="grid md:grid-cols-2 max-w-5xl w-full bg-surface-container-lowest rounded-[2rem] overflow-hidden shadow-[0_30px_100px_-15px_rgba(243,109,33,0.15)]">
+            <!-- Brand Side -->
+            <div class="hidden md:block relative overflow-hidden">
+                <img alt="Modern university campus" class="absolute inset-0 w-full h-full object-cover"
+                    src="https://www.united.com.bd/wp-content/uploads/2021/11/34.jpg.jpeg">
+                <div class="absolute inset-0 auth-image-overlay flex flex-col justify-end p-12">
+                    <h1 class="text-5xl font-black tracking-tighter mb-4 brand-title-color">U-Link</h1>
+                    <p class="text-lg leading-relaxed text-white font-bold">The Digital Life.<br>Where academic
+                        excellence meets social fluidity.</p>
+                </div>
+            </div>
+            <!-- Form Side -->
+            <div class="p-8 md:p-16 flex flex-col justify-center">
+                <!-- Login State -->
+                <div class="" id="login-section">
+                    <!-- Logo -->
+                    <div class="flex justify-center mb-6">
+                        <img src="Asserts/logo.png" alt="U-Link Logo"
+                            class="h-32 w-auto object-contain drop-shadow-md logo-login">
+                    </div>
+                    <h2 class="text-3xl font-bold mb-2 tracking-tight">Welcome Back</h2>
+                    <p class="text-secondary mb-8">Enter your credentials to access the quad.</p>
+                    <form class="space-y-4" id="login-form">
+                        <div>
+                            <label class="block text-[10px] font-bold uppercase tracking-widest text-secondary mb-2">UIU
+                                Email or Student ID</label>
+                            <input
+                                class="w-full bg-surface-container-high border-none rounded-xl px-4 py-3 focus:ring-2 focus:ring-primary-container/40 transition-all"
+                                id="login-id" placeholder="10 Digit Numeric ID Or Valid UIU E-mail" required=""
+                                type="text">
+                        </div>
+                        <div>
+                            <label
+                                class="block text-[10px] font-bold uppercase tracking-widest text-secondary mb-2">Password</label>
+                            <input
+                                class="w-full bg-surface-container-high border-none rounded-xl px-4 py-3 focus:ring-2 focus:ring-primary-container/40 transition-all"
+                                id="login-pass" placeholder="••••••••" required="" type="password" minlength="8"
+                                maxlength="8">
+                        </div>
+                        <button
+                            class="w-full bg-primary-container text-on-primary-container font-bold py-4 rounded-full shadow-lg shadow-primary-container/20 hover:scale-[1.02] active:scale-95 transition-all mt-4"
+                            type="submit">
+                            Enter the World
+                        </button>
+                    </form>
+                    <p class="mt-8 text-center text-sm text-secondary">
+                        New to U-Link? <button class="text-primary font-bold hover:underline"
+                            onclick="toggleAuth()">Create Account</button>
+                    </p>
+                </div>
+                <!-- Register State -->
+                <div class="hidden" id="register-section">
+                    <!-- Logo -->
+                    <div class="flex justify-center mb-4">
+                        <img src="logo.png" alt="U-Link Logo"
+                            class="h-28 w-auto object-contain drop-shadow-md logo-register">
+                    </div>
+                    <h2 class="text-3xl font-bold mb-2 tracking-tight">Join U-Link</h2>
+                    <p class="text-secondary mb-6">Create your U-Link profile.</p>
+                    <form class="space-y-3" id="register-form">
+                        <div class="grid grid-cols-2 gap-3">
+                            <div>
+                                <label
+                                    class="block text-[10px] font-bold uppercase tracking-widest text-secondary mb-1">Full
+                                    Name</label>
+                                <input class="w-full bg-surface-container-high border-none rounded-xl px-4 py-2 text-sm"
+                                    id="reg-name" placeholder="Enter your name" required="" type="text">
+                            </div>
+                            <div>
+                                <label
+                                    class="block text-[10px] font-bold uppercase tracking-widest text-secondary mb-1">UIU
+                                    Email</label>
+                                <input class="w-full bg-surface-container-high border-none rounded-xl px-4 py-2 text-sm"
+                                    id="reg-email" placeholder="user@uiu.ac.bd" required="" type="email">
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-2 gap-3">
+                            <div>
+                                <label
+                                    class="block text-[10px] font-bold uppercase tracking-widest text-secondary mb-1">Student
+                                    ID</label>
+                                <input class="w-full bg-surface-container-high border-none rounded-xl px-4 py-2 text-sm"
+                                    id="reg-id" maxlength="10" oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+                                    placeholder="Numeric ID (10 digits)" required="" type="text">
+                            </div>
+                            <div>
+                                <label
+                                    class="block text-[10px] font-bold uppercase tracking-widest text-secondary mb-1">Department</label>
+                                <select
+                                    class="w-full bg-surface-container-high border-none rounded-xl px-4 py-2 text-sm"
+                                    id="reg-dept" required="">
+                                    <option value="CSE">CSE</option>
+                                    <option value="EEE">EEE</option>
+                                    <option value="BBA">BBA</option>
+                                    <option value="Pharmacy">Pharmacy</option>
+                                    <option value="Data Science">Data Science</option>
+                                    <option value="English">English</option>
+                                    <option value="Biotechnology">Biotechnology</option>
+                                    <option value="Civil">Civil</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label
+                                class="block text-[10px] font-bold uppercase tracking-widest text-secondary mb-1">Batch</label>
+                            <input class="w-full bg-surface-container-high border-none rounded-xl px-4 py-2 text-sm"
+                                id="reg-batch" maxlength="3" minlength="3"
+                                oninput="this.value = this.value.replace(/[^0-9]/g, '')" placeholder="e.g. 233"
+                                required="" type="text">
+                        </div>
+                        <div class="grid grid-cols-2 gap-3 mb-1">
+                            <div>
+                                <label
+                                    class="block text-[10px] font-bold uppercase tracking-widest text-secondary mb-1">Set
+                                    Password</label>
+                                <input class="w-full bg-surface-container-high border-none rounded-xl px-4 py-2 text-sm"
+                                    id="reg-pass" placeholder="••••••••" required="" type="password" minlength="8"
+                                    maxlength="8">
+                            </div>
+                            <div>
+                                <label
+                                    class="block text-[10px] font-bold uppercase tracking-widest text-secondary mb-1">Profile
+                                    Pic (Optional)</label>
+                                <input
+                                    class="w-full bg-surface-container-high border-none rounded-xl px-2 py-1.5 text-sm file:mr-2 file:py-1 file:px-2 file:rounded-full file:border-0 file:text-[10px] file:font-bold file:bg-primary/20 file:text-primary hover:file:bg-primary/30 cursor-pointer"
+                                    id="reg-pic" accept="image/*" type="file">
+                            </div>
+                        </div>
+                        <button
+                            class="w-full bg-primary-container text-on-primary-container font-bold py-3 rounded-full shadow-lg shadow-primary-container/20 hover:scale-[1.02] active:scale-95 transition-all mt-4"
+                            type="submit">
+                            Join the Community
+                        </button>
+                    </form>
+                    <p class="mt-6 text-center text-sm text-secondary">
+                        Already have an account? <button class="text-primary font-bold hover:underline"
+                            onclick="toggleAuth()">Log In</button>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- MAIN APP DISCOVERY VIEW (Hidden by default) -->
+    <div class="hidden" id="main-app">
+        <!-- TopNavBar -->
+        <header
+            class="fixed top-0 w-full z-50 bg-surface/80 dark:bg-slate-900/80 backdrop-blur-md shadow-[0px_30px_60px_rgba(0,0,0,0.04)] flex justify-between items-center px-6 h-16 w-full">
+            <div class="flex items-center gap-8">
+                <button onclick="switchTab('home')"
+                    class="flex items-center focus:outline-none hover:opacity-90 active:scale-95 transition-all"
+                    title="Go to Home" id="nav-logo-btn">
+                    <img src="logo.png" alt="U-Link" class="h-10 w-auto object-contain logo-nav">
+                </button>
+                <div class="hidden md:flex items-center gap-6" id="top-nav-links">
+                    <a class="nav-link text-orange-600 dark:text-orange-500 font-bold border-b-2 border-orange-600 px-3 py-1 cursor-pointer"
+                        onclick="switchTab('home')" data-tab="home">Home</a>
+                    <a class="nav-link text-slate-600 dark:text-slate-400 font-medium hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors px-3 py-1 rounded-full cursor-pointer"
+                        onclick="switchTab('explore')" data-tab="explore">Explore</a>
+                    <a class="nav-link text-slate-600 dark:text-slate-400 font-medium hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors px-3 py-1 rounded-full cursor-pointer"
+                        onclick="switchTab('communities')" data-tab="communities">Communities</a>
+                    <a class="nav-link text-slate-600 dark:text-slate-400 font-medium hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors px-3 py-1 rounded-full cursor-pointer"
+                        onclick="switchTab('events')" data-tab="events">Events</a>
+                </div>
+            </div>
+            <div class="flex items-center gap-4">
+                <div
+                    class="relative flex items-center bg-surface-container-high rounded-full px-4 py-2 w-64 md:w-96 group">
+                    <span class="material-symbols-outlined text-on-surface-variant mr-2">search</span>
+                    <input id="search-input"
+                        class="bg-transparent border-none focus:ring-0 text-sm w-full font-body placeholder:text-on-surface-variant/60"
+                        placeholder="Search for research, peers, or clubs..." type="text" oninput="handleSearch()">
+                    <div id="search-dropdown"
+                        class="hidden absolute top-full left-0 right-0 mt-2 bg-surface-container-lowest border border-surface-container-high rounded-xl shadow-lg max-h-64 overflow-y-auto z-50">
+                    </div>
+                </div>
+                <div class="flex items-center gap-2 relative">
+                    <button
+                        class="p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 active:scale-95 duration-150 relative"
+                        onclick="toggleNotifications()">
+                        <span class="material-symbols-outlined text-slate-600"
+                            data-icon="notifications">notifications</span>
+                        <span id="notif-badge"
+                            class="hidden absolute top-1 right-1 w-2.5 h-2.5 bg-red-500 rounded-full border-2 border-surface"></span>
+                    </button>
+                    <!-- Notifications Dropdown -->
+                    <div id="notifications-panel"
+                        class="hidden absolute top-full right-0 mt-2 w-80 bg-surface-container-lowest border border-surface-container-high rounded-xl shadow-xl z-50 pb-2">
+                        <div class="p-3 border-b border-surface-container-highest flex justify-between items-center">
+                            <h3 class="font-bold text-sm">Notifications</h3>
+                            <button class="text-xs text-primary hover:underline" onclick="markAllRead()">Mark all
+                                read</button>
+                        </div>
+                        <div id="notifications-list" class="max-h-80 overflow-y-auto">
+                            <!-- Items added by JS -->
+                        </div>
+                    </div>
+
+                    <button
+                        class="p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 active:scale-95 duration-150 relative"
+                        onclick="switchTab('profile')">
+                        <img id="nav-profile-pic" src="https://ui-avatars.com/api/?name=User&background=random"
+                            class="w-8 h-8 rounded-full object-cover border border-slate-200">
+                    </button>
+                </div>
+            </div>
+        </header>
+        <!-- SideNavBar -->
+        <aside
+            class="hidden lg:flex flex-col p-4 gap-2 h-screen w-72 fixed left-0 top-0 bg-slate-50 dark:bg-slate-950 pt-20">
+            <div class="mb-6 px-4">
+                <div class="flex items-center gap-3 mb-2">
+                    <button onclick="switchTab('home')"
+                        class="focus:outline-none hover:opacity-90 active:scale-95 transition-all" title="Go to Home"
+                        id="sidebar-logo-btn">
+                        <img src="logo.png" alt="U-Link Logo" class="h-12 w-auto object-contain logo-sidebar">
+                    </button>
+                    <div id="user-branding">
+                        <h2 class="text-xl font-bold tracking-tighter text-orange-600 font-['Inter']" id="display-name">
+                            UIU QUAD</h2>
+                        <p class="text-xs text-slate-500 font-medium" id="display-info">United International
+                            University</p>
+                    </div>
+                </div>
+            </div>
+            <nav class="flex-1 flex flex-col gap-1" id="side-nav-links">
+                <a class="side-nav-link flex items-center gap-3 px-4 py-3 bg-orange-50 dark:bg-orange-900/20 text-orange-700 dark:text-orange-400 rounded-full font-bold cursor-pointer"
+                    onclick="switchTab('home')" data-tab="home">
+                    <span class="material-symbols-outlined" data-icon="home">home</span>
+                    <span class="font-medium">Home</span>
+                </a>
+                <a class="side-nav-link flex items-center gap-3 px-4 py-3 text-slate-500 dark:text-slate-400 hover:text-orange-600 hover:bg-orange-50 dark:hover:bg-orange-900/10 rounded-full transition-all cursor-pointer"
+                    onclick="switchTab('explore')" data-tab="explore">
+                    <span class="material-symbols-outlined" data-icon="explore">explore</span>
+                    <span class="font-medium">Explore</span>
+                </a>
+                <a class="side-nav-link flex items-center gap-3 px-4 py-3 text-slate-500 dark:text-slate-400 hover:text-orange-600 hover:bg-orange-50 dark:hover:bg-orange-900/10 rounded-full transition-all cursor-pointer"
+                    onclick="switchTab('profile')" data-tab="profile">
+                    <span class="material-symbols-outlined" data-icon="person">person</span>
+                    <span class="font-medium">Profile</span>
+                </a>
+                <a class="side-nav-link flex items-center gap-3 px-4 py-3 text-slate-500 dark:text-slate-400 hover:text-orange-600 hover:bg-orange-50 dark:hover:bg-orange-900/10 rounded-full transition-all cursor-pointer"
+                    onclick="switchTab('communities')" data-tab="communities">
+                    <span class="material-symbols-outlined" data-icon="groups">groups</span>
+                    <span class="font-medium">Communities</span>
+                </a>
+                <a class="side-nav-link flex items-center gap-3 px-4 py-3 text-slate-500 dark:text-slate-400 hover:text-orange-600 hover:bg-orange-50 dark:hover:bg-orange-900/10 rounded-full transition-all cursor-pointer"
+                    onclick="openChat('102')">
+                    <span class="material-symbols-outlined" data-icon="chat">chat</span>
+                    <span class="font-medium">Messages</span>
+                </a>
+            </nav>
+            <div class="mt-auto flex flex-col gap-1 border-t border-slate-200 dark:border-slate-800 pt-4">
+                <button
+                    class="mx-4 mb-4 bg-primary-container text-on-primary-container py-3 px-6 rounded-full font-bold shadow-lg shadow-primary-container/20 flex items-center justify-center gap-2 active:scale-95 transition-transform"
+                    onclick="focusCreatePost()">
+                    <span class="material-symbols-outlined icon-filled">add</span>
+                    Create Post
+                </button>
+                <a class="flex items-center gap-3 px-4 py-2 text-slate-500 dark:text-slate-400 hover:text-orange-600 hover:bg-orange-50 dark:hover:bg-orange-900/10 rounded-full transition-all text-sm"
+                    href="#">
+                    <span class="material-symbols-outlined text-lg" data-icon="settings">settings</span>
+                    <span class="">Settings</span>
+                </a>
+                <button
+                    class="flex items-center gap-3 px-4 py-2 text-slate-500 dark:text-slate-400 hover:text-orange-600 hover:bg-orange-50 dark:hover:bg-orange-900/10 rounded-full transition-all text-sm w-full text-left"
+                    onclick="logout()">
+                    <span class="material-symbols-outlined text-lg" data-icon="logout">logout</span>
+                    <span class="">Logout</span>
+                </button>
+            </div>
+        </aside>
+        <!-- Main Content Area -->
+        <main class="lg:ml-72 pt-20 px-4 md:px-10 pb-20 relative">
+
+            <!-- HOME VIEW (Newsfeed) -->
+            <div id="home-view"
+                class="view-section hidden opacity-0 transition-opacity duration-300 bg-gradient-to-br from-orange-100 via-orange-50 to-orange-200 dark:from-orange-950 dark:via-slate-900 dark:to-orange-900 shadow-inner p-4 md:p-8 rounded-[2.5rem] min-h-[85vh] border border-orange-200/60 relative overflow-hidden">
+                <!-- Background decorative glowing orbs -->
+                <div
+                    class="absolute top-[-10%] right-[-5%] w-96 h-96 bg-gradient-to-br from-orange-400 to-rose-400 rounded-full blur-[100px] opacity-30 mix-blend-multiply dark:mix-blend-lighten pointer-events-none">
+                </div>
+                <div
+                    class="absolute bottom-[10%] left-[-10%] w-72 h-72 bg-gradient-to-tr from-yellow-300 to-orange-500 rounded-full blur-[90px] opacity-20 mix-blend-multiply dark:mix-blend-lighten pointer-events-none">
+                </div>
+                <div class="max-w-2xl mx-auto relative z-10">
+                    <!-- Create Post Form -->
+                    <div class="bg-surface-container-lowest rounded-xl p-4 shadow-sm mb-6">
+                        <div class="flex gap-4">
+                            <img id="post-user-pic" src="https://ui-avatars.com/api/?name=User&background=random"
+                                class="w-10 h-10 rounded-full object-cover">
+                            <div class="flex-1">
+                                <textarea id="post-text" rows="2"
+                                    class="w-full bg-surface-container-low rounded-xl px-4 py-3 border-none focus:ring-0 text-sm placeholder:text-on-surface-variant/60 resize-none hover:bg-surface-container-high transition-colors"
+                                    placeholder="What's happening on campus?"></textarea>
+                                <!-- Image Preview -->
+                                <div id="image-preview-container"
+                                    class="hidden relative mt-2 rounded-xl overflow-hidden shadow-sm">
+                                    <img id="image-preview" src="" class="w-full max-h-64 object-cover">
+                                    <button onclick="removeImage()"
+                                        class="absolute top-2 right-2 p-1 bg-black/50 text-white rounded-full hover:bg-black/70 backdrop-blur-sm">
+                                        <span class="material-symbols-outlined text-sm">close</span>
+                                    </button>
+                                </div>
+                                <div
+                                    class="flex justify-between items-center mt-3 pt-3 border-t border-surface-container-high/50">
+                                    <div class="flex gap-2">
+                                        <input type="file" id="post-image-input" accept="image/*" class="hidden"
+                                            onchange="previewImage(event, 'home')">
+                                        <button onclick="document.getElementById('post-image-input').click()"
+                                            class="p-2 text-primary hover:bg-primary/10 rounded-full transition-colors flex items-center justify-center">
+                                            <span class="material-symbols-outlined text-lg">image</span>
+                                        </button>
+                                    </div>
+                                    <button onclick="submitPost('home')"
+                                        class="bg-primary hover:bg-primary/90 text-white font-bold py-1.5 px-6 rounded-full text-sm shadow-md active:scale-95 transition-transform">Post</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Feed -->
+                    <div id="feed-container" class="flex flex-col gap-6">
+                        <!-- Posts dynamically added here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- PROFILE VIEW -->
+            <div id="profile-view" class="view-section hidden opacity-0 transition-opacity duration-300">
+                <div class="max-w-4xl mx-auto">
+                    <!-- Profile Header -->
+                    <div class="bg-surface-container-lowest rounded-2xl overflow-hidden shadow-sm mb-6 relative">
+                        <div class="h-48 bg-gradient-to-r from-primary/80 to-tertiary-container relative"></div>
+                        <div class="px-8 pb-8 relative">
+                            <div class="flex justify-between items-end -mt-16 mb-4">
+                                <div class="relative group">
+                                    <img id="profile-picture"
+                                        src="https://ui-avatars.com/api/?name=User&background=random"
+                                        class="w-32 h-32 rounded-full border-4 border-surface-container-lowest object-cover bg-white shadow-lg">
+                                    <label
+                                        class="absolute bottom-0 right-0 p-2 bg-primary text-white text-xs rounded-full cursor-pointer hover:scale-105 transition-transform shadow-md">
+                                        <span class="material-symbols-outlined text-sm">edit</span>
+                                        <input type="file" accept="image/*" class="hidden"
+                                            onchange="updateProfilePic(event)">
+                                    </label>
+                                </div>
+                                <button onclick="toggleEditProfile()"
+                                    class="px-6 py-2 border-2 border-primary text-primary font-bold rounded-full hover:bg-primary/5 transition-colors text-sm">Edit
+                                    Profile</button>
+                            </div>
+
+                            <!-- Editable User Info -->
+                            <div id="profile-display">
+                                <h1 id="profile-name" class="text-3xl font-black mb-1">User Name</h1>
+                                <p id="profile-bio" class="text-on-surface-variant font-medium mb-4">Dept • Batch • ID
+                                </p>
+                                <div class="flex gap-6 text-sm">
+                                    <span class="font-bold"><span id="profile-friends-count">0</span> <span
+                                            class="text-on-surface-variant font-normal">Connections</span></span>
+                                    <span class="font-bold"><span id="profile-posts-count">0</span> <span
+                                            class="text-on-surface-variant font-normal">Posts</span></span>
+                                </div>
+                            </div>
+
+                            <!-- Edit Form -->
+                            <div id="profile-edit-form" class="hidden mt-4 space-y-4 max-w-lg">
+                                <div><label class="text-xs font-bold text-secondary uppercase">Name</label><input
+                                        type="text" id="edit-name"
+                                        class="w-full bg-surface-container-low rounded-lg px-3 py-2 text-sm border-none mt-1">
+                                </div>
+                                <div><label
+                                        class="text-xs font-bold text-secondary uppercase">Bio/Description</label><input
+                                        type="text" id="edit-bio"
+                                        class="w-full bg-surface-container-low rounded-lg px-3 py-2 text-sm border-none mt-1">
+                                </div>
+                                <div class="flex gap-2">
+                                    <button onclick="saveProfile()"
+                                        class="bg-primary text-white px-4 py-2 rounded-lg text-sm font-bold">Save</button>
+                                    <button onclick="toggleEditProfile()"
+                                        class="bg-surface-container-high px-4 py-2 rounded-lg text-sm font-bold">Cancel</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                        <div
+                            class="lg:col-span-1 border border-surface-container-highest rounded-xl p-6 bg-surface-container-lowest h-fit">
+                            <h3 class="font-bold text-lg mb-4">About</h3>
+                            <p class="text-sm text-on-surface-variant leading-relaxed">Student at United International
+                                University. Passionate about connecting and exploring campus life.</p>
+                        </div>
+                        <div class="lg:col-span-2">
+                            <!-- Create Post Form in Profile -->
+                            <div class="bg-surface-container-lowest rounded-xl p-4 shadow-sm mb-6">
+                                <div class="flex gap-4">
+                                    <img id="post-user-pic-profile"
+                                        src="https://ui-avatars.com/api/?name=User&background=random"
+                                        class="w-10 h-10 rounded-full object-cover">
+                                    <div class="flex-1">
+                                        <textarea id="post-text-profile" rows="2"
+                                            class="w-full bg-surface-container-low rounded-xl px-4 py-3 border-none focus:ring-0 text-sm placeholder:text-on-surface-variant/60 resize-none hover:bg-surface-container-high transition-colors"
+                                            placeholder="What's happening on campus?"></textarea>
+                                        <!-- Image Preview -->
+                                        <div id="image-preview-container-profile"
+                                            class="hidden relative mt-2 rounded-xl overflow-hidden shadow-sm">
+                                            <img id="image-preview-profile" src="" class="w-full max-h-64 object-cover">
+                                            <button onclick="removeImage()"
+                                                class="absolute top-2 right-2 p-1 bg-black/50 text-white rounded-full hover:bg-black/70 backdrop-blur-sm">
+                                                <span class="material-symbols-outlined text-sm">close</span>
+                                            </button>
+                                        </div>
+                                        <div
+                                            class="flex justify-between items-center mt-3 pt-3 border-t border-surface-container-high/50">
+                                            <div class="flex gap-2">
+                                                <input type="file" id="post-image-input-profile" accept="image/*"
+                                                    class="hidden" onchange="previewImage(event, 'profile')">
+                                                <button
+                                                    onclick="document.getElementById('post-image-input-profile').click()"
+                                                    class="p-2 text-primary hover:bg-primary/10 rounded-full transition-colors flex items-center justify-center">
+                                                    <span class="material-symbols-outlined text-lg">image</span>
+                                                </button>
+                                            </div>
+                                            <button onclick="submitPost('profile')"
+                                                class="bg-primary hover:bg-primary/90 text-white font-bold py-1.5 px-6 rounded-full text-sm shadow-md active:scale-95 transition-transform">Post</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="my-posts-container" class="flex flex-col gap-6">
+                                <!-- User posts here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- OTHER USER PROFILE VIEW -->
+            <div id="other-profile-view" class="view-section hidden opacity-0 transition-opacity duration-300">
+                <div class="max-w-4xl mx-auto">
+                    <!-- Profile Header -->
+                    <button onclick="switchTab('home')"
+                        class="mb-4 flex items-center gap-2 text-primary font-bold hover:underline transition-all">
+                        <span class="material-symbols-outlined text-sm">arrow_back</span> Back to Newsfeed
+                    </button>
+                    <div class="bg-surface-container-lowest rounded-2xl overflow-hidden shadow-sm mb-6 relative">
+                        <div
+                            class="h-48 bg-gradient-to-r from-secondary to-slate-400 relative px-8 pb-4 flex items-end justify-end">
+                            <span
+                                class="bg-black/30 backdrop-blur-sm text-white text-xs px-3 py-1 rounded-lg shadow-sm">Campus
+                                Quad Member</span>
+                        </div>
+                        <div class="px-8 pb-8 relative">
+                            <div class="flex justify-between items-end -mt-16 mb-4">
+                                <img id="other-profile-picture" src=""
+                                    class="w-32 h-32 rounded-full border-4 border-surface-container-lowest object-cover bg-white shadow-lg relative z-10">
+
+                                <!-- Actions -->
+                                <div id="other-profile-actions" class="flex gap-3">
+                                </div>
+                            </div>
+
+                            <!-- User Info -->
+                            <div id="other-profile-display">
+                                <h1 id="other-profile-name" class="text-3xl font-black mb-1">User Name</h1>
+                                <p id="other-profile-bio" class="text-on-surface-variant font-medium mb-4">Dept • Batch
+                                    • ID
+                                </p>
+                                <div class="flex gap-6 text-sm">
+                                    <span class="font-bold"><span id="other-profile-friends-count">0</span> <span
+                                            class="text-on-surface-variant font-normal">Connections</span></span>
+                                    <span class="font-bold"><span id="other-profile-posts-count">0</span> <span
+                                            class="text-on-surface-variant font-normal">Posts</span></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                        <div
+                            class="lg:col-span-1 border border-surface-container-highest rounded-xl p-6 bg-surface-container-lowest h-fit">
+                            <h3 class="font-bold text-lg mb-4">About</h3>
+                            <p id="other-profile-about" class="text-sm text-on-surface-variant leading-relaxed">Student
+                                at United International University.</p>
+                        </div>
+                        <div class="lg:col-span-2">
+                            <h3 class="font-bold text-lg mb-4 text-on-surface flex items-center gap-2">
+                                <span class="material-symbols-outlined text-primary">history_edu</span> Shared Posts
+                            </h3>
+                            <div id="other-posts-container" class="flex flex-col gap-6">
+                                <!-- User posts here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- EXPLORE VIEW -->
+            <div id="explore-view" class="view-section hidden opacity-0 transition-opacity duration-300">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 mb-10">
+                    <div
+                        class="lg:col-span-8 bg-surface-container-low rounded-xl p-8 relative overflow-hidden flex flex-col justify-end min-h-[320px] shadow-sm">
+                        <div class="absolute inset-0 z-0">
+                            <img alt="University Library" class="w-full h-full object-cover opacity-20"
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuADPOBaQUdzcly7ayZ9yaZFd4S83y65GUHIObUJkgVdtrV9lJWiHQtwtuJ8KCg1ZyfprcenxCF7v5x6iBBbGpxyWXpCJ1xlX3KdunN3H8541eNcONC8xwVQWTRskacOwHxFepeQFmBizoaUUG-YT5gjhusTpq6N2QCL-8PjHdnooU91PWU4QPvytQE_Ge5bY0yEGRaUtOnmLLnwda_wDqjmT0jRRvePoBYvFDLjJ3x2ylWpVMr6IktIUbX-_PBmiFw2PGXUyNHEa24">
+                            <div
+                                class="absolute inset-0 bg-gradient-to-t from-surface-container-low via-surface-container-low/40 to-transparent">
+                            </div>
+                        </div>
+                        <div class="relative z-10 max-w-xl">
+                            <span
+                                class="inline-block px-3 py-1 bg-primary/10 text-primary rounded text-xs font-bold tracking-widest uppercase mb-4">Discovery
+                                Portal</span>
+                            <h1
+                                class="text-4xl md:text-5xl font-black tracking-tight text-on-surface mb-4 leading-tight">
+                                Explore the <span class="text-primary">Digital Quad</span></h1>
+                            <p class="text-lg text-on-surface-variant font-medium leading-relaxed">Connect with
+                                UIU students, access cutting-edge research, and never miss a campus event again.</p>
+                        </div>
+                    </div>
+                    <div
+                        class="lg:col-span-4 bg-tertiary-container text-on-tertiary-container rounded-xl p-8 flex flex-col justify-between shadow-sm">
+                        <div class="">
+                            <h3 class="text-2xl font-bold mb-2">Live Now</h3>
+                            <p class="text-on-tertiary-container/80 text-sm">UIU National Marketing Day is
+                                trending in Communities</p>
+                        </div>
+                        <div class="flex flex-col gap-3">
+                            <div
+                                class="flex items-center gap-3 bg-white/10 p-3 rounded-lg backdrop-blur-sm shadow-sm group hover:bg-white/20 cursor-pointer">
+                                <span class="material-symbols-outlined">trending_up</span>
+                                <span class="text-sm font-semibold">#CSE_Hackathon_2024</span>
+                            </div>
+                            <div
+                                class="flex items-center gap-3 bg-white/10 p-3 rounded-lg backdrop-blur-sm shadow-sm group hover:bg-white/20 cursor-pointer">
+                                <span class="material-symbols-outlined">groups</span>
+                                <span class="text-sm font-semibold">Photography Club Meeting</span>
+                            </div>
+                            <div
+                                class="flex items-center gap-3 bg-white/10 p-3 rounded-lg backdrop-blur-sm shadow-sm group hover:bg-white/20 cursor-pointer">
+                                <span class="material-symbols-outlined">campaign</span>
+                                <span class="text-sm font-semibold">#UIU_Job_Fair_Live</span>
+                            </div>
+                            <div
+                                class="flex items-center gap-3 bg-white/10 p-3 rounded-lg backdrop-blur-sm shadow-sm group hover:bg-white/20 cursor-pointer">
+                                <span class="material-symbols-outlined">sports_soccer</span>
+                                <span class="text-sm font-semibold">Inter-Department Football</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Added Exploring Topics -->
+                <div class="mb-10">
+                    <h3 class="text-xl font-bold mb-4">Recommended Topics</h3>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                        <div
+                            class="bg-surface-container-lowest p-6 rounded-xl shadow-sm text-center cursor-pointer hover:-translate-y-1 hover:shadow-md transition-all border border-surface-container-highest">
+                            <span class="material-symbols-outlined text-4xl text-primary mb-2">code</span>
+                            <h4 class="font-bold">Programming</h4>
+                            <p class="text-xs text-on-surface-variant mt-1">1.2k posts</p>
+                        </div>
+                        <div
+                            class="bg-surface-container-lowest p-6 rounded-xl shadow-sm text-center cursor-pointer hover:-translate-y-1 hover:shadow-md transition-all border border-surface-container-highest">
+                            <span class="material-symbols-outlined text-4xl text-primary mb-2">science</span>
+                            <h4 class="font-bold">Research & Labs</h4>
+                            <p class="text-xs text-on-surface-variant mt-1">850 posts</p>
+                        </div>
+                        <div
+                            class="bg-surface-container-lowest p-6 rounded-xl shadow-sm text-center cursor-pointer hover:-translate-y-1 hover:shadow-md transition-all border border-surface-container-highest">
+                            <span class="material-symbols-outlined text-4xl text-primary mb-2">sports_esports</span>
+                            <h4 class="font-bold">Gaming Center</h4>
+                            <p class="text-xs text-on-surface-variant mt-1">3.4k posts</p>
+                        </div>
+                        <div
+                            class="bg-surface-container-lowest p-6 rounded-xl shadow-sm text-center cursor-pointer hover:-translate-y-1 hover:shadow-md transition-all border border-surface-container-highest">
+                            <span class="material-symbols-outlined text-4xl text-primary mb-2">business_center</span>
+                            <h4 class="font-bold">Career & Jobs</h4>
+                            <p class="text-xs text-on-surface-variant mt-1">940 posts</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- COMMUNITIES VIEW -->
+            <div id="communities-view" class="view-section hidden opacity-0 transition-opacity duration-300">
+                <div class="grid grid-cols-1 xl:grid-cols-12 gap-8">
+                    <div class="xl:col-span-4">
+                        <div class="flex items-center justify-between mb-6">
+                            <h2 class="text-xl font-extrabold tracking-tight">Trending Communities</h2>
+                            <span class="material-symbols-outlined text-on-surface-variant/40">info</span>
+                        </div>
+                        <div class="flex flex-col gap-4">
+                            <div
+                                class="bg-surface-container-lowest p-4 rounded-xl flex items-center gap-4 group cursor-pointer hover:bg-surface-container-low transition-colors shadow-sm">
+                                <div
+                                    class="w-12 h-12 bg-slate-100 rounded-xl overflow-hidden flex-shrink-0 flex items-center justify-center">
+                                    <span class="material-symbols-outlined text-primary">computer</span>
+                                </div>
+                                <div class="flex-1">
+                                    <h4 class="font-bold text-sm">CSE Society</h4>
+                                    <p class="text-xs text-on-surface-variant">2.4k Members</p>
+                                </div>
+                                <button
+                                    class="px-4 py-1.5 rounded-full text-xs font-bold border border-primary text-primary hover:bg-primary hover:text-white transition-all shadow-sm">Join</button>
+                            </div>
+                            <div
+                                class="bg-surface-container-lowest p-4 rounded-xl flex items-center gap-4 group cursor-pointer hover:bg-surface-container-low transition-colors shadow-sm">
+                                <div
+                                    class="w-12 h-12 bg-slate-100 rounded-xl overflow-hidden flex-shrink-0 flex items-center justify-center">
+                                    <span class="material-symbols-outlined text-primary">photo_camera</span>
+                                </div>
+                                <div class="flex-1">
+                                    <h4 class="font-bold text-sm">UIU Photography Club</h4>
+                                    <p class="text-xs text-on-surface-variant">1.8k Members</p>
+                                </div>
+                                <button
+                                    class="px-4 py-1.5 rounded-full text-xs font-bold bg-primary text-white transition-all shadow-sm">Joined</button>
+                            </div>
+                            <!-- Added Communities -->
+                            <div
+                                class="bg-surface-container-lowest p-4 rounded-xl flex items-center gap-4 group cursor-pointer hover:bg-surface-container-low transition-colors shadow-sm">
+                                <div
+                                    class="w-12 h-12 bg-slate-100 rounded-xl overflow-hidden flex-shrink-0 flex items-center justify-center">
+                                    <span class="material-symbols-outlined text-primary">bolt</span>
+                                </div>
+                                <div class="flex-1">
+                                    <h4 class="font-bold text-sm">EEE Bash</h4>
+                                    <p class="text-xs text-on-surface-variant">2.1k Members</p>
+                                </div>
+                                <button
+                                    class="px-4 py-1.5 rounded-full text-xs font-bold border border-primary text-primary hover:bg-primary hover:text-white transition-all shadow-sm">Join</button>
+                            </div>
+                            <div
+                                class="bg-surface-container-lowest p-4 rounded-xl flex items-center gap-4 group cursor-pointer hover:bg-surface-container-low transition-colors shadow-sm">
+                                <div
+                                    class="w-12 h-12 bg-slate-100 rounded-xl overflow-hidden flex-shrink-0 flex items-center justify-center">
+                                    <span class="material-symbols-outlined text-primary">rocket_launch</span>
+                                </div>
+                                <div class="flex-1">
+                                    <h4 class="font-bold text-sm">UIU Mars Rover Team</h4>
+                                    <p class="text-xs text-on-surface-variant">340 Members</p>
+                                </div>
+                                <button
+                                    class="px-4 py-1.5 rounded-full text-xs font-bold border border-primary text-primary hover:bg-primary hover:text-white transition-all shadow-sm">Join</button>
+                            </div>
+                            <div
+                                class="bg-surface-container-lowest p-4 rounded-xl flex items-center gap-4 group cursor-pointer hover:bg-surface-container-low transition-colors shadow-sm">
+                                <div
+                                    class="w-12 h-12 bg-slate-100 rounded-xl overflow-hidden flex-shrink-0 flex items-center justify-center">
+                                    <span class="material-symbols-outlined text-primary">theater_comedy</span>
+                                </div>
+                                <div class="flex-1">
+                                    <h4 class="font-bold text-sm">UIU Cultural Club</h4>
+                                    <p class="text-xs text-on-surface-variant">4.2k Members</p>
+                                </div>
+                                <button
+                                    class="px-4 py-1.5 rounded-full text-xs font-bold border border-primary text-primary hover:bg-primary hover:text-white transition-all shadow-sm">Join</button>
+                            </div>
+                            <div
+                                class="bg-surface-container-lowest p-4 rounded-xl flex items-center gap-4 group cursor-pointer hover:bg-surface-container-low transition-colors shadow-sm">
+                                <div
+                                    class="w-12 h-12 bg-slate-100 rounded-xl overflow-hidden flex-shrink-0 flex items-center justify-center">
+                                    <span class="material-symbols-outlined text-primary">apps</span>
+                                </div>
+                                <div class="flex-1">
+                                    <h4 class="font-bold text-sm">UIU APP Forum</h4>
+                                    <p class="text-xs text-on-surface-variant">1.5k Members</p>
+                                </div>
+                                <button
+                                    class="px-4 py-1.5 rounded-full text-xs font-bold border border-primary text-primary hover:bg-primary hover:text-white transition-all shadow-sm">Join</button>
+                            </div>
+                            <div
+                                class="bg-surface-container-lowest p-4 rounded-xl flex items-center gap-4 group cursor-pointer hover:bg-surface-container-low transition-colors shadow-sm">
+                                <div
+                                    class="w-12 h-12 bg-slate-100 rounded-xl overflow-hidden flex-shrink-0 flex items-center justify-center">
+                                    <span class="material-symbols-outlined text-primary">psychology</span>
+                                </div>
+                                <div class="flex-1">
+                                    <h4 class="font-bold text-sm">UIU AI Explorers</h4>
+                                    <p class="text-xs text-on-surface-variant">890 Members</p>
+                                </div>
+                                <button
+                                    class="px-4 py-1.5 rounded-full text-xs font-bold border border-primary text-primary hover:bg-primary hover:text-white transition-all shadow-sm">Join</button>
+                            </div>
+                            <div
+                                class="bg-surface-container-lowest p-4 rounded-xl flex items-center gap-4 group cursor-pointer hover:bg-surface-container-low transition-colors shadow-sm">
+                                <div
+                                    class="w-12 h-12 bg-slate-100 rounded-xl overflow-hidden flex-shrink-0 flex items-center justify-center">
+                                    <span class="material-symbols-outlined text-primary">record_voice_over</span>
+                                </div>
+                                <div class="flex-1">
+                                    <h4 class="font-bold text-sm">UIU English Language Forum</h4>
+                                    <p class="text-xs text-on-surface-variant">1.1k Members</p>
+                                </div>
+                                <button
+                                    class="px-4 py-1.5 rounded-full text-xs font-bold border border-primary text-primary hover:bg-primary hover:text-white transition-all shadow-sm">Join</button>
+                            </div>
+                            <div
+                                class="bg-surface-container-lowest p-4 rounded-xl flex items-center gap-4 group cursor-pointer hover:bg-surface-container-low transition-colors shadow-sm">
+                                <div
+                                    class="w-12 h-12 bg-slate-100 rounded-xl overflow-hidden flex-shrink-0 flex items-center justify-center">
+                                    <span class="material-symbols-outlined text-primary">sports_esports</span>
+                                </div>
+                                <div class="flex-1">
+                                    <h4 class="font-bold text-sm">UIU Efootball Community</h4>
+                                    <p class="text-xs text-on-surface-variant">1.9k Members</p>
+                                </div>
+                                <button
+                                    class="px-4 py-1.5 rounded-full text-xs font-bold border border-primary text-primary hover:bg-primary hover:text-white transition-all shadow-sm">Join</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="xl:col-span-8">
+                        <div class="flex items-center justify-between mb-6">
+                            <h2 class="text-xl font-extrabold tracking-tight">Featured Research</h2>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <article
+                                class="bg-surface-container-lowest p-6 rounded-xl border-l-4 border-primary shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between">
+                                <div>
+                                    <h3 class="text-lg font-bold mb-3">Sustainable AI: Optimization for
+                                        Low-Resource Languages</h3>
+                                    <p class="text-sm text-on-surface-variant mb-4">Research exploring
+                                        transformer models for regional dialects like Sylheti and Chakma to preserve
+                                        linguistic diversity.</p>
+                                </div>
+                                <div class="flex items-center justify-between pt-4 border-t border-slate-100 mt-auto">
+                                    <div class="flex items-center gap-2">
+                                        <div
+                                            class="w-8 h-8 rounded-full bg-orange-100 flex items-center justify-center font-bold text-xs text-orange-700">
+                                            AK</div>
+                                        <span class="text-xs font-bold">Dr. Ahmed Kabir</span>
+                                    </div>
+                                </div>
+                            </article>
+                            <article
+                                class="bg-surface-container-lowest p-6 rounded-xl border-l-4 border-secondary shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between">
+                                <div>
+                                    <h3 class="text-lg font-bold mb-3">Renewable Energy: Solar Micro-Grids in
+                                        Rural Bangladesh</h3>
+                                    <p class="text-sm text-on-surface-variant mb-4">Developing scalable and
+                                        affordable solar energy solutions for off-grid communities in the coastal
+                                        regions.</p>
+                                </div>
+                                <div class="flex items-center justify-between pt-4 border-t border-slate-100 mt-auto">
+                                    <div class="flex items-center gap-2">
+                                        <div
+                                            class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center font-bold text-xs text-blue-700">
+                                            SI</div>
+                                        <span class="text-xs font-bold">Prof. Syed Islam</span>
+                                    </div>
+                                </div>
+                            </article>
+                            <article
+                                class="bg-surface-container-lowest p-6 rounded-xl border-l-4 border-emerald-500 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between">
+                                <div>
+                                    <h3 class="text-lg font-bold mb-3">Smart Traffic Management System using
+                                        IoT</h3>
+                                    <p class="text-sm text-on-surface-variant mb-4">A novel approach to reduce
+                                        traffic congestion in Dhaka city utilizing IoT-based real-time data analysis.
+                                    </p>
+                                </div>
+                                <div class="flex items-center justify-between pt-4 border-t border-slate-100 mt-auto">
+                                    <div class="flex items-center gap-2">
+                                        <div
+                                            class="w-8 h-8 rounded-full bg-emerald-100 flex items-center justify-center font-bold text-xs text-emerald-700">
+                                            RR</div>
+                                        <span class="text-xs font-bold">Dr. Rubaiya Rahman</span>
+                                    </div>
+                                </div>
+                            </article>
+                            <article
+                                class="bg-surface-container-lowest p-6 rounded-xl border-l-4 border-purple-500 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between">
+                                <div>
+                                    <h3 class="text-lg font-bold mb-3">Impact of Microfinance on Female
+                                        Entrepreneurs</h3>
+                                    <p class="text-sm text-on-surface-variant mb-4">An empirical study
+                                        analyzing the economic empowerment of women through micro-credit in semi-urban
+                                        areas.</p>
+                                </div>
+                                <div class="flex items-center justify-between pt-4 border-t border-slate-100 mt-auto">
+                                    <div class="flex items-center gap-2">
+                                        <div
+                                            class="w-8 h-8 rounded-full bg-purple-100 flex items-center justify-center font-bold text-xs text-purple-700">
+                                            FH</div>
+                                        <span class="text-xs font-bold">Dr. Fahima Hossain</span>
+                                    </div>
+                                </div>
+                            </article>
+                            <article
+                                class="bg-surface-container-lowest p-6 rounded-xl border-l-4 border-amber-500 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between">
+                                <div>
+                                    <h3 class="text-lg font-bold mb-3">Next-Gen Robotics in Agriculture</h3>
+                                    <p class="text-sm text-on-surface-variant mb-4">Implementing automated farming
+                                        machinery to increase crop yield and monitor soil health across rural farms.</p>
+                                </div>
+                                <div class="flex items-center justify-between pt-4 border-t border-slate-100 mt-auto">
+                                    <div class="flex items-center gap-2">
+                                        <div
+                                            class="w-8 h-8 rounded-full bg-amber-100 flex items-center justify-center font-bold text-xs text-amber-700">
+                                            MS</div>
+                                        <span class="text-xs font-bold">Dr. Mahmudul Shojib</span>
+                                    </div>
+                                </div>
+                            </article>
+                            <article
+                                class="bg-surface-container-lowest p-6 rounded-xl border-l-4 border-teal-500 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between">
+                                <div>
+                                    <h3 class="text-lg font-bold mb-3">Blockchain for Transparent Supply Chains</h3>
+                                    <p class="text-sm text-on-surface-variant mb-4">Investigating the use of
+                                        decentralized ledgers to ensure ethical sourcing in the ready-made garment (RMG)
+                                        sector.</p>
+                                </div>
+                                <div class="flex items-center justify-between pt-4 border-t border-slate-100 mt-auto">
+                                    <div class="flex items-center gap-2">
+                                        <div
+                                            class="w-8 h-8 rounded-full bg-teal-100 flex items-center justify-center font-bold text-xs text-teal-700">
+                                            TJ</div>
+                                        <span class="text-xs font-bold">Dr. Tanvir Jahan</span>
+                                    </div>
+                                </div>
+                            </article>
+                            <article
+                                class="bg-surface-container-lowest p-6 rounded-xl border-l-4 border-rose-500 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between">
+                                <div>
+                                    <h3 class="text-lg font-bold mb-3">Urban Air Quality Prediction Models</h3>
+                                    <p class="text-sm text-on-surface-variant mb-4">Machine learning frameworks to
+                                        forecast PM2.5 levels using real-time meteorological and vehicular data.</p>
+                                </div>
+                                <div class="flex items-center justify-between pt-4 border-t border-slate-100 mt-auto">
+                                    <div class="flex items-center gap-2">
+                                        <div
+                                            class="w-8 h-8 rounded-full bg-rose-100 flex items-center justify-center font-bold text-xs text-rose-700">
+                                            NA</div>
+                                        <span class="text-xs font-bold">Dr. Nadia Ahmed</span>
+                                    </div>
+                                </div>
+                            </article>
+                            <article
+                                class="bg-surface-container-lowest p-6 rounded-xl border-l-4 border-indigo-500 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between">
+                                <div>
+                                    <h3 class="text-lg font-bold mb-3">Cybersecurity in E-Governance</h3>
+                                    <p class="text-sm text-on-surface-variant mb-4">A comprehensive analysis of
+                                        vulnerabilities in public sector digital services and strategies for robust
+                                        protection.</p>
+                                </div>
+                                <div class="flex items-center justify-between pt-4 border-t border-slate-100 mt-auto">
+                                    <div class="flex items-center gap-2">
+                                        <div
+                                            class="w-8 h-8 rounded-full bg-indigo-100 flex items-center justify-center font-bold text-xs text-indigo-700">
+                                            KH</div>
+                                        <span class="text-xs font-bold">Prof. Kamrul Hasan</span>
+                                    </div>
+                                </div>
+                            </article>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- EVENTS VIEW -->
+            <div id="events-view" class="view-section hidden opacity-0 transition-opacity duration-300">
+                <div class="max-w-5xl mx-auto">
+                    <div class="flex items-center justify-between mb-8">
+                        <div>
+                            <h2 class="text-3xl font-black tracking-tight text-on-surface">Campus Events</h2>
+                            <p class="text-on-surface-variant font-medium mt-1">Discover what's happening around the
+                                community.</p>
+                        </div>
+                        <button
+                            class="bg-primary-container text-white rounded-full py-2 px-6 font-bold shadow-sm hover:scale-105 transition-transform text-sm">My
+                            Tickets</button>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <!-- Pohela Boishakh Event -->
+                        <div
+                            class="bg-surface-container-lowest rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all cursor-pointer group">
+                            <div class="relative h-48 overflow-hidden">
+                                <img src="https://www.hindustantimes.com/ht-img/img/2025/04/15/550x309/ANI-20250413058-0_1744696499882_1744697005977.jpg"
+                                    alt="Cultural Fest"
+                                    class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                                <div
+                                    class="absolute top-4 left-4 bg-white/90 backdrop-blur-md px-3 py-1.5 rounded-lg text-center shadow-sm">
+                                    <div class="text-primary font-black text-lg leading-none">15</div>
+                                    <div class="text-[10px] font-bold uppercase tracking-widest text-secondary mt-1">APR
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="p-5">
+                                <div class="flex items-start justify-between mb-2">
+                                    <h3 class="text-xl font-bold leading-tight flex-1">Borshoboron (Pohela Boishakh)
+                                    </h3>
+                                </div>
+                                <div class="flex items-center gap-2 mb-4 text-sm text-on-surface-variant">
+                                    <span class="material-symbols-outlined text-base">location_on</span>
+                                    <span>UIU Playground</span>
+                                </div>
+                                <div
+                                    class="flex justify-between items-center border-t border-surface-container-highest pt-4">
+                                    <div class="flex -space-x-2">
+                                        <img src="https://ui-avatars.com/api/?name=A+B&background=random"
+                                            class="w-8 h-8 rounded-full border-2 border-white">
+                                        <img src="https://ui-avatars.com/api/?name=X+Y&background=random"
+                                            class="w-8 h-8 rounded-full border-2 border-white">
+                                        <div
+                                            class="w-8 h-8 rounded-full bg-surface-container-highest border-2 border-white flex items-center justify-center text-[10px] font-bold">
+                                            +120</div>
+                                    </div>
+                                    <button
+                                        class="bg-primary text-white text-xs font-bold px-4 py-2 rounded-full hover:bg-primary/90 transition-colors">Join
+                                        Event</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Concert Event -->
+                        <div
+                            class="bg-surface-container-lowest rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all cursor-pointer group">
+                            <div class="relative h-48 overflow-hidden">
+                                <img src="https://cdn.pixabay.com/photo/2016/11/23/15/48/audience-1853662_1280.jpg"
+                                    alt="Concert"
+                                    class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                                <div
+                                    class="absolute top-4 left-4 bg-white/90 backdrop-blur-md px-3 py-1.5 rounded-lg text-center shadow-sm">
+                                    <div class="text-primary font-black text-lg leading-none">28</div>
+                                    <div class="text-[10px] font-bold uppercase tracking-widest text-secondary mt-1">APR
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="p-5">
+                                <div class="flex items-start justify-between mb-2">
+                                    <h3 class="text-xl font-bold leading-tight flex-1">Mega Campus Concert 2026</h3>
+                                </div>
+                                <div class="flex items-center gap-2 mb-4 text-sm text-on-surface-variant">
+                                    <span class="material-symbols-outlined text-base">location_on</span>
+                                    <span>UIU Open Field</span>
+                                </div>
+                                <div
+                                    class="flex justify-between items-center border-t border-surface-container-highest pt-4">
+                                    <div class="flex -space-x-2">
+                                        <img src="https://ui-avatars.com/api/?name=S+T&background=random"
+                                            class="w-8 h-8 rounded-full border-2 border-white">
+                                        <div
+                                            class="w-8 h-8 rounded-full bg-surface-container-highest border-2 border-white flex items-center justify-center text-[10px] font-bold">
+                                            +450</div>
+                                    </div>
+                                    <button
+                                        class="bg-primary text-white text-xs font-bold px-4 py-2 rounded-full hover:bg-primary/90 transition-colors">Get
+                                        Ticket</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Seminar Event -->
+                        <div
+                            class="bg-surface-container-lowest rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all cursor-pointer group">
+                            <div class="relative h-48 overflow-hidden">
+                                <img src="https://images.unsplash.com/photo-1475721027785-f74eccf877e2?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
+                                    alt="Seminar"
+                                    class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                                <div
+                                    class="absolute top-4 left-4 bg-white/90 backdrop-blur-md px-3 py-1.5 rounded-lg text-center shadow-sm">
+                                    <div class="text-primary font-black text-lg leading-none">05</div>
+                                    <div class="text-[10px] font-bold uppercase tracking-widest text-secondary mt-1">MAY
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="p-5">
+                                <div class="flex items-start justify-between mb-2">
+                                    <h3 class="text-xl font-bold leading-tight flex-1">Tech Leadership Summit</h3>
+                                </div>
+                                <div class="flex items-center gap-2 mb-4 text-sm text-on-surface-variant">
+                                    <span class="material-symbols-outlined text-base">location_on</span>
+                                    <span>Auditorium, 1st Floor</span>
+                                </div>
+                                <div
+                                    class="flex justify-between items-center border-t border-surface-container-highest pt-4">
+                                    <div class="flex -space-x-2">
+                                        <img src="https://ui-avatars.com/api/?name=C+S&background=random"
+                                            class="w-8 h-8 rounded-full border-2 border-white">
+                                        <img src="https://ui-avatars.com/api/?name=D+E&background=random"
+                                            class="w-8 h-8 rounded-full border-2 border-white">
+                                        <div
+                                            class="w-8 h-8 rounded-full bg-surface-container-highest border-2 border-white flex items-center justify-center text-[10px] font-bold">
+                                            +60</div>
+                                    </div>
+                                    <button
+                                        class="bg-primary text-white text-xs font-bold px-4 py-2 rounded-full hover:bg-primary/90 transition-colors">RSVP</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Hackathon Event -->
+                        <div
+                            class="bg-surface-container-lowest rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all cursor-pointer group">
+                            <div class="relative h-48 overflow-hidden">
+                                <img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
+                                    alt="Hackathon"
+                                    class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                                <div
+                                    class="absolute top-4 left-4 bg-white/90 backdrop-blur-md px-3 py-1.5 rounded-lg text-center shadow-sm">
+                                    <div class="text-primary font-black text-lg leading-none">12</div>
+                                    <div class="text-[10px] font-bold uppercase tracking-widest text-secondary mt-1">MAY
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="p-5">
+                                <div class="flex items-start justify-between mb-2">
+                                    <h3 class="text-xl font-bold leading-tight flex-1">Inter-University Hackathon</h3>
+                                </div>
+                                <div class="flex items-center gap-2 mb-4 text-sm text-on-surface-variant">
+                                    <span class="material-symbols-outlined text-base">location_on</span>
+                                    <span>CSE Project Lab</span>
+                                </div>
+                                <div
+                                    class="flex justify-between items-center border-t border-surface-container-highest pt-4">
+                                    <div class="flex -space-x-2">
+                                        <img src="https://ui-avatars.com/api/?name=A+S&background=random"
+                                            class="w-8 h-8 rounded-full border-2 border-white">
+                                        <img src="https://ui-avatars.com/api/?name=B+E&background=random"
+                                            class="w-8 h-8 rounded-full border-2 border-white">
+                                        <div
+                                            class="w-8 h-8 rounded-full bg-surface-container-highest border-2 border-white flex items-center justify-center text-[10px] font-bold">
+                                            +200</div>
+                                    </div>
+                                    <button
+                                        class="bg-primary text-white text-xs font-bold px-4 py-2 rounded-full hover:bg-primary/90 transition-colors">Register</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Job Fair Event -->
+                        <div
+                            class="bg-surface-container-lowest rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all cursor-pointer group">
+                            <div class="relative h-48 overflow-hidden">
+                                <img src="https://www.tbsnews.net/sites/default/files/styles/big_3/public/images/2021/12/08/uiu_ckh.png"
+                                    alt="Job Fair"
+                                    class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                                <div
+                                    class="absolute top-4 left-4 bg-white/90 backdrop-blur-md px-3 py-1.5 rounded-lg text-center shadow-sm">
+                                    <div class="text-primary font-black text-lg leading-none">20</div>
+                                    <div class="text-[10px] font-bold uppercase tracking-widest text-secondary mt-1">MAY
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="p-5">
+                                <div class="flex items-start justify-between mb-2">
+                                    <h3 class="text-xl font-bold leading-tight flex-1">UIU Job Fair 2026</h3>
+                                </div>
+                                <div class="flex items-center gap-2 mb-4 text-sm text-on-surface-variant">
+                                    <span class="material-symbols-outlined text-base">location_on</span>
+                                    <span>Main Campus Plaza</span>
+                                </div>
+                                <div
+                                    class="flex justify-between items-center border-t border-surface-container-highest pt-4">
+                                    <div class="flex -space-x-2">
+                                        <img src="https://ui-avatars.com/api/?name=N+A&background=random"
+                                            class="w-8 h-8 rounded-full border-2 border-white">
+                                        <div
+                                            class="w-8 h-8 rounded-full bg-surface-container-highest border-2 border-white flex items-center justify-center text-[10px] font-bold">
+                                            +850</div>
+                                    </div>
+                                    <button
+                                        class="bg-primary text-white text-xs font-bold px-4 py-2 rounded-full hover:bg-primary/90 transition-colors">Details</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Photo Exhibition Event -->
+                        <div
+                            class="bg-surface-container-lowest rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all cursor-pointer group">
+                            <div class="relative h-48 overflow-hidden">
+                                <img src="https://jamesmaherphotography.com/wp-content/uploads/2020/02/top-photography-museums-galleries-new-york.jpg"
+                                    alt="Photo Exhibition"
+                                    class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                                <div
+                                    class="absolute top-4 left-4 bg-white/90 backdrop-blur-md px-3 py-1.5 rounded-lg text-center shadow-sm">
+                                    <div class="text-primary font-black text-lg leading-none">02</div>
+                                    <div class="text-[10px] font-bold uppercase tracking-widest text-secondary mt-1">JUN
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="p-5">
+                                <div class="flex items-start justify-between mb-2">
+                                    <h3 class="text-xl font-bold leading-tight flex-1">Annual Photo Exhibition</h3>
+                                </div>
+                                <div class="flex items-center gap-2 mb-4 text-sm text-on-surface-variant">
+                                    <span class="material-symbols-outlined text-base">location_on</span>
+                                    <span>Gallery Space</span>
+                                </div>
+                                <div
+                                    class="flex justify-between items-center border-t border-surface-container-highest pt-4">
+                                    <div class="flex -space-x-2">
+                                        <img src="https://ui-avatars.com/api/?name=P+R&background=random"
+                                            class="w-8 h-8 rounded-full border-2 border-white">
+                                        <img src="https://ui-avatars.com/api/?name=K+O&background=random"
+                                            class="w-8 h-8 rounded-full border-2 border-white">
+                                        <div
+                                            class="w-8 h-8 rounded-full bg-surface-container-highest border-2 border-white flex items-center justify-center text-[10px] font-bold">
+                                            +95</div>
+                                    </div>
+                                    <button
+                                        class="bg-primary text-white text-xs font-bold px-4 py-2 rounded-full hover:bg-primary/90 transition-colors">Join
+                                        Event</button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+
+            <!-- Chat Widget -->
+            <div id="chat-widget"
+                class="fixed right-6 bottom-20 md:bottom-6 w-80 bg-surface-container-lowest rounded-2xl shadow-2xl flex flex-col hidden z-[250] overflow-hidden border border-surface-container-highest transition-all transform origin-bottom-right scale-0">
+                <!-- Chat Header -->
+                <div class="p-4 bg-primary text-white flex items-center justify-between shadow-sm cursor-pointer"
+                    onclick="closeChat()">
+                    <div class="flex items-center gap-3">
+                        <div class="relative">
+                            <img id="chat-user-pic" src=""
+                                class="w-10 h-10 rounded-full border-2 border-white object-cover">
+                            <div
+                                class="absolute bottom-0 right-0 w-3 h-3 bg-green-400 border-2 border-white rounded-full">
+                            </div>
+                        </div>
+                        <div class="flex flex-col">
+                            <span id="chat-user-name" class="font-bold text-sm leading-tight">Name</span>
+                            <span class="text-xs text-primary-container opacity-90">Active now</span>
+                        </div>
+                    </div>
+                    <button
+                        class="w-8 h-8 hover:bg-white/20 rounded-full transition-colors flex items-center justify-center">
+                        <span class="material-symbols-outlined text-lg">close</span>
+                    </button>
+                </div>
+                <!-- Chat Body -->
+                <div id="chat-messages"
+                    class="h-64 p-4 overflow-y-auto bg-surface flex flex-col gap-3 text-sm scroll-smooth">
+                    <!-- Messages will be rendered here -->
+                </div>
+                <!-- Chat Input -->
+                <div
+                    class="p-3 bg-surface-container-lowest border-t border-surface-container-highest flex items-center gap-2">
+                    <button
+                        class="text-primary w-8 h-8 hover:bg-primary/10 rounded-full flex items-center justify-center transition-colors"><span
+                            class="material-symbols-outlined text-xl">add_circle</span></button>
+                    <input type="text" id="chat-input" placeholder="Type a message..."
+                        class="flex-1 bg-surface-container-high border-none rounded-full px-4 py-2 text-sm focus:ring-2 focus:ring-primary/50 transition-all outline-none"
+                        onkeypress="if(event.key === 'Enter') sendChatMessage()">
+                    <button onclick="sendChatMessage()"
+                        class="text-primary w-8 h-8 hover:bg-primary/10 rounded-full flex items-center justify-center transition-colors"><span
+                            class="material-symbols-outlined text-xl">send</span></button>
+                </div>
+            </div>
+        </main>
+        <!-- Mobile Nav -->
+        <nav
+            class="md:hidden fixed bottom-0 left-0 right-0 bg-surface/90 backdrop-blur-md px-6 py-3 flex justify-between items-center z-50 border-t border-slate-100">
+            <a class="flex flex-col items-center gap-1 text-slate-400" href="#"><span
+                    class="material-symbols-outlined">home</span></a>
+            <a class="flex flex-col items-center gap-1 text-primary" href="#"><span
+                    class="material-symbols-outlined icon-filled">explore</span></a>
+            <button
+                class="bg-primary-container text-white w-12 h-12 rounded-full -mt-10 shadow-lg flex items-center justify-center"
+                onclick="focusCreatePost()"><span class="material-symbols-outlined">add</span></button>
+            <a class="flex flex-col items-center gap-1 text-slate-400" href="#"><span
+                    class="material-symbols-outlined">groups</span></a>
+            <a class="flex flex-col items-center gap-1 text-slate-400" href="#"><span
+                    class="material-symbols-outlined">account_circle</span></a>
+        </nav>
+    </div>
+    <!-- Application Script -->
+    <script src="ulink_script.js"></script>
+</body>
+
+</html>
