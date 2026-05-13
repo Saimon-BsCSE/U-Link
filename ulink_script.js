@@ -63,6 +63,8 @@ function login(userData, customPic = null) {
         switchTab('home');
         renderFeed();
         updateNotificationsBadge();
+        renderRightSidebar();
+
 
         setTimeout(() => mainApp.classList.remove('opacity-0'), 50);
     }, 500);
@@ -692,3 +694,79 @@ function logout() {
         }, 500);
     }
 }
+
+// ── Right Sidebar ─────────────────────────────────────────────────────────
+
+/**
+ * Randomly assigns online/offline status to MOCK_USERS and renders
+ * both the Contacts list and the People You May Know panel.
+ */
+function renderRightSidebar() {
+    renderContacts();
+    renderPeopleYouMayKnow();
+}
+
+function renderContacts() {
+    const container = document.getElementById('contacts-list');
+    if (!container) return;
+
+    // Give each user a random online status (persisted on the object)
+    const users = MOCK_USERS.map(u => ({
+        ...u,
+        online: Math.random() > 0.35   // ~65 % chance online
+    }));
+
+    // Sort: online first
+    users.sort((a, b) => b.online - a.online);
+
+    container.innerHTML = users.map(u => `
+        <div class="contact-row" onclick="openChat('${u.id}')">
+            <div class="relative flex-shrink-0">
+                <img src="${u.pic}" class="w-9 h-9 rounded-full object-cover border border-slate-200">
+                ${u.online ? '<span class="contact-online-dot"></span>' : ''}
+            </div>
+            <div class="flex-1 min-w-0">
+                <p class="text-xs font-semibold text-slate-800 dark:text-slate-200 truncate">${u.name}</p>
+                <p class="text-[10px] ${u.online ? 'text-green-500' : 'text-slate-400'}">${u.online ? 'Active now' : 'Offline'}</p>
+            </div>
+            ${u.online ? '<span class="material-symbols-outlined text-slate-400 text-base hover:text-primary transition-colors">chat</span>' : ''}
+        </div>
+    `).join('');
+}
+
+function renderPeopleYouMayKnow() {
+    const container = document.getElementById('people-you-may-know');
+    if (!container) return;
+
+    // Show users not yet in our friends list (max 3)
+    const suggestions = MOCK_USERS
+        .filter(u => !state.friends.includes(u.id))
+        .slice(0, 3);
+
+    container.innerHTML = suggestions.map(u => `
+        <div class="pymk-card">
+            <img src="${u.pic}" class="w-10 h-10 rounded-full object-cover border border-slate-200 flex-shrink-0 cursor-pointer hover:opacity-80 transition-opacity"
+                onclick="openPublicProfile('${u.id}')">
+            <div class="flex-1 min-w-0">
+                <p class="text-xs font-bold text-slate-800 dark:text-slate-200 truncate cursor-pointer hover:underline"
+                    onclick="openPublicProfile('${u.id}')">${u.name}</p>
+                <p class="text-[10px] text-slate-500">${u.role} · ${u.dept}</p>
+                <button
+                    onclick="handlePymkAdd('${u.id}', this)"
+                    class="mt-1.5 px-3 py-0.5 bg-primary/10 hover:bg-primary/20 text-primary text-[11px] font-bold rounded-full transition-colors flex items-center gap-1">
+                    <span class="material-symbols-outlined text-sm">person_add</span> Add Friend
+                </button>
+            </div>
+        </div>
+    `).join('');
+}
+
+function handlePymkAdd(userId, btn) {
+    sendFriendRequest(userId, null);
+    btn.innerHTML = '<span class="material-symbols-outlined text-sm">check_circle</span> Requested';
+    btn.disabled = true;
+    btn.classList.add('opacity-60', 'cursor-not-allowed');
+    // Refresh after a short delay so friended users disappear from PYMK
+    setTimeout(() => renderPeopleYouMayKnow(), 1500);
+}
+
