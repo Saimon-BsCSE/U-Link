@@ -67,3 +67,141 @@ body {
 .logo-sidebar {
     max-width: 120px;
 }
+
+/* ── Right Sidebar ─────────────────────────────────────────── */
+
+/* Card wrapper used in every right-sidebar section */
+.right-sidebar-card {
+    background: #ffffff;
+    border-radius: 1rem;
+    padding: 1rem;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+}
+
+.dark .right-sidebar-card {
+    background: #1e293b;
+}
+
+/* Contact row (active users) */
+.contact-row {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    padding: 0.45rem 0.5rem;
+    border-radius: 0.75rem;
+    cursor: pointer;
+    transition: background 0.15s;
+    position: relative;
+}
+
+.contact-row:hover {
+    background: #f1f5f9;
+}
+
+.dark .contact-row:hover {
+    background: #1e293b;
+}
+
+/* Green "online" dot */
+.contact-online-dot {
+    position: absolute;
+    bottom: 6px;
+    left: 34px;
+    width: 10px;
+    height: 10px;
+    background: #22c55e;
+    border-radius: 50%;
+    border: 2px solid #f8fafc;
+    flex-shrink: 0;
+}
+
+.dark .contact-online-dot {
+    border-color: #0f172a;
+}
+
+/* Event card row */
+.right-event-card {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.5rem 0.5rem;
+    border-radius: 0.75rem;
+    cursor: pointer;
+    transition: background 0.15s;
+}
+
+.right-event-card:hover {
+    background: #f1f5f9;
+}
+
+.dark .right-event-card:hover {
+    background: #1e293b;
+}
+
+/* Calendar date badge inside event card */
+.right-event-date {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 2.8rem;
+    height: 2.8rem;
+    background: #fff7ed;
+    border-radius: 0.6rem;
+    flex-shrink: 0;
+    border: 1px solid #fed7aa;
+}
+
+/* Trending item row */
+.right-trending-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.4rem 0.5rem;
+    border-radius: 0.75rem;
+    cursor: pointer;
+    transition: background 0.15s;
+}
+
+.right-trending-item:hover {
+    background: #f1f5f9;
+}
+
+.dark .right-trending-item:hover {
+    background: #1e293b;
+}
+
+/* Rank badge */
+.right-trending-rank {
+    width: 1.5rem;
+    height: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #ffedd5;
+    color: #a14000;
+    border-radius: 50%;
+    font-size: 0.65rem;
+    font-weight: 800;
+    flex-shrink: 0;
+}
+
+/* People-you-may-know single suggestion */
+.pymk-card {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    padding: 0.4rem 0.4rem;
+    border-radius: 0.75rem;
+    transition: background 0.15s;
+    cursor: default;
+}
+
+.pymk-card:hover {
+    background: #f8fafc;
+}
+
+.dark .pymk-card:hover {
+    background: #1e293b;
+}
+
