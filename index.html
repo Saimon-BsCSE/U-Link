@@ -304,7 +304,7 @@
                     <button onclick="switchTab('home')"
                         class="focus:outline-none hover:opacity-90 active:scale-95 transition-all" title="Go to Home"
                         id="sidebar-logo-btn">
-                        <img id="nav-profile-pic" src="https://ui-avatars.com/api/?name=User&background=random" alt="User-Pic" class="h-12 w-auto object-contain logo-sidebar">
+                        <img src="Asserts/logo.png" alt="U-Link Logo" class="h-12 w-auto object-contain logo-sidebar">
                     </button>
                     <div id="user-branding">
                         <h2 class="text-xl font-bold tracking-tighter text-orange-600 font-['Inter']" id="display-name">
@@ -362,7 +362,7 @@
             </div>
         </aside>
         <!-- Main Content Area -->
-        <main class="lg:ml-72 pt-20 px-4 md:px-10 pb-20 relative">
+        <main class="lg:ml-72 xl:mr-80 pt-20 px-4 md:px-6 pb-20 relative">
 
             <!-- HOME VIEW (Newsfeed) -->
             <div id="home-view"
@@ -1251,6 +1251,171 @@
                 </div>
             </div>
         </main>
+
+     
+        <!--RIGHT SIDEBAR -->
+        <aside id="right-sidebar"
+            class="hidden xl:flex flex-col gap-5 fixed right-0 top-0 h-screen w-80 bg-slate-50 dark:bg-slate-950 pt-20 pb-24 px-4 overflow-y-auto hide-scrollbar border-l border-slate-100 dark:border-slate-800">
+
+            <!-- ── Contacts / Active Now ── -->
+            <div class="right-sidebar-card">
+                <div class="flex items-center justify-between mb-3">
+                    <h3 class="text-sm font-bold text-slate-700 dark:text-slate-200">Contacts</h3>
+                    <div class="flex gap-1">
+                        <button class="p-1.5 rounded-full hover:bg-slate-200 dark:hover:bg-slate-800 transition-colors" title="Video call">
+                            <span class="material-symbols-outlined text-slate-500 text-lg">videocam</span>
+                        </button>
+                        <button class="p-1.5 rounded-full hover:bg-slate-200 dark:hover:bg-slate-800 transition-colors" title="Search contacts">
+                            <span class="material-symbols-outlined text-slate-500 text-lg">search</span>
+                        </button>
+                        <button class="p-1.5 rounded-full hover:bg-slate-200 dark:hover:bg-slate-800 transition-colors" title="More">
+                            <span class="material-symbols-outlined text-slate-500 text-lg">more_horiz</span>
+                        </button>
+                    </div>
+                </div>
+                <div id="contacts-list" class="flex flex-col gap-0.5">
+                    <!-- Populated by JS -->
+                </div>
+            </div>
+
+            <!-- ── People You May Know ────────────────────────────────── -->
+            <div class="right-sidebar-card">
+                <div class="flex items-center justify-between mb-3">
+                    <h3 class="text-sm font-bold text-slate-700 dark:text-slate-200">People You May Know</h3>
+                    <button class="text-xs text-primary font-semibold hover:underline">See All</button>
+                </div>
+                <div id="people-you-may-know" class="flex flex-col gap-3">
+                    <!-- Populated by JS -->
+                </div>
+            </div>
+
+            <!-- ── Upcoming Events ────────────────────────────────────── -->
+            <div class="right-sidebar-card">
+                <div class="flex items-center justify-between mb-3">
+                    <h3 class="text-sm font-bold text-slate-700 dark:text-slate-200">Upcoming Events</h3>
+                    <button class="text-xs text-primary font-semibold hover:underline">See All</button>
+                </div>
+                <div class="flex flex-col gap-3">
+                    <div class="right-event-card group" onclick="">
+                        <div class="right-event-date">
+                            <span class="text-[10px] font-bold uppercase text-primary">May</span>
+                            <span class="text-xl font-black text-primary leading-none">18</span>
+                        </div>
+                        <div class="flex-1">
+                            <p class="text-xs font-bold text-slate-800 dark:text-slate-200 group-hover:text-primary transition-colors">CSE Hackathon 2025</p>
+                            <p class="text-[11px] text-slate-500">UIU Auditorium • 9:00 AM</p>
+                        </div>
+                    </div>
+                    <div class="right-event-card group">
+                        <div class="right-event-date">
+                            <span class="text-[10px] font-bold uppercase text-orange-500">May</span>
+                            <span class="text-xl font-black text-orange-500 leading-none">22</span>
+                        </div>
+                        <div class="flex-1">
+                            <p class="text-xs font-bold text-slate-800 dark:text-slate-200 group-hover:text-primary transition-colors">Photography Club Shoot</p>
+                            <p class="text-[11px] text-slate-500">Campus Garden • 3:00 PM</p>
+                        </div>
+                    </div>
+                    <div class="right-event-card group">
+                        <div class="right-event-date">
+                            <span class="text-[10px] font-bold uppercase text-blue-500">Jun</span>
+                            <span class="text-xl font-black text-blue-500 leading-none">3</span>
+                        </div>
+                        <div class="flex-1">
+                            <p class="text-xs font-bold text-slate-800 dark:text-slate-200 group-hover:text-primary transition-colors">UIU Cultural Fest 2025</p>
+                            <p class="text-[11px] text-slate-500">Main Stage • 5:00 PM</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ── Trending on Campus ─────────────────────────────────── -->
+            <div class="right-sidebar-card">
+                <div class="flex items-center justify-between mb-3">
+                    <h3 class="text-sm font-bold text-slate-700 dark:text-slate-200">Trending on Campus</h3>
+                    <span class="material-symbols-outlined text-primary text-lg">trending_up</span>
+                </div>
+                <div class="flex flex-col gap-2">
+                    <div class="right-trending-item">
+                        <span class="right-trending-rank">1</span>
+                        <div>
+                            <p class="text-xs font-bold text-slate-800 dark:text-slate-200">#CSE_Hackathon_2025</p>
+                            <p class="text-[11px] text-slate-500">4.2k posts</p>
+                        </div>
+                    </div>
+                    <div class="right-trending-item">
+                        <span class="right-trending-rank">2</span>
+                        <div>
+                            <p class="text-xs font-bold text-slate-800 dark:text-slate-200">#UIU_Job_Fair_Live</p>
+                            <p class="text-[11px] text-slate-500">2.8k posts</p>
+                        </div>
+                    </div>
+                    <div class="right-trending-item">
+                        <span class="right-trending-rank">3</span>
+                        <div>
+                            <p class="text-xs font-bold text-slate-800 dark:text-slate-200">#MidtermSurvivorMode</p>
+                            <p class="text-[11px] text-slate-500">1.5k posts</p>
+                        </div>
+                    </div>
+                    <div class="right-trending-item">
+                        <span class="right-trending-rank">4</span>
+                        <div>
+                            <p class="text-xs font-bold text-slate-800 dark:text-slate-200">#UIU_Mars_Rover</p>
+                            <p class="text-[11px] text-slate-500">980 posts</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ── Birthdays ──────────────────────────────────────────── -->
+            <div class="right-sidebar-card">
+                <div class="flex items-center gap-2 mb-3">
+                    <span class="material-symbols-outlined text-pink-500 text-xl icon-filled">cake</span>
+                    <h3 class="text-sm font-bold text-slate-700 dark:text-slate-200">Birthdays</h3>
+                </div>
+                <div class="flex items-center gap-3 p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-xl transition-colors cursor-pointer">
+                    <img src="https://ui-avatars.com/api/?name=Nusrat+Jahan&background=random" class="w-9 h-9 rounded-full object-cover border-2 border-pink-300">
+                    <p class="text-xs text-slate-700 dark:text-slate-300 leading-relaxed"><span class="font-bold">Nusrat Jahan</span> and <span class="font-bold">2 others</span> have birthdays today 🎂</p>
+                </div>
+            </div>
+
+            <!-- ── Sponsored ──────────────────────────────────────────── -->
+            <div class="right-sidebar-card">
+                <div class="flex items-center justify-between mb-3">
+                    <h3 class="text-sm font-bold text-slate-700 dark:text-slate-200">Sponsored</h3>
+                </div>
+                <div class="flex flex-col gap-3">
+                    <div class="flex gap-3 items-start hover:bg-slate-100 dark:hover:bg-slate-800 p-2 rounded-xl transition-colors cursor-pointer group">
+                        <div class="w-20 h-16 rounded-xl bg-gradient-to-br from-orange-400 to-rose-500 flex items-center justify-center flex-shrink-0 overflow-hidden shadow-sm">
+                            <span class="material-symbols-outlined text-white text-3xl">school</span>
+                        </div>
+                        <div>
+                            <p class="text-xs font-bold text-slate-800 dark:text-slate-200 group-hover:text-primary transition-colors">UIU Summer Courses 2025</p>
+                            <p class="text-[11px] text-slate-500 mt-0.5">uiu.ac.bd/summer</p>
+                            <p class="text-[11px] text-slate-400 mt-1">Enroll now for the best summer programs at United International University.</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-3 items-start hover:bg-slate-100 dark:hover:bg-slate-800 p-2 rounded-xl transition-colors cursor-pointer group">
+                        <div class="w-20 h-16 rounded-xl bg-gradient-to-br from-blue-400 to-indigo-600 flex items-center justify-center flex-shrink-0 overflow-hidden shadow-sm">
+                            <span class="material-symbols-outlined text-white text-3xl">devices</span>
+                        </div>
+                        <div>
+                            <p class="text-xs font-bold text-slate-800 dark:text-slate-200 group-hover:text-primary transition-colors">TechFest BD 2025</p>
+                            <p class="text-[11px] text-slate-500 mt-0.5">techfest.bd</p>
+                            <p class="text-[11px] text-slate-400 mt-1">Bangladesh's biggest tech festival. Register your team today!</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer links -->
+            <div class="px-2 pb-4">
+                <p class="text-[10px] text-slate-400 dark:text-slate-600 leading-relaxed">
+                    Privacy · Terms · Advertising · Ad Choices · Cookies · More · U-Link © 2025
+                </p>
+            </div>
+        </aside>
+
         <!-- Mobile Nav -->
         <nav
             class="md:hidden fixed bottom-0 left-0 right-0 bg-surface/90 backdrop-blur-md px-6 py-3 flex justify-between items-center z-50 border-t border-slate-100">
