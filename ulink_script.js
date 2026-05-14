@@ -1,13 +1,32 @@
-
 //  U-Link – Application Script  (ulink_script.js)
 
 // --- Mock Data & State ---
 const MOCK_USERS = [
-    { id: "101", name: "Sadika Rahman", dept: "CSE", role: "Student", batch: "211", pic: "https://ui-avatars.com/api/?name=Sadika+Rahman&background=random" },
-    { id: "102", name: "Rakib Hasan", dept: "BBA", role: "Student", batch: "203", pic: "https://ui-avatars.com/api/?name=Rakib+Hasan&background=random" },
-    { id: "103", name: "Nusrat Jahan", dept: "EEE", role: "Student", batch: "221", pic: "https://ui-avatars.com/api/?name=Nusrat+Jahan&background=random" },
-    { id: "104", name: "Dr. Ahmed Kabir", dept: "CSE", role: "Faculty", batch: "N/A", pic: "https://ui-avatars.com/api/?name=Dr+Ahmed+Kabir&background=random" },
-    { id: "105", name: "Jamal Uddin", dept: "Admin", role: "Staff", batch: "N/A", pic: "https://ui-avatars.com/api/?name=Jamal+Uddin&background=random" }
+    { id: "101", name: "Sadika Rahman",     dept: "CSE",         role: "Student", batch: "211", pic: "https://ui-avatars.com/api/?name=Sadika+Rahman&background=E85D04&color=fff" },
+    { id: "102", name: "Rakib Hasan",       dept: "BBA",         role: "Student", batch: "203", pic: "https://ui-avatars.com/api/?name=Rakib+Hasan&background=0077B6&color=fff" },
+    { id: "103", name: "Nusrat Jahan",      dept: "EEE",         role: "Student", batch: "221", pic: "https://ui-avatars.com/api/?name=Nusrat+Jahan&background=7B2D8B&color=fff" },
+    { id: "104", name: "Dr. Ahmed Kabir",   dept: "CSE",         role: "Professor", batch: "N/A", pic: "https://ui-avatars.com/api/?name=Dr+Ahmed+Kabir&background=023E8A&color=fff" },
+    { id: "105", name: "Jamal Uddin",       dept: "Admin",       role: "Staff",   batch: "N/A", pic: "https://ui-avatars.com/api/?name=Jamal+Uddin&background=2D6A4F&color=fff" },
+    { id: "106", name: "Tania Akter",       dept: "Data Science",role: "Student", batch: "231", pic: "https://ui-avatars.com/api/?name=Tania+Akter&background=D62828&color=fff" },
+    { id: "107", name: "Mehedi Hassan",     dept: "CSE",         role: "Student", batch: "223", pic: "https://ui-avatars.com/api/?name=Mehedi+Hassan&background=457B9D&color=fff" },
+    { id: "108", name: "Priya Das",         dept: "Pharmacy",    role: "Student", batch: "225", pic: "https://ui-avatars.com/api/?name=Priya+Das&background=C77DFF&color=fff" },
+    { id: "109", name: "Arif Hossain",      dept: "Civil",       role: "Student", batch: "212", pic: "https://ui-avatars.com/api/?name=Arif+Hossain&background=F4A261&color=fff" },
+    { id: "110", name: "Lamia Sultana",     dept: "English",     role: "Student", batch: "234", pic: "https://ui-avatars.com/api/?name=Lamia+Sultana&background=06D6A0&color=fff" },
+    { id: "111", name: "Omar Faruk",        dept: "BBA",         role: "Student", batch: "221", pic: "https://ui-avatars.com/api/?name=Omar+Faruk&background=FFB703&color=333" },
+    { id: "112", name: "Dr. Farzana Islam", dept: "EEE",         role: "Professor", batch: "N/A", pic: "https://ui-avatars.com/api/?name=Farzana+Islam&background=8338EC&color=fff" },
+    { id: "113", name: "Ayesha Siddiqa",    dept: "Architecture",role: "Student", batch: "211", pic: "https://ui-avatars.com/api/?name=Ayesha+Siddiqa&background=B5179E&color=fff" },
+    { id: "114", name: "Kamrul Hasan",      dept: "CSE",         role: "Lecturer",batch: "N/A", pic: "https://ui-avatars.com/api/?name=Kamrul+Hasan&background=4CC9F0&color=333" },
+    { id: "115", name: "Nazmul Huda",       dept: "Economics",   role: "Student", batch: "222", pic: "https://ui-avatars.com/api/?name=Nazmul+Huda&background=3A0CA3&color=fff" },
+    { id: "116", name: "Dr. Laila Zaman",   dept: "BBA",         role: "Professor",batch: "N/A",pic: "https://ui-avatars.com/api/?name=Laila+Zaman&background=7209B7&color=fff" },
+    { id: "117", name: "Rifat Ahmed",       dept: "Civil",       role: "Student", batch: "213", pic: "https://ui-avatars.com/api/?name=Rifat+Ahmed&background=F72585&color=fff" },
+    { id: "118", name: "Shammi Akter",      dept: "IT Support",  role: "Staff",   batch: "N/A", pic: "https://ui-avatars.com/api/?name=Shammi+Akter&background=4361EE&color=fff" },
+    { id: "119", name: "Fahim Faysal",      dept: "EEE",         role: "Student", batch: "233", pic: "https://ui-avatars.com/api/?name=Fahim+Faysal&background=3F37C9&color=fff" },
+    { id: "120", name: "Sumaiya Binte",     dept: "Pharmacy",    role: "Lecturer",batch: "N/A", pic: "https://ui-avatars.com/api/?name=Sumaiya+Binte&background=4895EF&color=fff" },
+    { id: "121", name: "Tahsin Alam",       dept: "Data Science",role: "Student", batch: "232", pic: "https://ui-avatars.com/api/?name=Tahsin+Alam&background=560BAD&color=fff" },
+    { id: "122", name: "Asma Ul Husna",     dept: "English",     role: "Student", batch: "221", pic: "https://ui-avatars.com/api/?name=Asma+Ul+Husna&background=F72585&color=fff" },
+    { id: "123", name: "Syed Muntasir",     dept: "CSE",         role: "Student", batch: "201", pic: "https://ui-avatars.com/api/?name=Syed+Muntasir&background=E85D04&color=fff" },
+    { id: "124", name: "Dr. Rafiqul Ali",   dept: "Civil",       role: "Faculty", batch: "N/A", pic: "https://ui-avatars.com/api/?name=Rafiqul+Ali&background=023E8A&color=fff" },
+    { id: "125", name: "Jannatul Ferdaus",  dept: "BBA",         role: "Student", batch: "211", pic: "https://ui-avatars.com/api/?name=Jannatul+Ferdaus&background=7B2D8B&color=fff" }
 ];
 
 const state = {
@@ -15,26 +34,155 @@ const state = {
     activeChatUserId: null,
     chatHistory: {},
     posts: [
-        { id: 1, userId: "101", text: "Excited for the upcoming CSE Hackathon!", image: "", likes: 145, comments: 5, liked: false, commentsList: [{ id: 101, userId: "102", name: "Rakib Hasan", text: "Best of luck!" }, { id: 102, userId: "103", name: "Nusrat Jahan", text: "See you there!" }, { id: 105, userId: "105", name: "Jamal Uddin", text: "Make us proud!" }, { id: 106, userId: "104", name: "Dr. Ahmed Kabir", text: "Great initiative!" }, { id: 107, userId: "101", name: "Sarah Khan", text: "Let's go team!" }] },
-        { id: 2, userId: "102", text: "Anyone have notes for FIN201? Midterm is coming up fast!", image: "", likes: 12, comments: 3, liked: false, commentsList: [{ id: 108, userId: "103", name: "Nusrat Jahan", text: "I have the chapter 3 & 4 summaries, ping me." }, { id: 109, userId: "102", name: "Rakib Hasan", text: "Check the master drive link pinned in our WhatsApp group." }, { id: 110, userId: "101", name: "Sadika Rahman", text: "Count me in if you find them!" }] },
-        { id: 3, userId: "103", text: "Excited for the upcoming concert! Who else is going?", image: "", likes: 234, comments: 4, liked: false, commentsList: [{ id: 103, userId: "102", name: "Rakib Hasan", text: "It will be awesome!" }, { id: 111, userId: "101", name: "Sadika Rahman", text: "Already bought the tickets!" }, { id: 112, userId: "105", name: "Jamal Uddin", text: "Have a great time everyone!" }, { id: 113, userId: "103", name: "Nusrat Jahan", text: "Can't wait!" }] },
-        { id: 4, userId: "101", text: "Sharing my Web programming notes. Feel free to use them! 📚", image: "", likes: 89, comments: 2, liked: false, commentsList: [{ id: 104, userId: "103", name: "Nusrat Jahan", text: "Thank you so much! Truly a life saver." }, { id: 114, userId: "102", name: "Rakib Hasan", text: "Appreciate it." }] },
-        { id: 5, userId: "104", text: "Reminder: Data Structures makeup class is scheduled for tomorrow at 10 AM in room 405. Please be on time.", image: "", likes: 120, comments: 2, liked: false, commentsList: [{ id: 115, userId: "102", name: "Rakib Hasan", text: "Noted sir." }, { id: 116, userId: "103", name: "Nusrat Jahan", text: "Will be there!" }] },
-        { id: 6, userId: "105", text: "Campus cafeteria will be closed this Friday for maintenance works. Please make alternate arrangements for lunch.", image: "", likes: 45, comments: 1, liked: false, commentsList: [{ id: 117, userId: "101", name: "Sadika Rahman", text: "Thanks for the heads up!" }] }
+        {
+            id: 1, userId: "101",
+            text: "Excited for the upcoming CSE Hackathon! 🚀 Our team has been preparing for weeks. Wish us luck!",
+            image: "", likes: 145, comments: 5, liked: false,
+            commentsList: [
+                { id: 101, userId: "102", name: "Rakib Hasan",   text: "Best of luck! You guys are going to crush it! 💪" },
+                { id: 102, userId: "103", name: "Nusrat Jahan",   text: "See you there! May the best team win 🏆" },
+                { id: 103, userId: "105", name: "Jamal Uddin",    text: "Make us proud! Rooting for you all 🎉" },
+                { id: 104, userId: "104", name: "Dr. Ahmed Kabir",text: "Great initiative! Keep pushing the boundaries of innovation." },
+                { id: 105, userId: "107", name: "Mehedi Hassan",  text: "Let's go team! The library's been booked solid 😂" }
+            ]
+        },
+        {
+            id: 2, userId: "102",
+            text: "Anyone have notes for FIN201? Midterm is coming up fast!!! 😬",
+            image: "", likes: 12, comments: 3, liked: false,
+            commentsList: [
+                { id: 108, userId: "103", name: "Nusrat Jahan",   text: "I have chapter 3 & 4 summaries, ping me 📖" },
+                { id: 109, userId: "111", name: "Omar Faruk",      text: "Check the master drive link pinned in our WhatsApp group!" },
+                { id: 110, userId: "101", name: "Sadika Rahman",   text: "Count me in if you find them! Same boat here 😅" }
+            ]
+        },
+        {
+            id: 3, userId: "103",
+            text: "The annual UIU Cultural Fest was absolutely AMAZING! 🎭🎶 Can't wait for next year. Who else was there?",
+            image: "", likes: 234, comments: 4, liked: false,
+            commentsList: [
+                { id: 111, userId: "102", name: "Rakib Hasan",    text: "It was incredible! The dance performance blew my mind 🔥" },
+                { id: 112, userId: "101", name: "Sadika Rahman",   text: "Already bought the tickets for next year! 😄" },
+                { id: 113, userId: "105", name: "Jamal Uddin",     text: "Lovely to see everyone enjoying themselves!" },
+                { id: 114, userId: "110", name: "Lamia Sultana",   text: "The poetry segment was my favourite part 🌸" }
+            ]
+        },
+        {
+            id: 4, userId: "101",
+            text: "Sharing my complete Web Programming notes for the final exam! Drive link in the comments 📚✨",
+            image: "", likes: 189, comments: 5, liked: false,
+            commentsList: [
+                { id: 115, userId: "103", name: "Nusrat Jahan",   text: "Thank you so much!! Truly a life saver 🙏" },
+                { id: 116, userId: "102", name: "Rakib Hasan",    text: "Appreciate it so much, you're the best!" },
+                { id: 117, userId: "107", name: "Mehedi Hassan",  text: "Legend move! Sharing is caring 🫶" },
+                { id: 118, userId: "106", name: "Tania Akter",    text: "You're amazing Sadika! Sending good karma your way ✨" },
+                { id: 119, userId: "109", name: "Arif Hossain",   text: "Just what I needed before the exam, thanks!" }
+            ]
+        },
+        {
+            id: 5, userId: "104",
+            text: "📢 REMINDER: Data Structures makeup class is scheduled for TOMORROW at 10 AM in Room 405. Attendance mandatory. Please be on time.",
+            image: "", likes: 120, comments: 3, liked: false,
+            commentsList: [
+                { id: 120, userId: "102", name: "Rakib Hasan",    text: "Noted Sir, will be there on time! 🙏" },
+                { id: 121, userId: "103", name: "Nusrat Jahan",   text: "Will be there! Thank you for the reminder." },
+                { id: 122, userId: "107", name: "Mehedi Hassan",  text: "Perfect timing, I was just looking for this info!" }
+            ]
+        },
+        {
+            id: 6, userId: "105",
+            text: "⚠️ Campus cafeteria will be CLOSED this Friday for maintenance works. Please make alternate arrangements for lunch.",
+            image: "", likes: 45, comments: 2, liked: false,
+            commentsList: [
+                { id: 123, userId: "101", name: "Sadika Rahman",  text: "Thanks for the heads up! Going off-campus then 🍜" },
+                { id: 124, userId: "109", name: "Arif Hossain",   text: "Good to know! Appreciate the timely notice." }
+            ]
+        },
+        {
+            id: 7, userId: "106",
+            text: "Just submitted my final project on Machine Learning-based traffic prediction for Dhaka city 🤖🚦 It's been a wild 3-month ride but we did it!",
+            image: "", likes: 312, comments: 6, liked: false,
+            commentsList: [
+                { id: 125, userId: "101", name: "Sadika Rahman",  text: "That sounds absolutely fascinating!! Congrats 🎉" },
+                { id: 126, userId: "107", name: "Mehedi Hassan",  text: "Bro this is next level! When is the presentation?" },
+                { id: 127, userId: "104", name: "Dr. Ahmed Kabir",text: "Excellent work Tania! Looking forward to your presentation." },
+                { id: 128, userId: "108", name: "Priya Das",      text: "We need more projects like this! So impactful 🙌" },
+                { id: 129, userId: "110", name: "Lamia Sultana",  text: "Wow, that's incredible! You're an inspiration ✨" },
+                { id: 130, userId: "102", name: "Rakib Hasan",    text: "Proud of you!! Can't wait to see the results." }
+            ]
+        },
+        {
+            id: 8, userId: "107",
+            text: "UIU Table Tennis Inter-Department Tournament results are in! 🏓 CSE takes GOLD!! Shoutout to the whole team 🥇",
+            image: "", likes: 278, comments: 4, liked: false,
+            commentsList: [
+                { id: 131, userId: "101", name: "Sadika Rahman",  text: "CSE FOREVER!!! 🔥🔥" },
+                { id: 132, userId: "103", name: "Nusrat Jahan",   text: "EEE will get you next time 😤 Congrats though!" },
+                { id: 133, userId: "111", name: "Omar Faruk",     text: "BBA in shambles lol. Well played guys!! 🏆" },
+                { id: 134, userId: "109", name: "Arif Hossain",   text: "Absolute legends! Watching from the sidelines was electric." }
+            ]
+        },
+        {
+            id: 9, userId: "108",
+            text: "Friendly reminder to everyone: World Pharmacist Day is next week! 💊 Come visit our awareness booth in the quad 9AM–4PM. Free health screenings!",
+            image: "", likes: 98, comments: 3, liked: false,
+            commentsList: [
+                { id: 135, userId: "105", name: "Jamal Uddin",    text: "Great initiative! Will announce this on the board too 👍" },
+                { id: 136, userId: "106", name: "Tania Akter",    text: "Will definitely be there! Love this kind of community event!" },
+                { id: 137, userId: "110", name: "Lamia Sultana",  text: "Thank you for doing this Priya! So important 💪" }
+            ]
+        },
+        {
+            id: 10, userId: "112",
+            text: "📣 EEE Lab Update: The new Robotics Lab equipment has arrived! Students enrolled in EEE 405 can start using the facilities from Monday. Please check your schedule!",
+            image: "", likes: 156, comments: 4, liked: false,
+            commentsList: [
+                { id: 138, userId: "103", name: "Nusrat Jahan",   text: "This is huge!! Finally the equipment we've been waiting for 😭" },
+                { id: 139, userId: "109", name: "Arif Hossain",   text: "Amazing news Dr. Farzana! Civil students are jealous 😄" },
+                { id: 140, userId: "107", name: "Mehedi Hassan",  text: "Can CSE students visit? We'd love to collaborate!" },
+                { id: 141, userId: "112", name: "Dr. Farzana Islam", text: "Of course! Reach out via email to schedule cross-dept sessions 🤝" }
+            ]
+        },
+        {
+            id: 11, userId: "109",
+            text: "Our Civil Engineering capstone bridge design just got selected for the National Youth Engineering Competition 🌉 UIU representing! Any support from the community would mean the world.",
+            image: "", likes: 430, comments: 5, liked: false,
+            commentsList: [
+                { id: 142, userId: "104", name: "Dr. Ahmed Kabir",text: "Phenomenal achievement! UIU is proud of you all 🎊" },
+                { id: 143, userId: "101", name: "Sadika Rahman",  text: "This is AMAZING Arif!! 🏆 You're going to win it!" },
+                { id: 144, userId: "106", name: "Tania Akter",    text: "Following this journey! Please post updates 🙏" },
+                { id: 145, userId: "111", name: "Omar Faruk",     text: "Big ups!! Entire campus is behind you guys 💪" },
+                { id: 146, userId: "108", name: "Priya Das",      text: "Go go go!! Break a leg (not literally 😂) you've got this!" }
+            ]
+        },
+        {
+            id: 12, userId: "110",
+            text: "Poem of the week 🌸\n\n'The campus hums with whispered dreams,\nBetween the clauses, coffee steams.\nWe learn, we fail, we rise again—\nUIU, where we find our pen.' ✍️\n\nFeedback welcome!",
+            image: "", likes: 201, comments: 3, liked: false,
+            commentsList: [
+                { id: 147, userId: "103", name: "Nusrat Jahan",   text: "Absolutely beautiful! 😭 This hit different during exam week." },
+                { id: 148, userId: "108", name: "Priya Das",      text: "Wow, this gave me chills! Talent right here 🌟" },
+                { id: 149, userId: "105", name: "Jamal Uddin",    text: "Very touching words. Thank you for sharing this gem." }
+            ]
+        },
     ],
     notifications: [
-        { id: 1, type: "like", text: "Sadika Rahman liked your post", read: false },
-        { id: 2, type: "request", text: "Rakib Hasan sent you a friend request", read: false, fromId: "102" },
-        { id: 3, type: "group", text: "CSE GROUP: New announcement posted regarding Hackathon finals.", read: false },
-        { id: 4, type: "group", text: "HACKATHON GROUP: Registration closes tomorrow! Make sure you fill correctly.", read: false },
-        { id: 5, type: "group", text: "CULTURAL GROUP: Annual fest meeting at 3 PM in Room 102.", read: false }
+        { id: 1, type: "like",    text: "Sadika Rahman liked your post",                             read: false },
+        { id: 2, type: "request", text: "Rakib Hasan sent you a friend request",                     read: false, fromId: "102" },
+        { id: 3, type: "request", text: "Tania Akter sent you a friend request",                      read: false, fromId: "106" },
+        { id: 4, type: "group",   text: "CSE GROUP: New announcement posted regarding Hackathon finals.", read: false },
+        { id: 5, type: "group",   text: "HACKATHON GROUP: Registration closes tomorrow!",             read: false },
+        { id: 6, type: "group",   text: "CULTURAL GROUP: Annual fest meeting at 3 PM in Room 102.",  read: false },
+        { id: 7, type: "like",    text: "Mehedi Hassan reacted ❤️ to your post",                     read: false },
     ],
-    friends: [] // IDs
+    friends: ["101", "103"] // Start with 2 friends so it's not empty
 };
 
 let activeTab = 'home';
 let currentOtherUserId = null;
 let uploadedImageBase64 = "";
+let activeFriendsTab = 'all';
+
 
 // --- Authentication ---
 function toggleAuth() {
@@ -75,6 +223,12 @@ function updateUI() {
     document.getElementById('display-name').innerText = state.user.name.toUpperCase();
     document.getElementById('display-info').innerText = `${state.user.dept} • ${state.user.batch} • ID: ${state.user.id}`;
     document.getElementById('nav-profile-pic').src = state.user.pic;
+
+    const sidebarPic = document.getElementById('sidebar-profile-pic');
+    if (sidebarPic) sidebarPic.src = state.user.pic;
+    
+    const friendsCountBadge = document.getElementById('friends-count-badge');
+    if (friendsCountBadge) friendsCountBadge.innerText = state.friends.length;
 
     // Profile view updates
     document.getElementById('profile-name').innerText = state.user.name;
@@ -123,6 +277,7 @@ function switchTab(tabId) {
         setTimeout(() => targetView.classList.remove('opacity-0'), 50);
         if (tabId === 'home') renderFeed();
         if (tabId === 'profile') renderUserPosts();
+        if (tabId === 'friends') renderFriendsView();
     }
 }
 
@@ -767,6 +922,83 @@ function handlePymkAdd(userId, btn) {
     btn.disabled = true;
     btn.classList.add('opacity-60', 'cursor-not-allowed');
     // Refresh after a short delay so friended users disappear from PYMK
-    setTimeout(() => renderPeopleYouMayKnow(), 1500);
+    setTimeout(() => {
+        renderPeopleYouMayKnow();
+        if (activeTab === 'friends') renderFriendsView();
+    }, 1500);
+}
+
+// ── Friends View ──────────────────────────────────────────────────────────
+
+function switchFriendsTab(tab) {
+    activeFriendsTab = tab;
+    
+    // Update tab styling
+    document.getElementById('friends-tab-all').className = tab === 'all' 
+        ? "px-4 py-2 bg-primary text-white rounded-full text-sm font-bold shadow-sm transition-all active:scale-95" 
+        : "px-4 py-2 bg-surface-container-high text-on-surface rounded-full text-sm font-bold hover:bg-surface-container-highest transition-all active:scale-95";
+        
+    document.getElementById('friends-tab-pymk').className = tab === 'pymk' 
+        ? "px-4 py-2 bg-primary text-white rounded-full text-sm font-bold shadow-sm transition-all active:scale-95" 
+        : "px-4 py-2 bg-surface-container-high text-on-surface rounded-full text-sm font-bold hover:bg-surface-container-highest transition-all active:scale-95";
+
+    // Toggle panels
+    if (tab === 'all') {
+        document.getElementById('friends-panel-all').classList.remove('hidden');
+        document.getElementById('friends-panel-pymk').classList.add('hidden');
+    } else {
+        document.getElementById('friends-panel-all').classList.add('hidden');
+        document.getElementById('friends-panel-pymk').classList.remove('hidden');
+    }
+    
+    renderFriendsView();
+}
+
+function renderFriendsView() {
+    if (activeFriendsTab === 'all') {
+        const friendsList = MOCK_USERS.filter(u => state.friends.includes(u.id));
+        const grid = document.getElementById('friends-grid');
+        const emptyState = document.getElementById('friends-empty');
+        
+        if (friendsList.length === 0) {
+            grid.innerHTML = '';
+            emptyState.classList.remove('hidden');
+        } else {
+            emptyState.classList.add('hidden');
+            grid.innerHTML = friendsList.map(u => `
+                <div class="friend-card border border-surface-container-highest flex flex-col group">
+                    <div class="h-16 bg-gradient-to-r from-orange-400 to-rose-400 relative">
+                        <img src="${u.pic}" class="w-16 h-16 rounded-full object-cover border-4 border-white dark:border-slate-900 absolute -bottom-8 left-1/2 -translate-x-1/2 cursor-pointer group-hover:scale-105 transition-transform" onclick="openPublicProfile('${u.id}')">
+                    </div>
+                    <div class="pt-10 pb-4 px-4 flex-1 flex flex-col items-center text-center">
+                        <h3 class="font-bold text-sm text-slate-800 dark:text-slate-100 cursor-pointer hover:underline truncate w-full" onclick="openPublicProfile('${u.id}')">${u.name}</h3>
+                        <p class="text-[11px] text-slate-500 mb-4">${u.role} · ${u.dept}</p>
+                        <div class="mt-auto w-full flex gap-2">
+                            <button onclick="openChat('${u.id}')" class="flex-1 bg-surface-container-high hover:bg-surface-container-highest text-on-surface py-1.5 rounded-lg text-xs font-bold transition-colors">Message</button>
+                            <button class="bg-surface-container-high hover:bg-red-100 hover:text-red-600 text-slate-500 w-8 flex items-center justify-center rounded-lg transition-colors"><span class="material-symbols-outlined text-[1rem]">person_remove</span></button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+    } else {
+        const recommendations = MOCK_USERS.filter(u => !state.friends.includes(u.id) && u.id !== state.user.id);
+        const grid = document.getElementById('pymk-grid');
+        
+        grid.innerHTML = recommendations.map(u => `
+            <div class="friend-card border border-surface-container-highest flex flex-col group">
+                <div class="h-16 bg-gradient-to-r from-slate-300 to-slate-400 dark:from-slate-700 dark:to-slate-800 relative">
+                    <img src="${u.pic}" class="w-16 h-16 rounded-full object-cover border-4 border-white dark:border-slate-900 absolute -bottom-8 left-1/2 -translate-x-1/2 cursor-pointer group-hover:scale-105 transition-transform" onclick="openPublicProfile('${u.id}')">
+                </div>
+                <div class="pt-10 pb-4 px-4 flex-1 flex flex-col items-center text-center">
+                    <h3 class="font-bold text-sm text-slate-800 dark:text-slate-100 cursor-pointer hover:underline truncate w-full" onclick="openPublicProfile('${u.id}')">${u.name}</h3>
+                    <p class="text-[11px] text-slate-500 mb-4">${u.dept} · Batch ${u.batch}</p>
+                    <div class="mt-auto w-full">
+                        <button onclick="handlePymkAdd('${u.id}', this)" class="w-full bg-primary hover:bg-primary/90 text-white py-1.5 rounded-lg text-xs font-bold transition-colors flex items-center justify-center gap-1"><span class="material-symbols-outlined text-[1rem]">person_add</span> Add Friend</button>
+                    </div>
+                </div>
+            </div>
+        `).join('');
+    }
 }
 
