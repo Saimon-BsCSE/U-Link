@@ -905,7 +905,7 @@ function renderPeopleYouMayKnow() {
             <div class="flex-1 min-w-0">
                 <p class="text-xs font-bold text-slate-800 dark:text-slate-200 truncate cursor-pointer hover:underline"
                     onclick="openPublicProfile('${u.id}')">${u.name}</p>
-                <p class="text-[10px] text-slate-500">${u.role} · ${u.dept}</p>
+                <p class="text-[10px] text-slate-500">${u.role === 'Student' ? 'Batch ' + u.batch + ' · ' + u.dept : u.role + ' · ' + u.dept}</p>
                 <button
                     onclick="handlePymkAdd('${u.id}', this)"
                     class="mt-1.5 px-3 py-0.5 bg-primary/10 hover:bg-primary/20 text-primary text-[11px] font-bold rounded-full transition-colors flex items-center gap-1">
@@ -972,7 +972,7 @@ function renderFriendsView() {
                     </div>
                     <div class="pt-10 pb-4 px-4 flex-1 flex flex-col items-center text-center">
                         <h3 class="font-bold text-sm text-slate-800 dark:text-slate-100 cursor-pointer hover:underline truncate w-full" onclick="openPublicProfile('${u.id}')">${u.name}</h3>
-                        <p class="text-[11px] text-slate-500 mb-4">${u.role} · ${u.dept}</p>
+                        <p class="text-[11px] text-slate-500 mb-4">${u.role === 'Student' ? u.role + ' · ' + u.dept + ' · Batch ' + u.batch : u.role + ' · ' + u.dept}</p>
                         <div class="mt-auto w-full flex gap-2">
                             <button onclick="openChat('${u.id}')" class="flex-1 bg-surface-container-high hover:bg-surface-container-highest text-on-surface py-1.5 rounded-lg text-xs font-bold transition-colors">Message</button>
                             <button class="bg-surface-container-high hover:bg-red-100 hover:text-red-600 text-slate-500 w-8 flex items-center justify-center rounded-lg transition-colors"><span class="material-symbols-outlined text-[1rem]">person_remove</span></button>
@@ -992,7 +992,7 @@ function renderFriendsView() {
                 </div>
                 <div class="pt-10 pb-4 px-4 flex-1 flex flex-col items-center text-center">
                     <h3 class="font-bold text-sm text-slate-800 dark:text-slate-100 cursor-pointer hover:underline truncate w-full" onclick="openPublicProfile('${u.id}')">${u.name}</h3>
-                    <p class="text-[11px] text-slate-500 mb-4">${u.dept} · Batch ${u.batch}</p>
+                    <p class="text-[11px] text-slate-500 mb-4">${u.role === 'Student' ? u.dept + ' · Batch ' + u.batch : u.role + ' · ' + u.dept}</p>
                     <div class="mt-auto w-full">
                         <button onclick="handlePymkAdd('${u.id}', this)" class="w-full bg-primary hover:bg-primary/90 text-white py-1.5 rounded-lg text-xs font-bold transition-colors flex items-center justify-center gap-1"><span class="material-symbols-outlined text-[1rem]">person_add</span> Add Friend</button>
                     </div>
@@ -1001,4 +1001,3 @@ function renderFriendsView() {
         `).join('');
     }
 }
-
