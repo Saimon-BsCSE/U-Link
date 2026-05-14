@@ -301,15 +301,19 @@
             class="hidden lg:flex flex-col p-4 gap-2 h-screen w-72 fixed left-0 top-0 bg-slate-50 dark:bg-slate-950 pt-20 overflow-y-auto hide-scrollbar">
             <!-- User Profile Card in Sidebar -->
             <div class="mb-4 px-2">
-                <button onclick="switchTab('profile')" class="flex items-center gap-3 w-full p-2 rounded-2xl hover:bg-orange-50 dark:hover:bg-orange-900/10 transition-all group">
+                <button onclick="switchTab('profile')"
+                    class="flex items-center gap-3 w-full p-2 rounded-2xl hover:bg-orange-50 dark:hover:bg-orange-900/10 transition-all group">
                     <div class="relative flex-shrink-0">
                         <img id="sidebar-profile-pic" src="https://ui-avatars.com/api/?name=User&background=random"
                             class="w-12 h-12 rounded-full object-cover border-2 border-orange-200 shadow-sm group-hover:border-orange-400 transition-all">
-                        <span class="absolute bottom-0 right-0 w-3.5 h-3.5 bg-green-500 rounded-full border-2 border-slate-50"></span>
+                        <span
+                            class="absolute bottom-0 right-0 w-3.5 h-3.5 bg-green-500 rounded-full border-2 border-slate-50"></span>
                     </div>
                     <div class="text-left min-w-0">
-                        <h2 class="text-sm font-bold text-slate-800 dark:text-slate-100 truncate" id="display-name">UIU QUAD</h2>
-                        <p class="text-[11px] text-slate-500 font-medium truncate" id="display-info">United International University</p>
+                        <h2 class="text-sm font-bold text-slate-800 dark:text-slate-100 truncate" id="display-name">UIU
+                            QUAD</h2>
+                        <p class="text-[11px] text-slate-500 font-medium truncate" id="display-info">United
+                            International University</p>
                     </div>
                 </button>
             </div>
@@ -333,7 +337,8 @@
                     onclick="switchTab('friends')" data-tab="friends">
                     <span class="material-symbols-outlined" data-icon="group">group</span>
                     <span class="font-medium">Friends</span>
-                    <span id="friends-count-badge" class="ml-auto text-[10px] font-bold bg-orange-100 text-orange-700 rounded-full px-2 py-0.5">0</span>
+                    <span id="friends-count-badge"
+                        class="ml-auto text-[10px] font-bold bg-orange-100 text-orange-700 rounded-full px-2 py-0.5">0</span>
                 </a>
                 <a class="side-nav-link flex items-center gap-3 px-4 py-3 text-slate-500 dark:text-slate-400 hover:text-orange-600 hover:bg-orange-50 dark:hover:bg-orange-900/10 rounded-full transition-all cursor-pointer"
                     onclick="switchTab('communities')" data-tab="communities">
@@ -593,6 +598,113 @@
                 </div>
             </div>
 
+            <!-- COMMUNITY PROFILE VIEW -->
+            <div id="community-profile-view" class="view-section hidden opacity-0 transition-opacity duration-300">
+                <div class="max-w-4xl mx-auto">
+                    <!-- Profile Header -->
+                    <button onclick="switchTab('communities')"
+                        class="mb-4 flex items-center gap-2 text-primary font-bold hover:underline transition-all">
+                        <span class="material-symbols-outlined text-sm">arrow_back</span> Back to Communities
+                    </button>
+
+                    <div class="bg-surface-container-lowest rounded-2xl overflow-hidden shadow-sm mb-6 relative">
+                        <div id="community-profile-cover"
+                            class="h-48 bg-slate-300 relative px-8 pb-4 flex items-end justify-end bg-cover bg-center">
+                            <span
+                                class="bg-black/30 backdrop-blur-sm text-white text-xs px-3 py-1 rounded-lg shadow-sm z-10 relative">Official
+                                Community</span>
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                        </div>
+                        <div class="px-8 pb-8 relative">
+                            <div class="flex justify-between items-end -mt-16 mb-4">
+                                <div id="community-profile-icon"
+                                    class="w-28 h-28 rounded-3xl border-4 border-surface-container-lowest bg-white shadow-lg relative z-10 overflow-hidden">
+                                    <img id="community-profile-pic" src="" class="w-full h-full object-cover">
+                                </div>
+
+                                <!-- Actions -->
+                                <div id="community-profile-actions" class="flex gap-3">
+                                    <button id="community-join-btn"
+                                        class="px-8 py-2 rounded-xl text-sm font-bold bg-primary text-white hover:bg-primary/90 transition-all shadow-sm">
+                                        Join
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Community Info -->
+                            <div id="community-profile-display">
+                                <h1 id="community-profile-name" class="text-3xl font-black mb-1">Community Name</h1>
+                                <div class="flex gap-6 text-sm mt-3">
+                                    <span class="font-bold"><span id="community-profile-members">0</span> <span
+                                            class="text-on-surface-variant font-normal">Members</span></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                        <div class="lg:col-span-8 flex flex-col gap-6">
+
+                            <!-- Post Feed -->
+                            <div class="flex items-center gap-2 mb-2">
+                                <span class="material-symbols-outlined text-primary text-xl">forum</span>
+                                <h3 class="font-bold text-lg text-on-surface">Community Feed</h3>
+                            </div>
+
+                            <!-- Locked Warning -->
+                            <div id="community-locked-warning"
+                                class="hidden bg-red-50 dark:bg-red-900/10 border border-red-200 dark:border-red-900/30 text-red-600 dark:text-red-400 p-4 rounded-xl flex items-center justify-center gap-2 text-sm font-bold">
+                                <span class="material-symbols-outlined">lock</span> You must join to interact with this
+                                community's feed.
+                            </div>
+
+                            <!-- Generate Post Input -->
+                            <div class="bg-surface-container-lowest rounded-2xl p-4 shadow-sm border border-slate-100 mb-4">
+                                <div class="flex gap-4">
+                                    <img src="" id="community-nav-pic" class="w-10 h-10 rounded-full border border-slate-200 object-cover bg-white pointer-events-none">
+                                    <div class="flex-1">
+                                        <textarea id="community-post-input" placeholder="Post a discussion to the community..." class="w-full bg-surface-container-high border-none rounded-xl px-4 py-3 text-sm outline-none focus:ring-2 focus:ring-primary/20 transition-all font-medium resize-none" onkeypress="if(event.key === 'Enter') submitCommunityPost()" disabled></textarea>
+                                        <!-- Image Preview -->
+                                        <div id="image-preview-container-community" class="hidden relative mt-2 rounded-xl overflow-hidden shadow-sm">
+                                            <img id="image-preview-community" src="" class="w-full max-h-64 object-cover">
+                                            <button onclick="removeImage('community')" class="absolute top-2 right-2 p-1 bg-black/50 text-white rounded-full hover:bg-black/70 backdrop-blur-sm">
+                                                <span class="material-symbols-outlined text-sm">close</span>
+                                            </button>
+                                        </div>
+                                        <div class="flex justify-between items-center mt-3 pt-3 border-t border-slate-100">
+                                            <div class="flex gap-2">
+                                                <input type="file" id="post-image-input-community" accept="image/*" class="hidden" onchange="previewImage(event, 'community')" disabled>
+                                                <button id="community-post-img-btn" onclick="document.getElementById('post-image-input-community').click()" class="p-2 text-primary hover:bg-primary/10 rounded-full transition-colors flex items-center justify-center disabled:opacity-50" disabled>
+                                                    <span class="material-symbols-outlined text-lg">image</span>
+                                                </button>
+                                            </div>
+                                            <button id="community-post-btn" onclick="submitCommunityPost()" class="bg-primary hover:bg-primary/90 text-white font-bold py-1.5 px-6 rounded-full text-sm shadow-md active:scale-95 transition-transform disabled:opacity-50" disabled>Post</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="community-feed-container" class="flex flex-col gap-6 mt-2">
+                                <!-- Feed goes here -->
+                            </div>
+                        </div>
+
+                        <div
+                            class="lg:col-span-4 border border-surface-container-highest rounded-xl p-6 bg-surface-container-lowest h-fit">
+                            <h3 class="font-bold text-lg mb-4">About</h3>
+                            <p class="text-sm text-on-surface-variant leading-relaxed mb-4">The official hub for all
+                                discussions, events, and networking. Keep conversations respectful.</p>
+                            <h3 class="font-bold text-sm text-slate-800 mb-3 mt-6">Rules</h3>
+                            <ul class="text-[11px] text-slate-600 space-y-2 list-disc pl-4">
+                                <li>No spam or self-promotion</li>
+                                <li>Be respectful to members & admins</li>
+                                <li>Follow UIU Code of Conduct</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <!-- EXPLORE VIEW -->
             <div id="explore-view" class="view-section hidden opacity-0 transition-opacity duration-300">
                 <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 mb-10">
@@ -687,9 +799,11 @@
                         <h1 class="text-2xl font-black tracking-tight">Friends</h1>
                         <div class="flex gap-2">
                             <button id="friends-tab-all" onclick="switchFriendsTab('all')"
-                                class="px-4 py-2 bg-primary text-white rounded-full text-sm font-bold shadow-sm transition-all active:scale-95">All Friends</button>
+                                class="px-4 py-2 bg-primary text-white rounded-full text-sm font-bold shadow-sm transition-all active:scale-95">All
+                                Friends</button>
                             <button id="friends-tab-pymk" onclick="switchFriendsTab('pymk')"
-                                class="px-4 py-2 bg-surface-container-high text-on-surface rounded-full text-sm font-bold hover:bg-surface-container-highest transition-all active:scale-95">People You May Know</button>
+                                class="px-4 py-2 bg-surface-container-high text-on-surface rounded-full text-sm font-bold hover:bg-surface-container-highest transition-all active:scale-95">People
+                                You May Know</button>
                         </div>
                     </div>
 
@@ -701,9 +815,11 @@
                         <div id="friends-empty" class="hidden text-center py-16">
                             <span class="material-symbols-outlined text-6xl text-slate-300 block mb-4">group_off</span>
                             <h3 class="text-lg font-bold text-slate-500">No friends yet</h3>
-                            <p class="text-sm text-slate-400 mt-2">Accept friend requests or connect with your classmates!</p>
+                            <p class="text-sm text-slate-400 mt-2">Accept friend requests or connect with your
+                                classmates!</p>
                             <button onclick="switchFriendsTab('pymk')"
-                                class="mt-4 px-6 py-2 bg-primary text-white rounded-full font-bold text-sm hover:bg-primary/90 transition-colors">Find People</button>
+                                class="mt-4 px-6 py-2 bg-primary text-white rounded-full font-bold text-sm hover:bg-primary/90 transition-colors">Find
+                                People</button>
                         </div>
                     </div>
 
@@ -724,125 +840,8 @@
                             <h2 class="text-xl font-extrabold tracking-tight">Trending Communities</h2>
                             <span class="material-symbols-outlined text-on-surface-variant/40">info</span>
                         </div>
-                        <div class="flex flex-col gap-4">
-                            <div
-                                class="bg-surface-container-lowest p-4 rounded-xl flex items-center gap-4 group cursor-pointer hover:bg-surface-container-low transition-colors shadow-sm">
-                                <div
-                                    class="w-12 h-12 bg-slate-100 rounded-xl overflow-hidden flex-shrink-0 flex items-center justify-center">
-                                    <span class="material-symbols-outlined text-primary">computer</span>
-                                </div>
-                                <div class="flex-1">
-                                    <h4 class="font-bold text-sm">CSE Society</h4>
-                                    <p class="text-xs text-on-surface-variant">2.4k Members</p>
-                                </div>
-                                <button
-                                    class="px-4 py-1.5 rounded-full text-xs font-bold border border-primary text-primary hover:bg-primary hover:text-white transition-all shadow-sm">Join</button>
-                            </div>
-                            <div
-                                class="bg-surface-container-lowest p-4 rounded-xl flex items-center gap-4 group cursor-pointer hover:bg-surface-container-low transition-colors shadow-sm">
-                                <div
-                                    class="w-12 h-12 bg-slate-100 rounded-xl overflow-hidden flex-shrink-0 flex items-center justify-center">
-                                    <span class="material-symbols-outlined text-primary">photo_camera</span>
-                                </div>
-                                <div class="flex-1">
-                                    <h4 class="font-bold text-sm">UIU Photography Club</h4>
-                                    <p class="text-xs text-on-surface-variant">1.8k Members</p>
-                                </div>
-                                <button
-                                    class="px-4 py-1.5 rounded-full text-xs font-bold bg-primary text-white transition-all shadow-sm">Joined</button>
-                            </div>
-                            <!-- Added Communities -->
-                            <div
-                                class="bg-surface-container-lowest p-4 rounded-xl flex items-center gap-4 group cursor-pointer hover:bg-surface-container-low transition-colors shadow-sm">
-                                <div
-                                    class="w-12 h-12 bg-slate-100 rounded-xl overflow-hidden flex-shrink-0 flex items-center justify-center">
-                                    <span class="material-symbols-outlined text-primary">bolt</span>
-                                </div>
-                                <div class="flex-1">
-                                    <h4 class="font-bold text-sm">EEE Bash</h4>
-                                    <p class="text-xs text-on-surface-variant">2.1k Members</p>
-                                </div>
-                                <button
-                                    class="px-4 py-1.5 rounded-full text-xs font-bold border border-primary text-primary hover:bg-primary hover:text-white transition-all shadow-sm">Join</button>
-                            </div>
-                            <div
-                                class="bg-surface-container-lowest p-4 rounded-xl flex items-center gap-4 group cursor-pointer hover:bg-surface-container-low transition-colors shadow-sm">
-                                <div
-                                    class="w-12 h-12 bg-slate-100 rounded-xl overflow-hidden flex-shrink-0 flex items-center justify-center">
-                                    <span class="material-symbols-outlined text-primary">rocket_launch</span>
-                                </div>
-                                <div class="flex-1">
-                                    <h4 class="font-bold text-sm">UIU Mars Rover Team</h4>
-                                    <p class="text-xs text-on-surface-variant">340 Members</p>
-                                </div>
-                                <button
-                                    class="px-4 py-1.5 rounded-full text-xs font-bold border border-primary text-primary hover:bg-primary hover:text-white transition-all shadow-sm">Join</button>
-                            </div>
-                            <div
-                                class="bg-surface-container-lowest p-4 rounded-xl flex items-center gap-4 group cursor-pointer hover:bg-surface-container-low transition-colors shadow-sm">
-                                <div
-                                    class="w-12 h-12 bg-slate-100 rounded-xl overflow-hidden flex-shrink-0 flex items-center justify-center">
-                                    <span class="material-symbols-outlined text-primary">theater_comedy</span>
-                                </div>
-                                <div class="flex-1">
-                                    <h4 class="font-bold text-sm">UIU Cultural Club</h4>
-                                    <p class="text-xs text-on-surface-variant">4.2k Members</p>
-                                </div>
-                                <button
-                                    class="px-4 py-1.5 rounded-full text-xs font-bold border border-primary text-primary hover:bg-primary hover:text-white transition-all shadow-sm">Join</button>
-                            </div>
-                            <div
-                                class="bg-surface-container-lowest p-4 rounded-xl flex items-center gap-4 group cursor-pointer hover:bg-surface-container-low transition-colors shadow-sm">
-                                <div
-                                    class="w-12 h-12 bg-slate-100 rounded-xl overflow-hidden flex-shrink-0 flex items-center justify-center">
-                                    <span class="material-symbols-outlined text-primary">apps</span>
-                                </div>
-                                <div class="flex-1">
-                                    <h4 class="font-bold text-sm">UIU APP Forum</h4>
-                                    <p class="text-xs text-on-surface-variant">1.5k Members</p>
-                                </div>
-                                <button
-                                    class="px-4 py-1.5 rounded-full text-xs font-bold border border-primary text-primary hover:bg-primary hover:text-white transition-all shadow-sm">Join</button>
-                            </div>
-                            <div
-                                class="bg-surface-container-lowest p-4 rounded-xl flex items-center gap-4 group cursor-pointer hover:bg-surface-container-low transition-colors shadow-sm">
-                                <div
-                                    class="w-12 h-12 bg-slate-100 rounded-xl overflow-hidden flex-shrink-0 flex items-center justify-center">
-                                    <span class="material-symbols-outlined text-primary">psychology</span>
-                                </div>
-                                <div class="flex-1">
-                                    <h4 class="font-bold text-sm">UIU AI Explorers</h4>
-                                    <p class="text-xs text-on-surface-variant">890 Members</p>
-                                </div>
-                                <button
-                                    class="px-4 py-1.5 rounded-full text-xs font-bold border border-primary text-primary hover:bg-primary hover:text-white transition-all shadow-sm">Join</button>
-                            </div>
-                            <div
-                                class="bg-surface-container-lowest p-4 rounded-xl flex items-center gap-4 group cursor-pointer hover:bg-surface-container-low transition-colors shadow-sm">
-                                <div
-                                    class="w-12 h-12 bg-slate-100 rounded-xl overflow-hidden flex-shrink-0 flex items-center justify-center">
-                                    <span class="material-symbols-outlined text-primary">record_voice_over</span>
-                                </div>
-                                <div class="flex-1">
-                                    <h4 class="font-bold text-sm">UIU English Language Forum</h4>
-                                    <p class="text-xs text-on-surface-variant">1.1k Members</p>
-                                </div>
-                                <button
-                                    class="px-4 py-1.5 rounded-full text-xs font-bold border border-primary text-primary hover:bg-primary hover:text-white transition-all shadow-sm">Join</button>
-                            </div>
-                            <div
-                                class="bg-surface-container-lowest p-4 rounded-xl flex items-center gap-4 group cursor-pointer hover:bg-surface-container-low transition-colors shadow-sm">
-                                <div
-                                    class="w-12 h-12 bg-slate-100 rounded-xl overflow-hidden flex-shrink-0 flex items-center justify-center">
-                                    <span class="material-symbols-outlined text-primary">sports_esports</span>
-                                </div>
-                                <div class="flex-1">
-                                    <h4 class="font-bold text-sm">UIU Efootball Community</h4>
-                                    <p class="text-xs text-on-surface-variant">1.9k Members</p>
-                                </div>
-                                <button
-                                    class="px-4 py-1.5 rounded-full text-xs font-bold border border-primary text-primary hover:bg-primary hover:text-white transition-all shadow-sm">Join</button>
-                            </div>
+                        <div id="communities-list-container" class="flex flex-col gap-4">
+                            <!-- Injected by renderCommunitiesList() -->
                         </div>
                     </div>
                     <div class="xl:col-span-8">
@@ -1071,13 +1070,16 @@
                 <div class="flex items-center justify-between mb-3">
                     <h3 class="text-sm font-bold text-slate-700 dark:text-slate-200">Contacts</h3>
                     <div class="flex gap-1">
-                        <button class="p-1.5 rounded-full hover:bg-slate-200 dark:hover:bg-slate-800 transition-colors" title="Video call">
+                        <button class="p-1.5 rounded-full hover:bg-slate-200 dark:hover:bg-slate-800 transition-colors"
+                            title="Video call">
                             <span class="material-symbols-outlined text-slate-500 text-lg">videocam</span>
                         </button>
-                        <button class="p-1.5 rounded-full hover:bg-slate-200 dark:hover:bg-slate-800 transition-colors" title="Search contacts">
+                        <button class="p-1.5 rounded-full hover:bg-slate-200 dark:hover:bg-slate-800 transition-colors"
+                            title="Search contacts">
                             <span class="material-symbols-outlined text-slate-500 text-lg">search</span>
                         </button>
-                        <button class="p-1.5 rounded-full hover:bg-slate-200 dark:hover:bg-slate-800 transition-colors" title="More">
+                        <button class="p-1.5 rounded-full hover:bg-slate-200 dark:hover:bg-slate-800 transition-colors"
+                            title="More">
                             <span class="material-symbols-outlined text-slate-500 text-lg">more_horiz</span>
                         </button>
                     </div>
@@ -1091,7 +1093,8 @@
             <div class="right-sidebar-card">
                 <div class="flex items-center justify-between mb-3">
                     <h3 class="text-sm font-bold text-slate-700 dark:text-slate-200">People You May Know</h3>
-                    <button class="text-xs text-primary font-semibold hover:underline" onclick="switchTab('friends'); setTimeout(() => switchFriendsTab('pymk'), 50);">See All</button>
+                    <button class="text-xs text-primary font-semibold hover:underline"
+                        onclick="switchTab('friends'); setTimeout(() => switchFriendsTab('pymk'), 50);">See All</button>
                 </div>
                 <div id="people-you-may-know" class="flex flex-col gap-3">
                     <!-- Populated by JS -->
@@ -1102,39 +1105,11 @@
             <div class="right-sidebar-card">
                 <div class="flex items-center justify-between mb-3">
                     <h3 class="text-sm font-bold text-slate-700 dark:text-slate-200">Upcoming Events</h3>
-                    <button class="text-xs text-primary font-semibold hover:underline" onclick="switchTab('events')">See All</button>
+                    <button class="text-xs text-primary font-semibold hover:underline" onclick="switchTab('events')">See
+                        All</button>
                 </div>
-                <div class="flex flex-col gap-3">
-                    <div class="right-event-card group" onclick="">
-                        <div class="right-event-date">
-                            <span class="text-[10px] font-bold uppercase text-primary">May</span>
-                            <span class="text-xl font-black text-primary leading-none">18</span>
-                        </div>
-                        <div class="flex-1">
-                            <p class="text-xs font-bold text-slate-800 dark:text-slate-200 group-hover:text-primary transition-colors">CSE Hackathon 2025</p>
-                            <p class="text-[11px] text-slate-500">UIU Auditorium • 9:00 AM</p>
-                        </div>
-                    </div>
-                    <div class="right-event-card group">
-                        <div class="right-event-date">
-                            <span class="text-[10px] font-bold uppercase text-orange-500">May</span>
-                            <span class="text-xl font-black text-orange-500 leading-none">22</span>
-                        </div>
-                        <div class="flex-1">
-                            <p class="text-xs font-bold text-slate-800 dark:text-slate-200 group-hover:text-primary transition-colors">Photography Club Shoot</p>
-                            <p class="text-[11px] text-slate-500">Campus Garden • 3:00 PM</p>
-                        </div>
-                    </div>
-                    <div class="right-event-card group">
-                        <div class="right-event-date">
-                            <span class="text-[10px] font-bold uppercase text-blue-500">Jun</span>
-                            <span class="text-xl font-black text-blue-500 leading-none">3</span>
-                        </div>
-                        <div class="flex-1">
-                            <p class="text-xs font-bold text-slate-800 dark:text-slate-200 group-hover:text-primary transition-colors">UIU Cultural Fest 2025</p>
-                            <p class="text-[11px] text-slate-500">Main Stage • 5:00 PM</p>
-                        </div>
-                    </div>
+                <div id="right-sidebar-events-list" class="flex flex-col gap-3">
+                    <!-- Populated by JS -->
                 </div>
             </div>
 
@@ -1182,9 +1157,12 @@
                     <span class="material-symbols-outlined text-pink-500 text-xl icon-filled">cake</span>
                     <h3 class="text-sm font-bold text-slate-700 dark:text-slate-200">Birthdays</h3>
                 </div>
-                <div class="flex items-center gap-3 p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-xl transition-colors cursor-pointer">
-                    <img src="https://ui-avatars.com/api/?name=Nusrat+Jahan&background=random" class="w-9 h-9 rounded-full object-cover border-2 border-pink-300">
-                    <p class="text-xs text-slate-700 dark:text-slate-300 leading-relaxed"><span class="font-bold">Nusrat Jahan</span> and <span class="font-bold">2 others</span> have birthdays today 🎂</p>
+                <div
+                    class="flex items-center gap-3 p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-xl transition-colors cursor-pointer">
+                    <img src="https://ui-avatars.com/api/?name=Nusrat+Jahan&background=random"
+                        class="w-9 h-9 rounded-full object-cover border-2 border-pink-300">
+                    <p class="text-xs text-slate-700 dark:text-slate-300 leading-relaxed"><span class="font-bold">Nusrat
+                            Jahan</span> and <span class="font-bold">2 others</span> have birthdays today 🎂</p>
                 </div>
             </div>
 
@@ -1194,24 +1172,34 @@
                     <h3 class="text-sm font-bold text-slate-700 dark:text-slate-200">Sponsored</h3>
                 </div>
                 <div class="flex flex-col gap-3">
-                    <div class="flex gap-3 items-start hover:bg-slate-100 dark:hover:bg-slate-800 p-2 rounded-xl transition-colors cursor-pointer group">
-                        <div class="w-20 h-16 rounded-xl bg-gradient-to-br from-orange-400 to-rose-500 flex items-center justify-center flex-shrink-0 overflow-hidden shadow-sm">
+                    <div
+                        class="flex gap-3 items-start hover:bg-slate-100 dark:hover:bg-slate-800 p-2 rounded-xl transition-colors cursor-pointer group">
+                        <div
+                            class="w-20 h-16 rounded-xl bg-gradient-to-br from-orange-400 to-rose-500 flex items-center justify-center flex-shrink-0 overflow-hidden shadow-sm">
                             <span class="material-symbols-outlined text-white text-3xl">school</span>
                         </div>
                         <div>
-                            <p class="text-xs font-bold text-slate-800 dark:text-slate-200 group-hover:text-primary transition-colors">UIU Summer Courses 2025</p>
+                            <p
+                                class="text-xs font-bold text-slate-800 dark:text-slate-200 group-hover:text-primary transition-colors">
+                                UIU Summer Courses 2025</p>
                             <p class="text-[11px] text-slate-500 mt-0.5">uiu.ac.bd/summer</p>
-                            <p class="text-[11px] text-slate-400 mt-1">Enroll now for the best summer programs at United International University.</p>
+                            <p class="text-[11px] text-slate-400 mt-1">Enroll now for the best summer programs at United
+                                International University.</p>
                         </div>
                     </div>
-                    <div class="flex gap-3 items-start hover:bg-slate-100 dark:hover:bg-slate-800 p-2 rounded-xl transition-colors cursor-pointer group">
-                        <div class="w-20 h-16 rounded-xl bg-gradient-to-br from-blue-400 to-indigo-600 flex items-center justify-center flex-shrink-0 overflow-hidden shadow-sm">
+                    <div
+                        class="flex gap-3 items-start hover:bg-slate-100 dark:hover:bg-slate-800 p-2 rounded-xl transition-colors cursor-pointer group">
+                        <div
+                            class="w-20 h-16 rounded-xl bg-gradient-to-br from-blue-400 to-indigo-600 flex items-center justify-center flex-shrink-0 overflow-hidden shadow-sm">
                             <span class="material-symbols-outlined text-white text-3xl">devices</span>
                         </div>
                         <div>
-                            <p class="text-xs font-bold text-slate-800 dark:text-slate-200 group-hover:text-primary transition-colors">TechFest BD 2025</p>
+                            <p
+                                class="text-xs font-bold text-slate-800 dark:text-slate-200 group-hover:text-primary transition-colors">
+                                TechFest BD 2025</p>
                             <p class="text-[11px] text-slate-500 mt-0.5">techfest.bd</p>
-                            <p class="text-[11px] text-slate-400 mt-1">Bangladesh's biggest tech festival. Register your team today!</p>
+                            <p class="text-[11px] text-slate-400 mt-1">Bangladesh's biggest tech festival. Register your
+                                team today!</p>
                         </div>
                     </div>
                 </div>
@@ -1243,42 +1231,51 @@
     </div>
     <!-- Application Script -->
     <!-- Event Details Modal -->
-    <div id="event-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden z-[300] flex items-center justify-center opacity-0 transition-opacity duration-300 px-4">
-        <div class="bg-surface-container-lowest w-full max-w-2xl rounded-2xl shadow-2xl overflow-hidden transform scale-95 transition-transform duration-300" id="event-modal-content" onclick="event.stopPropagation()">
+    <div id="event-modal"
+        class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden z-[300] flex items-center justify-center opacity-0 transition-opacity duration-300 px-4">
+        <div class="bg-surface-container-lowest w-full max-w-2xl rounded-2xl shadow-2xl overflow-hidden transform scale-95 transition-transform duration-300"
+            id="event-modal-content" onclick="event.stopPropagation()">
             <!-- Header Image -->
             <div class="h-64 sm:h-80 w-full relative">
                 <img id="event-modal-img" src="" class="w-full h-full object-cover">
-                <div class="absolute top-4 right-4 bg-white/90 backdrop-blur-md px-3 py-1.5 rounded-lg text-center shadow-lg">
+                <div
+                    class="absolute top-4 right-4 bg-white/90 backdrop-blur-md px-3 py-1.5 rounded-lg text-center shadow-lg">
                     <div id="event-modal-day" class="text-primary font-black text-xl leading-none"></div>
-                    <div id="event-modal-month" class="text-[11px] font-bold uppercase tracking-widest text-secondary mt-1"></div>
+                    <div id="event-modal-month"
+                        class="text-[11px] font-bold uppercase tracking-widest text-secondary mt-1"></div>
                 </div>
                 <!-- Close Button -->
-                <button onclick="closeEventModal()" class="absolute top-4 left-4 bg-black/50 hover:bg-black/70 text-white rounded-full p-2 backdrop-blur-sm transition-colors">
+                <button onclick="closeEventModal()"
+                    class="absolute top-4 left-4 bg-black/50 hover:bg-black/70 text-white rounded-full p-2 backdrop-blur-sm transition-colors">
                     <span class="material-symbols-outlined">close</span>
                 </button>
             </div>
-            
+
             <div class="p-6 sm:p-8 flex flex-col gap-6">
                 <!-- Title & Location -->
                 <div>
-                    <h2 id="event-modal-title" class="text-2xl sm:text-3xl font-black tracking-tight text-slate-800 dark:text-slate-100 mb-3"></h2>
+                    <h2 id="event-modal-title"
+                        class="text-2xl sm:text-3xl font-black tracking-tight text-slate-800 dark:text-slate-100 mb-3">
+                    </h2>
                     <div class="flex items-center gap-2 text-primary font-medium">
                         <span class="material-symbols-outlined text-[18px]">location_on</span>
                         <span id="event-modal-location"></span>
                     </div>
                 </div>
-                
+
                 <!-- Description -->
                 <div class="bg-surface-container-highest/50 p-4 rounded-xl">
                     <p id="event-modal-description" class="text-slate-600 dark:text-slate-300 leading-relaxed"></p>
                 </div>
-                
+
                 <!-- Interaction Buttons -->
                 <div class="flex gap-4 pt-4 border-t border-surface-container-highest">
-                    <button id="btn-interested" onclick="toggleEventInterest(true)" class="flex-1 py-3 bg-primary/10 hover:bg-primary text-primary hover:text-white font-bold rounded-xl transition-all flex items-center justify-center gap-2">
+                    <button id="btn-interested" onclick="toggleEventInterest(true)"
+                        class="flex-1 py-3 bg-primary/10 hover:bg-primary text-primary hover:text-white font-bold rounded-xl transition-all flex items-center justify-center gap-2">
                         <span class="material-symbols-outlined">star</span> Interested
                     </button>
-                    <button id="btn-not-interested" onclick="toggleEventInterest(false)" class="flex-1 py-3 bg-surface-container-high hover:bg-red-100 text-slate-600 hover:text-red-600 font-bold rounded-xl transition-all flex items-center justify-center gap-2">
+                    <button id="btn-not-interested" onclick="toggleEventInterest(false)"
+                        class="flex-1 py-3 bg-surface-container-high hover:bg-red-100 text-slate-600 hover:text-red-600 font-bold rounded-xl transition-all flex items-center justify-center gap-2">
                         <span class="material-symbols-outlined">cancel</span> Not Interested
                     </button>
                 </div>
