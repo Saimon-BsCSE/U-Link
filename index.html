@@ -241,7 +241,7 @@
                 <button onclick="switchTab('home')"
                     class="flex items-center focus:outline-none hover:opacity-90 active:scale-95 transition-all"
                     title="Go to Home" id="nav-logo-btn">
-                    <img src="Asserts/logo.png" alt="U-Link" class="h-10 w-auto object-contain logo-nav">
+                    <img src="Asserts/logo.png" alt="U-Link" class="h-14 w-auto object-contain logo-nav-lg">
                 </button>
                 <div class="hidden md:flex items-center gap-6" id="top-nav-links">
                     <a class="nav-link text-orange-600 dark:text-orange-500 font-bold border-b-2 border-orange-600 px-3 py-1 cursor-pointer"
@@ -298,21 +298,20 @@
         </header>
         <!-- SideNavBar -->
         <aside
-            class="hidden lg:flex flex-col p-4 gap-2 h-screen w-72 fixed left-0 top-0 bg-slate-50 dark:bg-slate-950 pt-20">
-            <div class="mb-6 px-4">
-                <div class="flex items-center gap-3 mb-2">
-                    <button onclick="switchTab('home')"
-                        class="focus:outline-none hover:opacity-90 active:scale-95 transition-all" title="Go to Home"
-                        id="sidebar-logo-btn">
-                        <img src="Asserts/logo.png" alt="U-Link Logo" class="h-12 w-auto object-contain logo-sidebar">
-                    </button>
-                    <div id="user-branding">
-                        <h2 class="text-xl font-bold tracking-tighter text-orange-600 font-['Inter']" id="display-name">
-                            UIU QUAD</h2>
-                        <p class="text-xs text-slate-500 font-medium" id="display-info">United International
-                            University</p>
+            class="hidden lg:flex flex-col p-4 gap-2 h-screen w-72 fixed left-0 top-0 bg-slate-50 dark:bg-slate-950 pt-20 overflow-y-auto hide-scrollbar">
+            <!-- User Profile Card in Sidebar -->
+            <div class="mb-4 px-2">
+                <button onclick="switchTab('profile')" class="flex items-center gap-3 w-full p-2 rounded-2xl hover:bg-orange-50 dark:hover:bg-orange-900/10 transition-all group">
+                    <div class="relative flex-shrink-0">
+                        <img id="sidebar-profile-pic" src="https://ui-avatars.com/api/?name=User&background=random"
+                            class="w-12 h-12 rounded-full object-cover border-2 border-orange-200 shadow-sm group-hover:border-orange-400 transition-all">
+                        <span class="absolute bottom-0 right-0 w-3.5 h-3.5 bg-green-500 rounded-full border-2 border-slate-50"></span>
                     </div>
-                </div>
+                    <div class="text-left min-w-0">
+                        <h2 class="text-sm font-bold text-slate-800 dark:text-slate-100 truncate" id="display-name">UIU QUAD</h2>
+                        <p class="text-[11px] text-slate-500 font-medium truncate" id="display-info">United International University</p>
+                    </div>
+                </button>
             </div>
             <nav class="flex-1 flex flex-col gap-1" id="side-nav-links">
                 <a class="side-nav-link flex items-center gap-3 px-4 py-3 bg-orange-50 dark:bg-orange-900/20 text-orange-700 dark:text-orange-400 rounded-full font-bold cursor-pointer"
@@ -329,6 +328,12 @@
                     onclick="switchTab('profile')" data-tab="profile">
                     <span class="material-symbols-outlined" data-icon="person">person</span>
                     <span class="font-medium">Profile</span>
+                </a>
+                <a class="side-nav-link flex items-center gap-3 px-4 py-3 text-slate-500 dark:text-slate-400 hover:text-orange-600 hover:bg-orange-50 dark:hover:bg-orange-900/10 rounded-full transition-all cursor-pointer"
+                    onclick="switchTab('friends')" data-tab="friends">
+                    <span class="material-symbols-outlined" data-icon="group">group</span>
+                    <span class="font-medium">Friends</span>
+                    <span id="friends-count-badge" class="ml-auto text-[10px] font-bold bg-orange-100 text-orange-700 rounded-full px-2 py-0.5">0</span>
                 </a>
                 <a class="side-nav-link flex items-center gap-3 px-4 py-3 text-slate-500 dark:text-slate-400 hover:text-orange-600 hover:bg-orange-50 dark:hover:bg-orange-900/10 rounded-full transition-all cursor-pointer"
                     onclick="switchTab('communities')" data-tab="communities">
@@ -675,6 +680,42 @@
                 </div>
             </div>
 
+            <!-- FRIENDS VIEW -->
+            <div id="friends-view" class="view-section hidden opacity-0 transition-opacity duration-300">
+                <div class="max-w-4xl mx-auto">
+                    <div class="flex items-center justify-between mb-6">
+                        <h1 class="text-2xl font-black tracking-tight">Friends</h1>
+                        <div class="flex gap-2">
+                            <button id="friends-tab-all" onclick="switchFriendsTab('all')"
+                                class="px-4 py-2 bg-primary text-white rounded-full text-sm font-bold shadow-sm transition-all active:scale-95">All Friends</button>
+                            <button id="friends-tab-pymk" onclick="switchFriendsTab('pymk')"
+                                class="px-4 py-2 bg-surface-container-high text-on-surface rounded-full text-sm font-bold hover:bg-surface-container-highest transition-all active:scale-95">People You May Know</button>
+                        </div>
+                    </div>
+
+                    <!-- All Friends Panel -->
+                    <div id="friends-panel-all">
+                        <div id="friends-grid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                            <!-- populated by JS -->
+                        </div>
+                        <div id="friends-empty" class="hidden text-center py-16">
+                            <span class="material-symbols-outlined text-6xl text-slate-300 block mb-4">group_off</span>
+                            <h3 class="text-lg font-bold text-slate-500">No friends yet</h3>
+                            <p class="text-sm text-slate-400 mt-2">Accept friend requests or connect with your classmates!</p>
+                            <button onclick="switchFriendsTab('pymk')"
+                                class="mt-4 px-6 py-2 bg-primary text-white rounded-full font-bold text-sm hover:bg-primary/90 transition-colors">Find People</button>
+                        </div>
+                    </div>
+
+                    <!-- People You May Know Panel -->
+                    <div id="friends-panel-pymk" class="hidden">
+                        <div id="pymk-grid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                            <!-- populated by JS -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <!-- COMMUNITIES VIEW -->
             <div id="communities-view" class="view-section hidden opacity-0 transition-opacity duration-300">
                 <div class="grid grid-cols-1 xl:grid-cols-12 gap-8">
@@ -966,241 +1007,8 @@
                             Tickets</button>
                     </div>
 
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        <!-- Pohela Boishakh Event -->
-                        <div
-                            class="bg-surface-container-lowest rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all cursor-pointer group">
-                            <div class="relative h-48 overflow-hidden">
-                                <img src="https://www.hindustantimes.com/ht-img/img/2025/04/15/550x309/ANI-20250413058-0_1744696499882_1744697005977.jpg"
-                                    alt="Cultural Fest"
-                                    class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
-                                <div
-                                    class="absolute top-4 left-4 bg-white/90 backdrop-blur-md px-3 py-1.5 rounded-lg text-center shadow-sm">
-                                    <div class="text-primary font-black text-lg leading-none">15</div>
-                                    <div class="text-[10px] font-bold uppercase tracking-widest text-secondary mt-1">APR
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="p-5">
-                                <div class="flex items-start justify-between mb-2">
-                                    <h3 class="text-xl font-bold leading-tight flex-1">Borshoboron (Pohela Boishakh)
-                                    </h3>
-                                </div>
-                                <div class="flex items-center gap-2 mb-4 text-sm text-on-surface-variant">
-                                    <span class="material-symbols-outlined text-base">location_on</span>
-                                    <span>UIU Playground</span>
-                                </div>
-                                <div
-                                    class="flex justify-between items-center border-t border-surface-container-highest pt-4">
-                                    <div class="flex -space-x-2">
-                                        <img src="https://ui-avatars.com/api/?name=A+B&background=random"
-                                            class="w-8 h-8 rounded-full border-2 border-white">
-                                        <img src="https://ui-avatars.com/api/?name=X+Y&background=random"
-                                            class="w-8 h-8 rounded-full border-2 border-white">
-                                        <div
-                                            class="w-8 h-8 rounded-full bg-surface-container-highest border-2 border-white flex items-center justify-center text-[10px] font-bold">
-                                            +120</div>
-                                    </div>
-                                    <button
-                                        class="bg-primary text-white text-xs font-bold px-4 py-2 rounded-full hover:bg-primary/90 transition-colors">Join
-                                        Event</button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Concert Event -->
-                        <div
-                            class="bg-surface-container-lowest rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all cursor-pointer group">
-                            <div class="relative h-48 overflow-hidden">
-                                <img src="https://cdn.pixabay.com/photo/2016/11/23/15/48/audience-1853662_1280.jpg"
-                                    alt="Concert"
-                                    class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
-                                <div
-                                    class="absolute top-4 left-4 bg-white/90 backdrop-blur-md px-3 py-1.5 rounded-lg text-center shadow-sm">
-                                    <div class="text-primary font-black text-lg leading-none">28</div>
-                                    <div class="text-[10px] font-bold uppercase tracking-widest text-secondary mt-1">APR
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="p-5">
-                                <div class="flex items-start justify-between mb-2">
-                                    <h3 class="text-xl font-bold leading-tight flex-1">Mega Campus Concert 2026</h3>
-                                </div>
-                                <div class="flex items-center gap-2 mb-4 text-sm text-on-surface-variant">
-                                    <span class="material-symbols-outlined text-base">location_on</span>
-                                    <span>UIU Open Field</span>
-                                </div>
-                                <div
-                                    class="flex justify-between items-center border-t border-surface-container-highest pt-4">
-                                    <div class="flex -space-x-2">
-                                        <img src="https://ui-avatars.com/api/?name=S+T&background=random"
-                                            class="w-8 h-8 rounded-full border-2 border-white">
-                                        <div
-                                            class="w-8 h-8 rounded-full bg-surface-container-highest border-2 border-white flex items-center justify-center text-[10px] font-bold">
-                                            +450</div>
-                                    </div>
-                                    <button
-                                        class="bg-primary text-white text-xs font-bold px-4 py-2 rounded-full hover:bg-primary/90 transition-colors">Get
-                                        Ticket</button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Seminar Event -->
-                        <div
-                            class="bg-surface-container-lowest rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all cursor-pointer group">
-                            <div class="relative h-48 overflow-hidden">
-                                <img src="https://images.unsplash.com/photo-1475721027785-f74eccf877e2?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
-                                    alt="Seminar"
-                                    class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
-                                <div
-                                    class="absolute top-4 left-4 bg-white/90 backdrop-blur-md px-3 py-1.5 rounded-lg text-center shadow-sm">
-                                    <div class="text-primary font-black text-lg leading-none">05</div>
-                                    <div class="text-[10px] font-bold uppercase tracking-widest text-secondary mt-1">MAY
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="p-5">
-                                <div class="flex items-start justify-between mb-2">
-                                    <h3 class="text-xl font-bold leading-tight flex-1">Tech Leadership Summit</h3>
-                                </div>
-                                <div class="flex items-center gap-2 mb-4 text-sm text-on-surface-variant">
-                                    <span class="material-symbols-outlined text-base">location_on</span>
-                                    <span>Auditorium, 1st Floor</span>
-                                </div>
-                                <div
-                                    class="flex justify-between items-center border-t border-surface-container-highest pt-4">
-                                    <div class="flex -space-x-2">
-                                        <img src="https://ui-avatars.com/api/?name=C+S&background=random"
-                                            class="w-8 h-8 rounded-full border-2 border-white">
-                                        <img src="https://ui-avatars.com/api/?name=D+E&background=random"
-                                            class="w-8 h-8 rounded-full border-2 border-white">
-                                        <div
-                                            class="w-8 h-8 rounded-full bg-surface-container-highest border-2 border-white flex items-center justify-center text-[10px] font-bold">
-                                            +60</div>
-                                    </div>
-                                    <button
-                                        class="bg-primary text-white text-xs font-bold px-4 py-2 rounded-full hover:bg-primary/90 transition-colors">RSVP</button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Hackathon Event -->
-                        <div
-                            class="bg-surface-container-lowest rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all cursor-pointer group">
-                            <div class="relative h-48 overflow-hidden">
-                                <img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
-                                    alt="Hackathon"
-                                    class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
-                                <div
-                                    class="absolute top-4 left-4 bg-white/90 backdrop-blur-md px-3 py-1.5 rounded-lg text-center shadow-sm">
-                                    <div class="text-primary font-black text-lg leading-none">12</div>
-                                    <div class="text-[10px] font-bold uppercase tracking-widest text-secondary mt-1">MAY
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="p-5">
-                                <div class="flex items-start justify-between mb-2">
-                                    <h3 class="text-xl font-bold leading-tight flex-1">Inter-University Hackathon</h3>
-                                </div>
-                                <div class="flex items-center gap-2 mb-4 text-sm text-on-surface-variant">
-                                    <span class="material-symbols-outlined text-base">location_on</span>
-                                    <span>CSE Project Lab</span>
-                                </div>
-                                <div
-                                    class="flex justify-between items-center border-t border-surface-container-highest pt-4">
-                                    <div class="flex -space-x-2">
-                                        <img src="https://ui-avatars.com/api/?name=A+S&background=random"
-                                            class="w-8 h-8 rounded-full border-2 border-white">
-                                        <img src="https://ui-avatars.com/api/?name=B+E&background=random"
-                                            class="w-8 h-8 rounded-full border-2 border-white">
-                                        <div
-                                            class="w-8 h-8 rounded-full bg-surface-container-highest border-2 border-white flex items-center justify-center text-[10px] font-bold">
-                                            +200</div>
-                                    </div>
-                                    <button
-                                        class="bg-primary text-white text-xs font-bold px-4 py-2 rounded-full hover:bg-primary/90 transition-colors">Register</button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Job Fair Event -->
-                        <div
-                            class="bg-surface-container-lowest rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all cursor-pointer group">
-                            <div class="relative h-48 overflow-hidden">
-                                <img src="https://www.tbsnews.net/sites/default/files/styles/big_3/public/images/2021/12/08/uiu_ckh.png"
-                                    alt="Job Fair"
-                                    class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
-                                <div
-                                    class="absolute top-4 left-4 bg-white/90 backdrop-blur-md px-3 py-1.5 rounded-lg text-center shadow-sm">
-                                    <div class="text-primary font-black text-lg leading-none">20</div>
-                                    <div class="text-[10px] font-bold uppercase tracking-widest text-secondary mt-1">MAY
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="p-5">
-                                <div class="flex items-start justify-between mb-2">
-                                    <h3 class="text-xl font-bold leading-tight flex-1">UIU Job Fair 2026</h3>
-                                </div>
-                                <div class="flex items-center gap-2 mb-4 text-sm text-on-surface-variant">
-                                    <span class="material-symbols-outlined text-base">location_on</span>
-                                    <span>Main Campus Plaza</span>
-                                </div>
-                                <div
-                                    class="flex justify-between items-center border-t border-surface-container-highest pt-4">
-                                    <div class="flex -space-x-2">
-                                        <img src="https://ui-avatars.com/api/?name=N+A&background=random"
-                                            class="w-8 h-8 rounded-full border-2 border-white">
-                                        <div
-                                            class="w-8 h-8 rounded-full bg-surface-container-highest border-2 border-white flex items-center justify-center text-[10px] font-bold">
-                                            +850</div>
-                                    </div>
-                                    <button
-                                        class="bg-primary text-white text-xs font-bold px-4 py-2 rounded-full hover:bg-primary/90 transition-colors">Details</button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Photo Exhibition Event -->
-                        <div
-                            class="bg-surface-container-lowest rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all cursor-pointer group">
-                            <div class="relative h-48 overflow-hidden">
-                                <img src="https://jamesmaherphotography.com/wp-content/uploads/2020/02/top-photography-museums-galleries-new-york.jpg"
-                                    alt="Photo Exhibition"
-                                    class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
-                                <div
-                                    class="absolute top-4 left-4 bg-white/90 backdrop-blur-md px-3 py-1.5 rounded-lg text-center shadow-sm">
-                                    <div class="text-primary font-black text-lg leading-none">02</div>
-                                    <div class="text-[10px] font-bold uppercase tracking-widest text-secondary mt-1">JUN
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="p-5">
-                                <div class="flex items-start justify-between mb-2">
-                                    <h3 class="text-xl font-bold leading-tight flex-1">Annual Photo Exhibition</h3>
-                                </div>
-                                <div class="flex items-center gap-2 mb-4 text-sm text-on-surface-variant">
-                                    <span class="material-symbols-outlined text-base">location_on</span>
-                                    <span>Gallery Space</span>
-                                </div>
-                                <div
-                                    class="flex justify-between items-center border-t border-surface-container-highest pt-4">
-                                    <div class="flex -space-x-2">
-                                        <img src="https://ui-avatars.com/api/?name=P+R&background=random"
-                                            class="w-8 h-8 rounded-full border-2 border-white">
-                                        <img src="https://ui-avatars.com/api/?name=K+O&background=random"
-                                            class="w-8 h-8 rounded-full border-2 border-white">
-                                        <div
-                                            class="w-8 h-8 rounded-full bg-surface-container-highest border-2 border-white flex items-center justify-center text-[10px] font-bold">
-                                            +95</div>
-                                    </div>
-                                    <button
-                                        class="bg-primary text-white text-xs font-bold px-4 py-2 rounded-full hover:bg-primary/90 transition-colors">Join
-                                        Event</button>
-                                </div>
-                            </div>
-                        </div>
-
+                    <div id="events-grid-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <!-- Populated by JS -->
                     </div>
                 </div>
             </div>
@@ -1251,13 +1059,13 @@
                 </div>
             </div>
         </main>
-
-     
-        <!--RIGHT SIDEBAR -->
+        
+        <!-- RIGHT SIDEBAR -->
+        
         <aside id="right-sidebar"
             class="hidden xl:flex flex-col gap-5 fixed right-0 top-0 h-screen w-80 bg-slate-50 dark:bg-slate-950 pt-20 pb-24 px-4 overflow-y-auto hide-scrollbar border-l border-slate-100 dark:border-slate-800">
 
-            <!-- ── Contacts / Active Now ── -->
+            <!-- ── Contacts / Active Now ─-->
             <div class="right-sidebar-card">
                 <div class="flex items-center justify-between mb-3">
                     <h3 class="text-sm font-bold text-slate-700 dark:text-slate-200">Contacts</h3>
@@ -1278,11 +1086,11 @@
                 </div>
             </div>
 
-            <!-- ── People You May Know ────────────────────────────────── -->
+            <!-- ── People You May Know ──-->
             <div class="right-sidebar-card">
                 <div class="flex items-center justify-between mb-3">
                     <h3 class="text-sm font-bold text-slate-700 dark:text-slate-200">People You May Know</h3>
-                    <button class="text-xs text-primary font-semibold hover:underline">See All</button>
+                    <button class="text-xs text-primary font-semibold hover:underline" onclick="switchTab('friends'); setTimeout(() => switchFriendsTab('pymk'), 50);">See All</button>
                 </div>
                 <div id="people-you-may-know" class="flex flex-col gap-3">
                     <!-- Populated by JS -->
@@ -1293,7 +1101,7 @@
             <div class="right-sidebar-card">
                 <div class="flex items-center justify-between mb-3">
                     <h3 class="text-sm font-bold text-slate-700 dark:text-slate-200">Upcoming Events</h3>
-                    <button class="text-xs text-primary font-semibold hover:underline">See All</button>
+                    <button class="text-xs text-primary font-semibold hover:underline" onclick="switchTab('events')">See All</button>
                 </div>
                 <div class="flex flex-col gap-3">
                     <div class="right-event-card group" onclick="">
@@ -1433,6 +1241,50 @@
         </nav>
     </div>
     <!-- Application Script -->
+    <!-- Event Details Modal -->
+    <div id="event-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden z-[300] flex items-center justify-center opacity-0 transition-opacity duration-300 px-4">
+        <div class="bg-surface-container-lowest w-full max-w-2xl rounded-2xl shadow-2xl overflow-hidden transform scale-95 transition-transform duration-300" id="event-modal-content" onclick="event.stopPropagation()">
+            <!-- Header Image -->
+            <div class="h-64 sm:h-80 w-full relative">
+                <img id="event-modal-img" src="" class="w-full h-full object-cover">
+                <div class="absolute top-4 right-4 bg-white/90 backdrop-blur-md px-3 py-1.5 rounded-lg text-center shadow-lg">
+                    <div id="event-modal-day" class="text-primary font-black text-xl leading-none"></div>
+                    <div id="event-modal-month" class="text-[11px] font-bold uppercase tracking-widest text-secondary mt-1"></div>
+                </div>
+                <!-- Close Button -->
+                <button onclick="closeEventModal()" class="absolute top-4 left-4 bg-black/50 hover:bg-black/70 text-white rounded-full p-2 backdrop-blur-sm transition-colors">
+                    <span class="material-symbols-outlined">close</span>
+                </button>
+            </div>
+            
+            <div class="p-6 sm:p-8 flex flex-col gap-6">
+                <!-- Title & Location -->
+                <div>
+                    <h2 id="event-modal-title" class="text-2xl sm:text-3xl font-black tracking-tight text-slate-800 dark:text-slate-100 mb-3"></h2>
+                    <div class="flex items-center gap-2 text-primary font-medium">
+                        <span class="material-symbols-outlined text-[18px]">location_on</span>
+                        <span id="event-modal-location"></span>
+                    </div>
+                </div>
+                
+                <!-- Description -->
+                <div class="bg-surface-container-highest/50 p-4 rounded-xl">
+                    <p id="event-modal-description" class="text-slate-600 dark:text-slate-300 leading-relaxed"></p>
+                </div>
+                
+                <!-- Interaction Buttons -->
+                <div class="flex gap-4 pt-4 border-t border-surface-container-highest">
+                    <button id="btn-interested" onclick="toggleEventInterest(true)" class="flex-1 py-3 bg-primary/10 hover:bg-primary text-primary hover:text-white font-bold rounded-xl transition-all flex items-center justify-center gap-2">
+                        <span class="material-symbols-outlined">star</span> Interested
+                    </button>
+                    <button id="btn-not-interested" onclick="toggleEventInterest(false)" class="flex-1 py-3 bg-surface-container-high hover:bg-red-100 text-slate-600 hover:text-red-600 font-bold rounded-xl transition-all flex items-center justify-center gap-2">
+                        <span class="material-symbols-outlined">cancel</span> Not Interested
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="ulink_script.js"></script>
 </body>
 
