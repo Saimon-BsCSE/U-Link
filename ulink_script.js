@@ -1,3 +1,4 @@
+
 //  U-Link – Application Script  (ulink_script.js)
 
 // --- Mock Data & State ---
@@ -29,10 +30,33 @@ const MOCK_USERS = [
     { id: "125", name: "Jannatul Ferdaus",  dept: "BBA",         role: "Student", batch: "211", pic: "https://ui-avatars.com/api/?name=Jannatul+Ferdaus&background=7B2D8B&color=fff" }
 ];
 
+const MOCK_EVENTS = [
+    { id: 'e1', title: 'Borshoboron (Pohela Boishakh)', date: '15', month: 'APR', location: 'UIU Playground', img: 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=800&auto=format&fit=crop&q=60', desc: 'Join us in celebrating the Bengali New Year with traditional food, cultural performances, and the grand rally! Registration includes food token.', interested: null },
+    { id: 'e2', title: 'UIU National Career Fair 2026', date: '22', month: 'MAY', location: 'School of Business (2nd floor)', img: 'https://images.unsplash.com/photo-1556761175-4b46a572b786?w=800&auto=format&fit=crop&q=60', desc: 'Over 50 top tech and business companies hiring for internships and full-time positions. Bring your resumes! Open to all UIU students.', interested: null },
+    { id: 'e3', title: 'Advanced Machine Learning Lab', date: '05', month: 'JUN', location: 'Department of CSE (4th floor)', img: 'https://images.unsplash.com/photo-1531482615713-2afd69097998?w=800&auto=format&fit=crop&q=60', desc: 'Hands-on workshop covering neural network architectures using PyTorch. Hosted by the UIU Data Science Club. Limited seats! Laptop required.', interested: null },
+    { id: 'e4', title: 'Inter-University Hackathon', date: '12', month: 'MAY', location: 'Department of CSE (4th floor)', img: 'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80', desc: 'Join a 48-hour coding sprint. Build impactful projects and win amazing prizes provided by Google and AWS! Minimum team size 3.', interested: null },
+    { id: 'e5', title: 'Final Year Project Show', date: '18', month: 'JUN', location: 'Department of EEE (5th floor)', img: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=800&auto=format&fit=crop&q=60', desc: 'Explore the amazing capstone projects from the graduating class. From smart robotics to AI web apps! Open for all.', interested: null },
+    { id: 'e6', title: 'Winter Acoustic Concert', date: '20', month: 'DEC', location: 'UIU Playground', img: 'https://images.unsplash.com/photo-1459749411175-04bf5292ceea?w=800&auto=format&fit=crop&q=60', desc: 'Vibe with local bands and UIU\'s finest acoustic performers under the winter sky. Coffee and snacks stalls available.', interested: null },
+    { id: 'e7', title: 'Startup Pitch Deck Competition', date: '09', month: 'JUL', location: 'School of Business (2nd floor)', img: 'https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=800&auto=format&fit=crop&q=60', desc: 'Got a million dollar idea? Pitch it directly to local VC firms! Win up to 5 Lakhs seed funding.', interested: null },
+    { id: 'e8', title: 'Civil & Architectural Expo', date: '11', month: 'AUG', location: 'UIU Gallery', img: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&auto=format&fit=crop&q=60', desc: 'Showcasing brilliant 3D printed structural models and smart city designs from the UIU Civil Department.', interested: null },
+    { id: 'e9', title: 'Health & Life Science Camp', date: '14', month: 'SEP', location: 'School of Life-Science (9th floor)', img: 'https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?w=800&auto=format&fit=crop&q=60', desc: 'Free blood donation camp and health checkups! Organized by the Pharmacy and Health Sciences department.', interested: null }
+];
+
 const state = {
     user: null,
     activeChatUserId: null,
     chatHistory: {},
+    notifications: [
+        { id: 1, type: "like",    text: "Sadika Rahman liked your post",                             read: false },
+        { id: 2, type: "request", text: "Rakib Hasan sent you a friend request",                     read: false, fromId: "102" },
+        { id: 3, type: "request", text: "Tania Akter sent you a friend request",                      read: false, fromId: "106" },
+        { id: 4, type: "group",   text: "CSE GROUP: New announcement posted regarding Hackathon finals.", read: false },
+        { id: 5, type: "group",   text: "HACKATHON GROUP: Registration closes tomorrow!",             read: false },
+        { id: 6, type: "group",   text: "CULTURAL GROUP: Annual fest meeting at 3 PM in Room 102.",  read: false },
+        { id: 7, type: "like",    text: "Mehedi Hassan reacted ❤️ to your post",                     read: false },
+    ],
+    friends: ["101", "103"],
+    contactsExpanded: false,
     posts: [
         {
             id: 1, userId: "101",
@@ -164,18 +188,8 @@ const state = {
                 { id: 148, userId: "108", name: "Priya Das",      text: "Wow, this gave me chills! Talent right here 🌟" },
                 { id: 149, userId: "105", name: "Jamal Uddin",    text: "Very touching words. Thank you for sharing this gem." }
             ]
-        },
-    ],
-    notifications: [
-        { id: 1, type: "like",    text: "Sadika Rahman liked your post",                             read: false },
-        { id: 2, type: "request", text: "Rakib Hasan sent you a friend request",                     read: false, fromId: "102" },
-        { id: 3, type: "request", text: "Tania Akter sent you a friend request",                      read: false, fromId: "106" },
-        { id: 4, type: "group",   text: "CSE GROUP: New announcement posted regarding Hackathon finals.", read: false },
-        { id: 5, type: "group",   text: "HACKATHON GROUP: Registration closes tomorrow!",             read: false },
-        { id: 6, type: "group",   text: "CULTURAL GROUP: Annual fest meeting at 3 PM in Room 102.",  read: false },
-        { id: 7, type: "like",    text: "Mehedi Hassan reacted ❤️ to your post",                     read: false },
-    ],
-    friends: ["101", "103"] // Start with 2 friends so it's not empty
+        }
+    ]
 };
 
 let activeTab = 'home';
@@ -278,6 +292,7 @@ function switchTab(tabId) {
         if (tabId === 'home') renderFeed();
         if (tabId === 'profile') renderUserPosts();
         if (tabId === 'friends') renderFriendsView();
+        if (tabId === 'events') renderEventsGrid();
     }
 }
 
@@ -865,16 +880,18 @@ function renderContacts() {
     const container = document.getElementById('contacts-list');
     if (!container) return;
 
-    // Give each user a random online status (persisted on the object)
-    const users = MOCK_USERS.map(u => ({
-        ...u,
-        online: Math.random() > 0.35   // ~65 % chance online
-    }));
+    // Persist online status so it doesn't bounce around every re-render
+    if (!MOCK_USERS[0].hasOwnProperty('online')) {
+        MOCK_USERS.forEach(u => u.online = Math.random() > 0.35);
+    }
 
-    // Sort: online first
-    users.sort((a, b) => b.online - a.online);
+    const users = [...MOCK_USERS].sort((a, b) => b.online - a.online);
+    
+    // Only show 5/6 contacts when minimized
+    const maxContacts = state.contactsExpanded ? users.length : 6;
+    const displayedUsers = users.slice(0, maxContacts);
 
-    container.innerHTML = users.map(u => `
+    let html = displayedUsers.map(u => `
         <div class="contact-row" onclick="openChat('${u.id}')">
             <div class="relative flex-shrink-0">
                 <img src="${u.pic}" class="w-9 h-9 rounded-full object-cover border border-slate-200">
@@ -887,6 +904,127 @@ function renderContacts() {
             ${u.online ? '<span class="material-symbols-outlined text-slate-400 text-base hover:text-primary transition-colors">chat</span>' : ''}
         </div>
     `).join('');
+    
+    if (users.length > 6) {
+        html += `
+        <button onclick="toggleContactsExpanded()" class="w-full mt-2 py-2 text-[11px] font-bold text-slate-500 hover:bg-slate-100 rounded-lg transition-colors flex items-center justify-center gap-1">
+            ${state.contactsExpanded ? 'See Less <span class="material-symbols-outlined text-[1rem]">expand_less</span>' : 'See More <span class="material-symbols-outlined text-[1rem]">expand_more</span>'}
+        </button>
+        `;
+    }
+
+    container.innerHTML = html;
+}
+
+function toggleContactsExpanded() {
+    state.contactsExpanded = !state.contactsExpanded;
+    renderContacts();
+}
+
+function renderEventsGrid() {
+    const container = document.getElementById('events-grid-container');
+    if (!container) return;
+    
+    container.innerHTML = MOCK_EVENTS.map(event => `
+        <div class="bg-surface-container-lowest rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all cursor-pointer group" onclick="openEventModal('${event.id}')">
+            <div class="relative h-48 overflow-hidden">
+                <img src="${event.img}" alt="${event.title}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                <div class="absolute top-4 left-4 bg-white/90 backdrop-blur-md px-3 py-1.5 rounded-lg text-center shadow-sm">
+                    <div class="text-primary font-black text-lg leading-none">${event.date}</div>
+                    <div class="text-[10px] font-bold uppercase tracking-widest text-secondary mt-1">${event.month}</div>
+                </div>
+            </div>
+            <div class="p-5 flex flex-col h-[200px]">
+                <div class="flex items-start justify-between mb-2">
+                    <h3 class="text-xl font-bold leading-tight flex-1 truncate">${event.title}</h3>
+                </div>
+                <div class="flex items-center gap-2 mb-4 text-sm text-on-surface-variant flex-shrink-0">
+                    <span class="material-symbols-outlined text-[16px]">location_on</span>
+                    <span class="truncate">${event.location}</span>
+                </div>
+                <p class="text-sm text-slate-600 mb-4 line-clamp-2 min-h-[40px] flex-shrink-0">${event.desc}</p>
+                <div class="mt-auto">
+                    ${event.interested === true ? 
+                        '<button class="w-full bg-primary text-white font-bold py-2 rounded-lg transition-colors flex items-center justify-center gap-2"><span class="material-symbols-outlined text-[18px]">check_circle</span> Going</button>' : 
+                        (event.interested === false ? 
+                            '<button class="w-full bg-red-500 text-white font-bold py-2 rounded-lg transition-colors flex items-center justify-center gap-2"><span class="material-symbols-outlined text-[18px]">cancel</span> Not going</button>' : 
+                            '<button class="w-full bg-primary/10 text-primary hover:bg-primary hover:text-white font-bold py-2 rounded-lg transition-colors">See Details</button>'
+                        )
+                    }
+                </div>
+            </div>
+        </div>
+    `).join('');
+}
+
+let activeEventId = null;
+
+function openEventModal(eventId) {
+    const event = MOCK_EVENTS.find(e => e.id === eventId);
+    if (!event) return;
+    
+    activeEventId = eventId;
+    
+    document.getElementById('event-modal-img').src = event.img;
+    document.getElementById('event-modal-day').innerText = event.date;
+    document.getElementById('event-modal-month').innerText = event.month;
+    document.getElementById('event-modal-title').innerText = event.title;
+    document.getElementById('event-modal-location').innerText = event.location;
+    document.getElementById('event-modal-description').innerText = event.desc;
+    
+    const btnInt = document.getElementById('btn-interested');
+    const btnNotInt = document.getElementById('btn-not-interested');
+    
+    // Default / interested styling updates based on state
+    if (event.interested === true) {
+        btnInt.className = "flex-1 py-3 font-bold rounded-xl transition-all flex items-center justify-center gap-2 bg-primary text-white shadow-md transform scale-105 border border-primary";
+        btnNotInt.className = "flex-1 py-3 font-bold rounded-xl transition-all flex items-center justify-center gap-2 bg-surface-container-high hover:bg-red-100 text-slate-400 hover:text-red-600 border border-transparent";
+    } else if (event.interested === false) {
+        btnInt.className = "flex-1 py-3 font-bold rounded-xl transition-all flex items-center justify-center gap-2 bg-primary/10 hover:bg-primary text-primary hover:text-white border border-transparent";
+        btnNotInt.className = "flex-1 py-3 font-bold rounded-xl transition-all flex items-center justify-center gap-2 bg-red-500 text-white shadow-md transform scale-105 border border-red-500";
+    } else {
+        btnInt.className = "flex-1 py-3 font-bold rounded-xl transition-all flex items-center justify-center gap-2 bg-primary/10 hover:bg-primary text-primary hover:text-white border border-transparent";
+        btnNotInt.className = "flex-1 py-3 font-bold rounded-xl transition-all flex items-center justify-center gap-2 bg-surface-container-high hover:bg-red-100 text-slate-600 hover:text-red-600 border border-transparent";
+    }
+    
+    const modal = document.getElementById('event-modal');
+    const content = document.getElementById('event-modal-content');
+    
+    modal.classList.remove('hidden');
+    setTimeout(() => {
+        modal.classList.remove('opacity-0');
+        content.classList.remove('scale-95');
+    }, 10);
+    
+    document.body.style.overflow = 'hidden';
+}
+
+function closeEventModal() {
+    const modal = document.getElementById('event-modal');
+    const content = document.getElementById('event-modal-content');
+    
+    modal.classList.add('opacity-0');
+    content.classList.add('scale-95');
+    setTimeout(() => {
+        modal.classList.add('hidden');
+        document.body.style.overflow = '';
+        activeEventId = null;
+    }, 300);
+}
+
+function toggleEventInterest(isInterested) {
+    if (!activeEventId) return;
+    const event = MOCK_EVENTS.find(e => e.id === activeEventId);
+    if (!event) return;
+    
+    if (event.interested === isInterested) {
+        event.interested = null; // Unselect if clicked again
+    } else {
+        event.interested = isInterested;
+    }
+    
+    renderEventsGrid();
+    closeEventModal();
 }
 
 function renderPeopleYouMayKnow() {
@@ -1001,3 +1139,4 @@ function renderFriendsView() {
         `).join('');
     }
 }
+
