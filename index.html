@@ -7,8 +7,13 @@
     <title>U-Link| UIUian's Social Hub </title>
     <link rel="icon" type="image/png" href="Asserts/title.png">
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&amp;display=swap"
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap"
         rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+    </style>
     <link
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
         rel="stylesheet">
@@ -111,7 +116,7 @@
                             class="h-34 w-auto object-contain drop-shadow-md logo-login">
                     </div>
                     <h2 class="text-3xl font-bold mb-2 tracking-tight">Welcome Back</h2>
-                    <p class="text-secondary mb-8">Enter your credentials to access the quad.</p>
+                    <p class="text-secondary mb-8">Enter your credentials to access the U-Link.</p>
                     <form class="space-y-4" id="login-form">
                         <div>
                             <label class="block text-[10px] font-bold uppercase tracking-widest text-secondary mb-2">UIU
@@ -127,12 +132,12 @@
                             <input
                                 class="w-full bg-surface-container-high border-none rounded-xl px-4 py-3 focus:ring-2 focus:ring-primary-container/40 transition-all"
                                 id="login-pass" placeholder="••••••••" required="" type="password" minlength="8"
-                                maxlength="20">
+                                maxlength="8">
                         </div>
                         <button
                             class="w-full bg-primary-container text-on-primary-container font-bold py-4 rounded-full shadow-lg shadow-primary-container/20 hover:scale-[1.02] active:scale-95 transition-all mt-4"
                             type="submit">
-                            Enter the World
+                            Log Into Campus
                         </button>
                     </form>
                     <p class="mt-8 text-center text-sm text-secondary">
@@ -234,9 +239,14 @@
     </div>
     <!-- MAIN APP DISCOVERY VIEW (Hidden by default) -->
     <div class="hidden" id="main-app">
+        <!-- Notification Strip -->
+        <div id="notification-strip"
+            class="fixed top-0 w-full z-[80] h-8 bg-gradient-to-r from-orange-600 to-rose-600 text-white flex items-center justify-center text-xs font-bold px-4 gap-2 shadow-sm">
+            🔥 "Hackathon registration closes tonight!"
+        </div>
         <!-- TopNavBar -->
         <header
-            class="fixed top-0 w-full z-50 bg-surface/80 dark:bg-slate-900/80 backdrop-blur-md shadow-[0px_30px_60px_rgba(0,0,0,0.04)] flex justify-between items-center px-6 h-16 w-full">
+            class="fixed top-8 w-full z-50 bg-surface/80 dark:bg-slate-900/80 backdrop-blur-md shadow-[0px_30px_60px_rgba(0,0,0,0.04)] flex justify-between items-center px-6 h-16 w-full">
             <div class="flex items-center gap-8">
                 <button onclick="switchTab('home')"
                     class="flex items-center focus:outline-none hover:opacity-90 active:scale-95 transition-all"
@@ -298,7 +308,7 @@
         </header>
         <!-- SideNavBar -->
         <aside
-            class="hidden lg:flex flex-col p-4 gap-2 h-screen w-72 fixed left-0 top-0 bg-slate-50 dark:bg-slate-950 pt-20 overflow-y-auto hide-scrollbar">
+            class="hidden lg:flex flex-col p-4 gap-2 h-screen w-72 fixed left-0 top-8 bg-slate-50 dark:bg-slate-950 pt-20 overflow-y-auto hide-scrollbar">
             <!-- User Profile Card in Sidebar -->
             <div class="mb-4 px-2">
                 <button onclick="switchTab('profile')"
@@ -358,8 +368,8 @@
                     <span class="material-symbols-outlined icon-filled">add</span>
                     Create Post
                 </button>
-                <a class="flex items-center gap-3 px-4 py-2 text-slate-500 dark:text-slate-400 hover:text-orange-600 hover:bg-orange-50 dark:hover:bg-orange-900/10 rounded-full transition-all text-sm"
-                    href="#">
+                <a class="side-nav-link flex items-center gap-3 px-4 py-2 text-slate-500 dark:text-slate-400 hover:text-orange-600 hover:bg-orange-50 dark:hover:bg-orange-900/10 rounded-full transition-all text-sm cursor-pointer"
+                    onclick="switchTab('settings')" data-tab="settings">
                     <span class="material-symbols-outlined text-lg" data-icon="settings">settings</span>
                     <span class="">Settings</span>
                 </a>
@@ -372,7 +382,7 @@
             </div>
         </aside>
         <!-- Main Content Area -->
-        <main class="lg:ml-72 xl:mr-80 pt-20 px-4 md:px-6 pb-20 relative">
+        <main class="lg:ml-72 xl:mr-80 pt-28 px-4 md:px-6 pb-20 relative">
 
             <!-- HOME VIEW (Newsfeed) -->
             <div id="home-view"
@@ -386,42 +396,59 @@
                 </div>
                 <div class="max-w-2xl mx-auto relative z-10">
                     <!-- Create Post Form -->
-                    <div class="bg-surface-container-lowest rounded-xl p-4 shadow-sm mb-6">
-                        <div class="flex gap-4">
+                    <div
+                        class="bg-white/80 dark:bg-slate-800/80 backdrop-blur-xl rounded-2xl p-5 shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:shadow-none mb-8 border border-white dark:border-slate-700/50 relative overflow-hidden group">
+                        <div
+                            class="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent dark:via-white/5 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000 pointer-events-none">
+                        </div>
+                        <div class="flex gap-4 relative z-10">
                             <img id="post-user-pic" src="https://ui-avatars.com/api/?name=User&background=random"
-                                class="w-10 h-10 rounded-full object-cover">
+                                class="w-12 h-12 rounded-full object-cover shadow-sm border-2 border-white dark:border-slate-700">
                             <div class="flex-1">
                                 <textarea id="post-text" rows="2"
-                                    class="w-full bg-surface-container-low rounded-xl px-4 py-3 border-none focus:ring-0 text-sm placeholder:text-on-surface-variant/60 resize-none hover:bg-surface-container-high transition-colors"
-                                    placeholder="What's happening on campus?"></textarea>
+                                    class="w-full bg-slate-50 dark:bg-slate-900/50 rounded-xl px-4 py-3 border border-transparent focus:border-orange-300 dark:focus:border-orange-500/30 focus:ring-4 focus:ring-orange-100 dark:focus:ring-orange-900/20 text-[15px] placeholder:text-slate-400 dark:placeholder:text-slate-500 resize-none transition-all outline-none"
+                                    placeholder="What's happening on campus today?"></textarea>
                                 <!-- Image Preview -->
                                 <div id="image-preview-container"
-                                    class="hidden relative mt-2 rounded-xl overflow-hidden shadow-sm">
-                                    <img id="image-preview" src="" class="w-full max-h-64 object-cover">
+                                    class="hidden relative mt-3 rounded-xl overflow-hidden shadow-inner border border-slate-200 dark:border-slate-700">
+                                    <img id="image-preview" src=""
+                                        class="w-full max-h-64 object-cover opacity-90 hover:opacity-100 transition-opacity">
                                     <button onclick="removeImage()"
-                                        class="absolute top-2 right-2 p-1 bg-black/50 text-white rounded-full hover:bg-black/70 backdrop-blur-sm">
+                                        class="absolute top-3 right-3 p-1.5 bg-black/60 text-white rounded-full hover:bg-black hover:scale-110 active:scale-95 transition-all backdrop-blur-md shadow-lg">
                                         <span class="material-symbols-outlined text-sm">close</span>
                                     </button>
                                 </div>
                                 <div
-                                    class="flex justify-between items-center mt-3 pt-3 border-t border-surface-container-high/50">
+                                    class="flex justify-between items-center mt-3 pt-3 border-t border-slate-100 dark:border-slate-700/60">
                                     <div class="flex gap-2">
                                         <input type="file" id="post-image-input" accept="image/*" class="hidden"
                                             onchange="previewImage(event, 'home')">
                                         <button onclick="document.getElementById('post-image-input').click()"
-                                            class="p-2 text-primary hover:bg-primary/10 rounded-full transition-colors flex items-center justify-center">
-                                            <span class="material-symbols-outlined text-lg">image</span>
+                                            class="p-2.5 text-primary hover:bg-orange-50 dark:hover:bg-orange-900/20 rounded-xl transition-colors flex items-center justify-center gap-2 font-bold text-sm">
+                                            <span class="material-symbols-outlined text-xl">image</span>
+                                            <span class="hidden sm:inline">Add Photo</span>
                                         </button>
                                     </div>
                                     <button onclick="submitPost('home')"
-                                        class="bg-primary hover:bg-primary/90 text-white font-bold py-1.5 px-6 rounded-full text-sm shadow-md active:scale-95 transition-transform">Post</button>
+                                        class="bg-gradient-to-r from-orange-500 to-primary hover:to-orange-600 text-white font-extrabold py-2 px-8 rounded-xl shadow-lg shadow-orange-500/30 hover:shadow-orange-500/50 active:scale-95 transition-all text-sm tracking-wide">Post</button>
                                 </div>
                             </div>
                         </div>
                     </div>
 
+                    <!-- Feed Header & Refresh Button -->
+                    <div class="flex items-center justify-between mb-4 px-2">
+                        <h3 class="text-xl font-black text-slate-800 dark:text-slate-100 tracking-tight">Timeline</h3>
+                        <button onclick="shuffleNewsfeed(this)"
+                            class="flex items-center gap-2 text-sm font-bold text-orange-600 dark:text-orange-400 bg-orange-50 dark:bg-orange-900/20 hover:bg-orange-100 dark:hover:bg-orange-900/40 px-4 py-2 rounded-full transition-all active:scale-95 group">
+                            <span
+                                class="material-symbols-outlined text-[18px] group-active:rotate-180 transition-transform duration-500">refresh</span>
+                            Refresh
+                        </button>
+                    </div>
+
                     <!-- Feed -->
-                    <div id="feed-container" class="flex flex-col gap-6">
+                    <div id="feed-container" class="flex flex-col gap-6 transition-opacity duration-300">
                         <!-- Posts dynamically added here -->
                     </div>
                 </div>
@@ -659,26 +686,42 @@
                             </div>
 
                             <!-- Generate Post Input -->
-                            <div class="bg-surface-container-lowest rounded-2xl p-4 shadow-sm border border-slate-100 mb-4">
+                            <div
+                                class="bg-surface-container-lowest rounded-2xl p-4 shadow-sm border border-slate-100 mb-4">
                                 <div class="flex gap-4">
-                                    <img src="" id="community-nav-pic" class="w-10 h-10 rounded-full border border-slate-200 object-cover bg-white pointer-events-none">
+                                    <img src="" id="community-nav-pic"
+                                        class="w-10 h-10 rounded-full border border-slate-200 object-cover bg-white pointer-events-none">
                                     <div class="flex-1">
-                                        <textarea id="community-post-input" placeholder="Post a discussion to the community..." class="w-full bg-surface-container-high border-none rounded-xl px-4 py-3 text-sm outline-none focus:ring-2 focus:ring-primary/20 transition-all font-medium resize-none" onkeypress="if(event.key === 'Enter') submitCommunityPost()" disabled></textarea>
+                                        <textarea id="community-post-input"
+                                            placeholder="Post a discussion to the community..."
+                                            class="w-full bg-surface-container-high border-none rounded-xl px-4 py-3 text-sm outline-none focus:ring-2 focus:ring-primary/20 transition-all font-medium resize-none"
+                                            onkeypress="if(event.key === 'Enter') submitCommunityPost()"
+                                            disabled></textarea>
                                         <!-- Image Preview -->
-                                        <div id="image-preview-container-community" class="hidden relative mt-2 rounded-xl overflow-hidden shadow-sm">
-                                            <img id="image-preview-community" src="" class="w-full max-h-64 object-cover">
-                                            <button onclick="removeImage('community')" class="absolute top-2 right-2 p-1 bg-black/50 text-white rounded-full hover:bg-black/70 backdrop-blur-sm">
+                                        <div id="image-preview-container-community"
+                                            class="hidden relative mt-2 rounded-xl overflow-hidden shadow-sm">
+                                            <img id="image-preview-community" src=""
+                                                class="w-full max-h-64 object-cover">
+                                            <button onclick="removeImage('community')"
+                                                class="absolute top-2 right-2 p-1 bg-black/50 text-white rounded-full hover:bg-black/70 backdrop-blur-sm">
                                                 <span class="material-symbols-outlined text-sm">close</span>
                                             </button>
                                         </div>
-                                        <div class="flex justify-between items-center mt-3 pt-3 border-t border-slate-100">
+                                        <div
+                                            class="flex justify-between items-center mt-3 pt-3 border-t border-slate-100">
                                             <div class="flex gap-2">
-                                                <input type="file" id="post-image-input-community" accept="image/*" class="hidden" onchange="previewImage(event, 'community')" disabled>
-                                                <button id="community-post-img-btn" onclick="document.getElementById('post-image-input-community').click()" class="p-2 text-primary hover:bg-primary/10 rounded-full transition-colors flex items-center justify-center disabled:opacity-50" disabled>
+                                                <input type="file" id="post-image-input-community" accept="image/*"
+                                                    class="hidden" onchange="previewImage(event, 'community')" disabled>
+                                                <button id="community-post-img-btn"
+                                                    onclick="document.getElementById('post-image-input-community').click()"
+                                                    class="p-2 text-primary hover:bg-primary/10 rounded-full transition-colors flex items-center justify-center disabled:opacity-50"
+                                                    disabled>
                                                     <span class="material-symbols-outlined text-lg">image</span>
                                                 </button>
                                             </div>
-                                            <button id="community-post-btn" onclick="submitCommunityPost()" class="bg-primary hover:bg-primary/90 text-white font-bold py-1.5 px-6 rounded-full text-sm shadow-md active:scale-95 transition-transform disabled:opacity-50" disabled>Post</button>
+                                            <button id="community-post-btn" onclick="submitCommunityPost()"
+                                                class="bg-primary hover:bg-primary/90 text-white font-bold py-1.5 px-6 rounded-full text-sm shadow-md active:scale-95 transition-transform disabled:opacity-50"
+                                                disabled>Post</button>
                                         </div>
                                     </div>
                                 </div>
@@ -707,86 +750,1387 @@
 
             <!-- EXPLORE VIEW -->
             <div id="explore-view" class="view-section hidden opacity-0 transition-opacity duration-300">
-                <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 mb-10">
-                    <div
-                        class="lg:col-span-8 bg-surface-container-low rounded-xl p-8 relative overflow-hidden flex flex-col justify-end min-h-[320px] shadow-sm">
-                        <div class="absolute inset-0 z-0">
-                            <img alt="University Library" class="w-full h-full object-cover opacity-20"
-                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuADPOBaQUdzcly7ayZ9yaZFd4S83y65GUHIObUJkgVdtrV9lJWiHQtwtuJ8KCg1ZyfprcenxCF7v5x6iBBbGpxyWXpCJ1xlX3KdunN3H8541eNcONC8xwVQWTRskacOwHxFepeQFmBizoaUUG-YT5gjhusTpq6N2QCL-8PjHdnooU91PWU4QPvytQE_Ge5bY0yEGRaUtOnmLLnwda_wDqjmT0jRRvePoBYvFDLjJ3x2ylWpVMr6IktIUbX-_PBmiFw2PGXUyNHEa24">
-                            <div
-                                class="absolute inset-0 bg-gradient-to-t from-surface-container-low via-surface-container-low/40 to-transparent">
+
+                <!-- Explore Main Portal -->
+                <div id="explore-main-view">
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 mb-10">
+                        <div
+                            class="lg:col-span-8 bg-surface-container-low rounded-xl p-8 relative overflow-hidden flex flex-col justify-end min-h-[320px] shadow-sm">
+                            <div class="absolute inset-0 z-0">
+                                <img alt="University Library" class="w-full h-full object-cover opacity-20"
+                                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuADPOBaQUdzcly7ayZ9yaZFd4S83y65GUHIObUJkgVdtrV9lJWiHQtwtuJ8KCg1ZyfprcenxCF7v5x6iBBbGpxyWXpCJ1xlX3KdunN3H8541eNcONC8xwVQWTRskacOwHxFepeQFmBizoaUUG-YT5gjhusTpq6N2QCL-8PjHdnooU91PWU4QPvytQE_Ge5bY0yEGRaUtOnmLLnwda_wDqjmT0jRRvePoBYvFDLjJ3x2ylWpVMr6IktIUbX-_PBmiFw2PGXUyNHEa24">
+                                <div
+                                    class="absolute inset-0 bg-gradient-to-t from-surface-container-low via-surface-container-low/40 to-transparent">
+                                </div>
+                            </div>
+                            <div class="relative z-10 max-w-xl">
+                                <span
+                                    class="inline-block px-3 py-1 bg-primary/10 text-primary rounded text-xs font-bold tracking-widest uppercase mb-4">Discovery
+                                    Portal</span>
+                                <h1
+                                    class="text-4xl md:text-5xl font-black tracking-tight text-on-surface mb-4 leading-tight">
+                                    Explore the <span class="text-primary">Digital Quad</span></h1>
+                                <p class="text-lg text-on-surface-variant font-medium leading-relaxed">Connect with
+                                    UIU students, access cutting-edge research, and never miss a campus event again.</p>
                             </div>
                         </div>
-                        <div class="relative z-10 max-w-xl">
-                            <span
-                                class="inline-block px-3 py-1 bg-primary/10 text-primary rounded text-xs font-bold tracking-widest uppercase mb-4">Discovery
-                                Portal</span>
-                            <h1
-                                class="text-4xl md:text-5xl font-black tracking-tight text-on-surface mb-4 leading-tight">
-                                Explore the <span class="text-primary">Digital Quad</span></h1>
-                            <p class="text-lg text-on-surface-variant font-medium leading-relaxed">Connect with
-                                UIU students, access cutting-edge research, and never miss a campus event again.</p>
+                        <div
+                            class="lg:col-span-4 bg-tertiary-container text-on-tertiary-container rounded-xl p-8 flex flex-col justify-between shadow-sm">
+                            <div class="">
+                                <h3 class="text-2xl font-bold mb-2">Live Now</h3>
+                                <p class="text-on-tertiary-container/80 text-sm">UIU National Marketing Day is
+                                    trending in Communities</p>
+                            </div>
+                            <div class="flex flex-col gap-3">
+                                <div
+                                    class="flex items-center gap-3 bg-white/10 p-3 rounded-lg backdrop-blur-sm shadow-sm group hover:bg-white/20 cursor-pointer">
+                                    <span class="material-symbols-outlined">trending_up</span>
+                                    <span class="text-sm font-semibold">#CSE_Hackathon_2024</span>
+                                </div>
+                                <div
+                                    class="flex items-center gap-3 bg-white/10 p-3 rounded-lg backdrop-blur-sm shadow-sm group hover:bg-white/20 cursor-pointer">
+                                    <span class="material-symbols-outlined">groups</span>
+                                    <span class="text-sm font-semibold">Photography Club Meeting</span>
+                                </div>
+                                <div
+                                    class="flex items-center gap-3 bg-white/10 p-3 rounded-lg backdrop-blur-sm shadow-sm group hover:bg-white/20 cursor-pointer">
+                                    <span class="material-symbols-outlined">campaign</span>
+                                    <span class="text-sm font-semibold">#UIU_Job_Fair_Live</span>
+                                </div>
+                                <div
+                                    class="flex items-center gap-3 bg-white/10 p-3 rounded-lg backdrop-blur-sm shadow-sm group hover:bg-white/20 cursor-pointer">
+                                    <span class="material-symbols-outlined">sports_soccer</span>
+                                    <span class="text-sm font-semibold">Inter-Department Football</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div
-                        class="lg:col-span-4 bg-tertiary-container text-on-tertiary-container rounded-xl p-8 flex flex-col justify-between shadow-sm">
-                        <div class="">
-                            <h3 class="text-2xl font-bold mb-2">Live Now</h3>
-                            <p class="text-on-tertiary-container/80 text-sm">UIU National Marketing Day is
-                                trending in Communities</p>
-                        </div>
-                        <div class="flex flex-col gap-3">
-                            <div
-                                class="flex items-center gap-3 bg-white/10 p-3 rounded-lg backdrop-blur-sm shadow-sm group hover:bg-white/20 cursor-pointer">
-                                <span class="material-symbols-outlined">trending_up</span>
-                                <span class="text-sm font-semibold">#CSE_Hackathon_2024</span>
+
+                    <!-- Exploring Topics handled by JS selection -->
+                    <div class="mb-10">
+                        <h3 class="text-xl font-bold mb-4">Recommended Topics</h3>
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                            <div onclick="switchExploreTab('programming')"
+                                class="bg-surface-container-lowest p-6 rounded-xl shadow-sm text-center cursor-pointer hover:-translate-y-1 hover:shadow-md hover:border-primary/50 transition-all border border-surface-container-highest">
+                                <span class="material-symbols-outlined text-4xl text-primary mb-2">code</span>
+                                <h4 class="font-bold">Programming</h4>
+                                <p class="text-xs text-on-surface-variant mt-1">1.2k posts</p>
                             </div>
-                            <div
-                                class="flex items-center gap-3 bg-white/10 p-3 rounded-lg backdrop-blur-sm shadow-sm group hover:bg-white/20 cursor-pointer">
-                                <span class="material-symbols-outlined">groups</span>
-                                <span class="text-sm font-semibold">Photography Club Meeting</span>
+                            <div onclick="switchExploreTab('research')"
+                                class="bg-surface-container-lowest p-6 rounded-xl shadow-sm text-center cursor-pointer hover:-translate-y-1 hover:shadow-md hover:border-primary/50 transition-all border border-surface-container-highest">
+                                <span class="material-symbols-outlined text-4xl text-primary mb-2">science</span>
+                                <h4 class="font-bold">Research & Labs</h4>
+                                <p class="text-xs text-on-surface-variant mt-1">850 posts</p>
                             </div>
-                            <div
-                                class="flex items-center gap-3 bg-white/10 p-3 rounded-lg backdrop-blur-sm shadow-sm group hover:bg-white/20 cursor-pointer">
-                                <span class="material-symbols-outlined">campaign</span>
-                                <span class="text-sm font-semibold">#UIU_Job_Fair_Live</span>
+                            <div onclick="switchExploreTab('gaming')"
+                                class="bg-surface-container-lowest p-6 rounded-xl shadow-sm text-center cursor-pointer hover:-translate-y-1 hover:shadow-md hover:border-primary/50 transition-all border border-surface-container-highest">
+                                <span class="material-symbols-outlined text-4xl text-primary mb-2">sports_esports</span>
+                                <h4 class="font-bold">Gaming Center</h4>
+                                <p class="text-xs text-on-surface-variant mt-1">3.4k posts</p>
                             </div>
-                            <div
-                                class="flex items-center gap-3 bg-white/10 p-3 rounded-lg backdrop-blur-sm shadow-sm group hover:bg-white/20 cursor-pointer">
-                                <span class="material-symbols-outlined">sports_soccer</span>
-                                <span class="text-sm font-semibold">Inter-Department Football</span>
+                            <div onclick="switchExploreTab('career')"
+                                class="bg-surface-container-lowest p-6 rounded-xl shadow-sm text-center cursor-pointer hover:-translate-y-1 hover:shadow-md hover:border-primary/50 transition-all border border-surface-container-highest">
+                                <span
+                                    class="material-symbols-outlined text-4xl text-primary mb-2">business_center</span>
+                                <h4 class="font-bold">Career & Jobs</h4>
+                                <p class="text-xs text-on-surface-variant mt-1">940 posts</p>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Added Exploring Topics -->
-                <div class="mb-10">
-                    <h3 class="text-xl font-bold mb-4">Recommended Topics</h3>
-                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <!-- Explore Sub-Views -->
+                <div id="explore-programming-view"
+                    class="hidden animate-in fade-in slide-in-from-bottom-4 duration-500">
+                    <button onclick="switchExploreTab('main')"
+                        class="mb-6 flex items-center gap-2 text-primary font-bold hover:underline transition-all group">
+                        <span
+                            class="material-symbols-outlined text-sm group-hover:-translate-x-1 transition-transform">arrow_back</span>
+                        Back to Explore
+                    </button>
+                    <!-- Hero Section -->
+                    <div
+                        class="relative bg-gradient-to-r from-slate-900 to-indigo-900 rounded-3xl overflow-hidden mb-8 p-8 md:p-12 shadow-xl group">
                         <div
-                            class="bg-surface-container-lowest p-6 rounded-xl shadow-sm text-center cursor-pointer hover:-translate-y-1 hover:shadow-md transition-all border border-surface-container-highest">
-                            <span class="material-symbols-outlined text-4xl text-primary mb-2">code</span>
-                            <h4 class="font-bold">Programming</h4>
-                            <p class="text-xs text-on-surface-variant mt-1">1.2k posts</p>
+                            class="absolute inset-0 z-0 opacity-30 bg-[url('https://images.unsplash.com/photo-1542831371-29b0f74f9713?auto=format&fit=crop&q=80')] bg-cover bg-center mix-blend-overlay group-hover:scale-105 transition-transform duration-700">
                         </div>
                         <div
-                            class="bg-surface-container-lowest p-6 rounded-xl shadow-sm text-center cursor-pointer hover:-translate-y-1 hover:shadow-md transition-all border border-surface-container-highest">
-                            <span class="material-symbols-outlined text-4xl text-primary mb-2">science</span>
-                            <h4 class="font-bold">Research & Labs</h4>
-                            <p class="text-xs text-on-surface-variant mt-1">850 posts</p>
+                            class="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent z-0">
+                        </div>
+                        <div class="relative z-10 max-w-2xl text-white">
+                            <span
+                                class="inline-block px-3 py-1 bg-white/10 backdrop-blur-md rounded-full text-[10px] font-bold tracking-widest uppercase mb-4 text-indigo-300 border border-white/10 shadow-sm">Programming
+                                Hub</span>
+                            <h1 class="text-4xl md:text-6xl font-black mb-4 leading-tight tracking-tight">Build the
+                                Future with <span class="text-indigo-400">UIU Developers</span></h1>
+                            <p class="text-lg md:text-xl text-slate-300 font-medium leading-relaxed mb-8">Discover
+                                projects, coding contests, open-source teams, and programming communities.</p>
+                            <div class="flex flex-wrap gap-4">
+                                <button onclick="openExplorePopup({
+                                    title: 'Join Developer Community',
+                                    subtitle: 'UIU Programming Hub',
+                                    icon: 'groups',
+                                    theme: 'indigo',
+                                    bodyHtml: '<p class=\'text-slate-600\'>Connect with fellow developers at UIU. Share your projects, find mentors, and stay updated on the latest tech trends. Your student ID will be shared with community moderators.</p>',
+                                    footerHtml: '<button onclick=\'closeExplorePopup(); showToast(&quot;Requested to join community!&quot;)\' class=\'flex-1 py-2.5 bg-indigo-600 text-white font-bold rounded-xl shadow-md hover:bg-indigo-500 transition-all\'>Request to Join</button>'
+                                })"
+                                    class="px-6 py-3 bg-indigo-500 hover:bg-indigo-400 text-white font-bold rounded-xl transition-all shadow-[0_0_20px_rgba(99,102,241,0.4)] hover:scale-105 active:scale-95 flex items-center gap-2">
+                                    <span class="material-symbols-outlined text-sm">groups</span> Join Community
+                                </button>
+                                <button onclick="openExplorePopup({
+                                    title: 'Share Your Project',
+                                    subtitle: 'Showcase your work',
+                                    icon: 'code',
+                                    theme: 'indigo',
+                                    bodyHtml: '<div class=\'space-y-4\'><p class=\'text-slate-600\'>Want to showcase your project to the UIU community? Provide a link to your repository or a hosted demo.</p><input type=\'text\' placeholder=\'Project Name\' class=\'w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-2 text-sm focus:ring-1 focus:ring-indigo-500 outline-none\'><input type=\'text\' placeholder=\'GitHub/Demo URL\' class=\'w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-2 text-sm focus:ring-1 focus:ring-indigo-500 outline-none\'></div>',
+                                    footerHtml: '<button onclick=\'closeExplorePopup(); showToast(&quot;Project submitted for review!&quot;)\' class=\'flex-1 py-2.5 bg-slate-900 text-white font-bold rounded-xl shadow-md hover:bg-slate-800 transition-all\'>Submit Project</button>'
+                                })"
+                                    class="px-6 py-3 bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-white/20 text-white font-bold rounded-xl transition-all hover:scale-105 active:scale-95 flex items-center gap-2">
+                                    <span class="material-symbols-outlined text-sm">code</span> Share Project
+                                </button>
+                                <button onclick="switchTab('events')"
+                                    class="px-6 py-3 bg-white/5 hover:bg-white/10 backdrop-blur-sm text-slate-300 font-bold rounded-xl transition-all flex items-center gap-2">
+                                    <span class="material-symbols-outlined text-sm">event</span> Explore Events
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 xl:grid-cols-12 gap-8">
+                        <div class="xl:col-span-8 flex flex-col gap-10">
+                            <!-- Trending Now Slider -->
+                            <div>
+                                <div class="flex items-center justify-between mb-5">
+                                    <h3 class="text-xl font-bold flex items-center gap-2 text-on-surface">
+                                        <span
+                                            class="material-symbols-outlined text-red-500">local_fire_department</span>
+                                        Trending Now
+                                    </h3>
+                                    <div class="flex gap-2">
+                                        <button onclick="scrollSlider('trending-slider', 'left')"
+                                            class="w-8 h-8 rounded-full bg-surface-container-high flex items-center justify-center hover:bg-surface-container-highest transition-colors shadow-sm active:scale-90"><span
+                                                class="material-symbols-outlined text-sm">chevron_left</span></button>
+                                        <button onclick="scrollSlider('trending-slider', 'right')"
+                                            class="w-8 h-8 rounded-full bg-surface-container-high flex items-center justify-center hover:bg-surface-container-highest transition-colors shadow-sm active:scale-90"><span
+                                                class="material-symbols-outlined text-sm">chevron_right</span></button>
+                                    </div>
+                                </div>
+                                <div id="trending-slider"
+                                    class="flex gap-4 overflow-x-auto hide-scrollbar pb-4 -mx-4 px-4 snap-x">
+                                    <div
+                                        class="min-w-[280px] bg-surface-container-lowest rounded-2xl p-5 border border-surface-container-highest shadow-sm snap-start hover:border-indigo-300 transition-colors group cursor-pointer">
+                                        <div class="flex justify-between items-start mb-4">
+                                            <span
+                                                class="px-2 py-1 bg-red-50 text-red-600 text-[10px] font-bold rounded uppercase tracking-widest flex items-center gap-1.5"><span
+                                                    class="w-2 h-2 rounded-full bg-red-500 animate-pulse"></span>
+                                                LIVE</span>
+                                            <span
+                                                class="text-xs text-on-surface-variant font-bold bg-surface-container-low px-2 py-1 rounded-md">14
+                                                May</span>
+                                        </div>
+                                        <h4
+                                            class="font-bold text-lg mb-1 leading-tight text-on-surface group-hover:text-indigo-600 transition-colors">
+                                            UIU Hackathon 2026</h4>
+                                        <p class="text-xs text-on-surface-variant mb-6 font-medium">48-hour coding
+                                            sprint. Build impactful API solutions.</p>
+                                        <div
+                                            class="flex justify-between items-center mt-auto pt-4 border-t border-surface-container-highest">
+                                            <div class="flex items-center gap-2">
+                                                <div class="flex -space-x-2">
+                                                    <img class="w-6 h-6 rounded-full border-2 border-white object-cover"
+                                                        src="https://ui-avatars.com/api/?name=A&background=random">
+                                                    <img class="w-6 h-6 rounded-full border-2 border-white object-cover"
+                                                        src="https://ui-avatars.com/api/?name=B&background=random">
+                                                    <div
+                                                        class="w-6 h-6 rounded-full border-2 border-white bg-slate-100 flex items-center justify-center text-[8px] font-bold text-slate-600">
+                                                        +42</div>
+                                                </div>
+                                            </div>
+                                            <button onclick="openExplorePopup({
+                                                title: 'UIU Hackathon 2026',
+                                                subtitle: '48H Coding Challenge',
+                                                icon: 'terminal',
+                                                theme: 'indigo',
+                                                bodyHtml: '<div class=\'space-y-4\'><div class=\'flex items-center gap-2 text-red-600 font-bold text-xs uppercase\'><span class=\'w-2 h-2 rounded-full bg-red-600 animate-pulse\'></span> Registration Open</div><p class=\'text-slate-600 text-sm\'>Build impactful solutions for campus life using modern APIs. Top 3 teams win cash prizes and internships.</p><div class=\'bg-slate-50 p-3 rounded-lg border border-slate-100\'><h5 class=\'text-[10px] font-bold text-slate-400 uppercase mb-1\'>Rules & Requirements</h5><ul class=\'text-xs text-slate-600 space-y-1 list-disc pl-4\'><li>Max 4 members per team</li><li>At least one UIU CSE major required</li><li>Pre-built projects not allowed</li></ul></div></div>',
+                                                footerHtml: '<button onclick=\'closeExplorePopup(); showToast(&quot;Registered for Hackathon!&quot;)\' class=\'flex-1 py-2.5 bg-indigo-600 text-white font-bold rounded-xl shadow-md hover:bg-indigo-500 transition-all\'>Register Team</button>'
+                                            })"
+                                                class="px-4 py-1.5 bg-slate-900 text-white text-xs font-bold rounded-lg hover:bg-slate-800 transition-colors shadow-md">Join</button>
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="min-w-[280px] bg-surface-container-lowest rounded-2xl p-5 border border-surface-container-highest shadow-sm snap-start hover:border-emerald-300 transition-colors group cursor-pointer">
+                                        <div class="flex justify-between items-start mb-4">
+                                            <span
+                                                class="px-2 py-1 bg-emerald-50 text-emerald-600 text-[10px] font-bold rounded uppercase tracking-widest flex items-center gap-1.5"><span
+                                                    class="w-2 h-2 rounded-full bg-emerald-500"></span> OPEN</span>
+                                            <span
+                                                class="text-xs text-on-surface-variant font-bold bg-surface-container-low px-2 py-1 rounded-md">20
+                                                May</span>
+                                        </div>
+                                        <h4
+                                            class="font-bold text-lg mb-1 leading-tight text-on-surface group-hover:text-emerald-600 transition-colors">
+                                            Open Source Sprint</h4>
+                                        <p class="text-xs text-on-surface-variant mb-6 font-medium">Contribute to UIU's
+                                            GitHub repos and earn badges.</p>
+                                        <div
+                                            class="flex justify-between items-center mt-auto pt-4 border-t border-surface-container-highest">
+                                            <div class="flex items-center gap-2">
+                                                <span class="text-xs text-on-surface font-bold">12 Active PRs</span>
+                                            </div>
+                                            <button onclick="openExplorePopup({
+                                                title: 'Open Source Sprint',
+                                                subtitle: 'UIU Projects on GitHub',
+                                                icon: 'hub',
+                                                theme: 'emerald',
+                                                bodyHtml: '<p class=\'text-slate-600\'>Help improve UIU digital infrastructure. Contribute to active repositories and earn your Silver Contributor badge.</p>',
+                                                footerHtml: '<a href=\'https://github.com\' target=\'_blank\' class=\'flex-1 py-2.5 bg-emerald-600 text-white text-center font-bold rounded-xl shadow-md hover:bg-emerald-500 transition-all\'>View Repositories</a>'
+                                            })"
+                                                class="px-4 py-1.5 bg-emerald-600 text-white text-xs font-bold rounded-lg hover:bg-emerald-500 transition-colors shadow-md">View
+                                                Repo</button>
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="min-w-[280px] bg-surface-container-lowest rounded-2xl p-5 border border-surface-container-highest shadow-sm snap-start hover:border-purple-300 transition-colors group cursor-pointer">
+                                        <div class="flex justify-between items-start mb-4">
+                                            <span
+                                                class="px-2 py-1 bg-purple-50 text-purple-600 text-[10px] font-bold rounded uppercase tracking-widest flex items-center gap-1.5"><span
+                                                    class="material-symbols-outlined text-[10px]">campaign</span>
+                                                REGISTER</span>
+                                            <span
+                                                class="text-xs text-on-surface-variant font-bold bg-surface-container-low px-2 py-1 rounded-md">01
+                                                Jun</span>
+                                        </div>
+                                        <h4
+                                            class="font-bold text-lg mb-1 leading-tight text-on-surface group-hover:text-purple-600 transition-colors">
+                                            Competitive Programming Bootcamp</h4>
+                                        <p class="text-xs text-on-surface-variant mb-6 font-medium">Master Data
+                                            Structures and Algorithms with ICPC champions.</p>
+                                        <div
+                                            class="flex justify-between items-center mt-auto pt-4 border-t border-surface-container-highest">
+                                            <div class="flex items-center gap-2">
+                                                <span class="text-xs text-on-surface-variant font-bold">85
+                                                    Registered</span>
+                                            </div>
+                                            <button onclick="openExplorePopup({
+                                                title: 'Competitive Programming Bootcamp',
+                                                subtitle: 'Level up your DSA skills',
+                                                icon: 'psychology',
+                                                theme: 'indigo',
+                                                bodyHtml: '<p class=\'text-slate-600\'>Master Data Structures and Algorithms with past ICPC regionals winners. Every Monday & Wednesday at Room 502.</p>',
+                                                footerHtml: '<button onclick=\'closeExplorePopup(); showToast(&quot;Enrolled in Bootcamp!&quot;)\' class=\'flex-1 py-2.5 bg-indigo-600 text-white font-bold rounded-xl shadow-md hover:bg-indigo-500 transition-all\'>Confirm Enrollment</button>'
+                                            })"
+                                                class="px-4 py-1.5 bg-purple-600 text-white text-xs font-bold rounded-lg hover:bg-purple-500 transition-colors shadow-md">Enroll</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Explore Categories -->
+                            <div>
+                                <h3 class="text-xl font-bold mb-5 text-on-surface flex items-center gap-2"><span
+                                        class="material-symbols-outlined text-primary">category</span> Explore
+                                    Categories</h3>
+                                <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+                                    <div
+                                        class="bg-surface-container-lowest p-5 rounded-2xl hover:shadow-md hover:-translate-y-1 transition-all border border-surface-container-highest cursor-pointer group">
+                                        <div
+                                            class="w-12 h-12 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                                            <span class="material-symbols-outlined">language</span>
+                                        </div>
+                                        <h4 class="font-bold text-sm mb-1 text-slate-800">Web Development</h4>
+                                        <p class="text-[11px] text-slate-500 mb-3">Open posts + resources</p>
+                                        <span class="text-xs font-bold text-blue-600 group-hover:underline">Explore
+                                            →</span>
+                                    </div>
+                                    <div
+                                        class="bg-surface-container-lowest p-5 rounded-2xl hover:shadow-md hover:-translate-y-1 transition-all border border-surface-container-highest cursor-pointer group">
+                                        <div
+                                            class="w-12 h-12 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                                            <span class="material-symbols-outlined">smartphone</span>
+                                        </div>
+                                        <h4 class="font-bold text-sm mb-1 text-slate-800">App Development</h4>
+                                        <p class="text-[11px] text-slate-500 mb-3">View projects & teams</p>
+                                        <span class="text-xs font-bold text-emerald-600 group-hover:underline">Explore
+                                            →</span>
+                                    </div>
+                                    <div
+                                        class="bg-surface-container-lowest p-5 rounded-2xl hover:shadow-md hover:-translate-y-1 transition-all border border-surface-container-highest cursor-pointer group">
+                                        <div
+                                            class="w-12 h-12 rounded-full bg-purple-50 text-purple-600 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                                            <span class="material-symbols-outlined">psychology</span>
+                                        </div>
+                                        <h4 class="font-bold text-sm mb-1 text-slate-800">AI & ML</h4>
+                                        <p class="text-[11px] text-slate-500 mb-3">Join research models</p>
+                                        <span class="text-xs font-bold text-purple-600 group-hover:underline">Explore
+                                            →</span>
+                                    </div>
+                                    <div
+                                        class="bg-surface-container-lowest p-5 rounded-2xl hover:shadow-md hover:-translate-y-1 transition-all border border-surface-container-highest cursor-pointer group">
+                                        <div
+                                            class="w-12 h-12 rounded-full bg-amber-50 text-amber-600 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                                            <span class="material-symbols-outlined">code_blocks</span>
+                                        </div>
+                                        <h4 class="font-bold text-sm mb-1 text-slate-800">Competitive Prog.</h4>
+                                        <p class="text-[11px] text-slate-500 mb-3">Contest schedules</p>
+                                        <span class="text-xs font-bold text-amber-600 group-hover:underline">Explore
+                                            →</span>
+                                    </div>
+                                    <div
+                                        class="bg-surface-container-lowest p-5 rounded-2xl hover:shadow-md hover:-translate-y-1 transition-all border border-surface-container-highest cursor-pointer group">
+                                        <div
+                                            class="w-12 h-12 rounded-full bg-pink-50 text-pink-600 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                                            <span class="material-symbols-outlined">design_services</span>
+                                        </div>
+                                        <h4 class="font-bold text-sm mb-1 text-slate-800">UI/UX Design</h4>
+                                        <p class="text-[11px] text-slate-500 mb-3">Team collaboration</p>
+                                        <span class="text-xs font-bold text-pink-600 group-hover:underline">Explore
+                                            →</span>
+                                    </div>
+                                    <div
+                                        class="bg-surface-container-lowest p-5 rounded-2xl hover:shadow-md hover:-translate-y-1 transition-all border border-surface-container-highest cursor-pointer group">
+                                        <div
+                                            class="w-12 h-12 rounded-full bg-slate-100 text-slate-700 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                                            <span class="material-symbols-outlined">security</span>
+                                        </div>
+                                        <h4 class="font-bold text-sm mb-1 text-slate-800">Cybersecurity</h4>
+                                        <p class="text-[11px] text-slate-500 mb-3">Labs & challenges</p>
+                                        <span class="text-xs font-bold text-slate-700 group-hover:underline">Explore
+                                            →</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Student Project Showcase -->
+                            <div>
+                                <div class="flex items-center justify-between mb-5">
+                                    <h3 class="text-xl font-bold flex items-center gap-2 text-on-surface"><span
+                                            class="material-symbols-outlined text-orange-500">grid_view</span> Student
+                                        Projects</h3>
+                                    <button class="text-sm text-primary font-bold hover:underline">View All</button>
+                                </div>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    <div
+                                        class="bg-surface-container-lowest rounded-2xl overflow-hidden border border-surface-container-highest shadow-sm group">
+                                        <div
+                                            class="h-40 bg-[url('https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=600')] bg-cover bg-center relative">
+                                            <div
+                                                class="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors">
+                                            </div>
+                                            <button
+                                                class="absolute top-3 right-3 w-8 h-8 rounded-full bg-white/30 backdrop-blur-md flex items-center justify-center hover:bg-white text-white hover:text-red-500 transition-colors shadow-sm"><span
+                                                    class="material-symbols-outlined text-[18px]">favorite_border</span></button>
+                                        </div>
+                                        <div class="p-5">
+                                            <div class="flex gap-2 mb-3">
+                                                <span
+                                                    class="px-2 py-0.5 bg-blue-50 text-blue-600 rounded text-[10px] font-bold border border-blue-100">React</span>
+                                                <span
+                                                    class="px-2 py-0.5 bg-yellow-50 text-yellow-600 rounded text-[10px] font-bold border border-yellow-100">Firebase</span>
+                                            </div>
+                                            <h4 class="font-black text-lg mb-1">Smart Attendance System</h4>
+                                            <div class="flex flex-col gap-4">
+                                                <div class="flex items-center justify-between">
+                                                    <div class="flex items-center gap-2 mt-2">
+                                                        <img src="https://ui-avatars.com/api/?name=Rakib+Hasan&background=random"
+                                                            class="w-6 h-6 rounded-full border border-slate-200">
+                                                        <span
+                                                            class="text-xs font-semibold text-slate-600 cursor-pointer hover:underline">Rakib
+                                                            Hasan</span>
+                                                    </div>
+                                                    <div class="flex items-center gap-1 text-slate-500 text-xs mt-2">
+                                                        <span
+                                                            class="material-symbols-outlined text-[14px]">thumb_up</span>
+                                                        124
+                                                    </div>
+                                                </div>
+                                                <div class="flex gap-2 w-full mt-2">
+                                                    <button
+                                                        class="flex-1 py-1.5 bg-slate-900 text-white text-[11px] font-bold rounded-lg shadow-sm hover:bg-slate-800 transition-colors">View
+                                                        Demo</button>
+                                                    <button
+                                                        class="flex-1 py-1.5 bg-indigo-50 text-indigo-700 border border-indigo-100 text-[11px] font-bold rounded-lg shadow-sm hover:bg-indigo-100 transition-colors">Join
+                                                        Team</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="bg-surface-container-lowest rounded-2xl overflow-hidden border border-surface-container-highest shadow-sm group">
+                                        <div
+                                            class="h-40 bg-[url('https://images.unsplash.com/photo-1544197150-b99a580bb7a8?auto=format&fit=crop&w=600')] bg-cover bg-center relative">
+                                            <div
+                                                class="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors">
+                                            </div>
+                                            <button
+                                                class="absolute top-3 right-3 w-8 h-8 rounded-full bg-white/30 backdrop-blur-md flex items-center justify-center hover:bg-white text-white hover:text-red-500 transition-colors shadow-sm"><span
+                                                    class="material-symbols-outlined text-[18px]">favorite</span></button>
+                                        </div>
+                                        <div class="p-5">
+                                            <div class="flex gap-2 mb-3">
+                                                <span
+                                                    class="px-2 py-0.5 bg-emerald-50 text-emerald-600 rounded text-[10px] font-bold border border-emerald-100">Flutter</span>
+                                                <span
+                                                    class="px-2 py-0.5 bg-slate-50 text-slate-600 rounded text-[10px] font-bold border border-slate-200">Supabase</span>
+                                            </div>
+                                            <h4 class="font-black text-lg mb-1">Campus Trade App</h4>
+                                            <div class="flex flex-col gap-4">
+                                                <div class="flex items-center justify-between">
+                                                    <div class="flex items-center gap-2 mt-2">
+                                                        <img src="https://ui-avatars.com/api/?name=Sadika+Rahman&background=random"
+                                                            class="w-6 h-6 rounded-full border border-slate-200">
+                                                        <span
+                                                            class="text-xs font-semibold text-slate-600 cursor-pointer hover:underline">Sadika
+                                                            Rahman</span>
+                                                    </div>
+                                                    <div class="flex items-center gap-1 text-slate-500 text-xs mt-2">
+                                                        <span
+                                                            class="material-symbols-outlined text-[14px]">thumb_up</span>
+                                                        38
+                                                    </div>
+                                                </div>
+                                                <div class="flex gap-2 w-full mt-2">
+                                                    <button
+                                                        class="flex-1 py-1.5 bg-slate-900 text-white text-[11px] font-bold rounded-lg shadow-sm hover:bg-slate-800 transition-colors">View
+                                                        Github</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="xl:col-span-4 flex flex-col gap-8">
+                            <!-- Coding Help Feed -->
+                            <div
+                                class="bg-surface-container-lowest rounded-2xl p-5 border border-surface-container-highest shadow-sm">
+                                <div
+                                    class="flex items-center justify-between mb-4 border-b border-surface-container-highest pb-3">
+                                    <h3 class="font-bold text-lg flex items-center gap-2 text-on-surface"><span
+                                            class="material-symbols-outlined text-purple-500">help</span> Q&A Forum</h3>
+                                    <button onclick="openExplorePopup({
+                                        title: 'Ask a Technical Question',
+                                        subtitle: 'UIU Programming Forum',
+                                        icon: 'help',
+                                        theme: 'indigo',
+                                        bodyHtml: '<div class=\'space-y-4\'><div class=\'bg-indigo-50 p-3 rounded-lg border border-indigo-100 mb-4\'><p class=\'text-xs text-indigo-700\'>Your question will be visible to students and faculty in the Programming Hub.</p></div><input type=\'text\' id=\'qa-subject\' placeholder=\'Subject (e.g., Python Lists)\' class=\'w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-2 text-sm focus:ring-1 focus:ring-indigo-500 outline-none\'><textarea id=\'qa-details\' placeholder=\'Describe your problem in detail...\' class=\'w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-3 text-sm focus:ring-1 focus:ring-indigo-500 outline-none h-32\'></textarea><div class=\'flex gap-2\'><span class=\'px-2 py-1 bg-slate-100 text-slate-500 rounded text-[10px] font-bold\'>#python</span><span class=\'px-2 py-1 bg-slate-100 text-slate-500 rounded text-[10px] font-bold\'>#frontend</span><button class=\'text-[10px] text-indigo-600 font-bold hover:underline\'>+ Add Tags</button></div></div>',
+                                        footerHtml: '<button onclick=\'postQuestion()\' class=\'flex-1 py-2.5 bg-indigo-600 text-white font-bold rounded-xl shadow-md hover:bg-indigo-500 transition-all\'>Post Question</button>'
+                                    })"
+                                        class="text-[11px] text-white bg-primary px-3 py-1.5 rounded-lg font-bold shadow-sm hover:scale-105 transition-transform flex items-center gap-1"><span
+                                            class="material-symbols-outlined text-[14px]">add</span> Ask</button>
+                                </div>
+                                <div id="qa-forum-list" class="flex flex-col gap-5">
+                                    <div class="group cursor-pointer">
+                                        <h4
+                                            class="font-semibold text-sm mb-2 text-slate-800 group-hover:text-primary transition-colors leading-snug">
+                                            How to resolve "CORS policy" error when connecting React to Node.js?</h4>
+                                        <div class="flex gap-1.5 mb-2">
+                                            <span
+                                                class="px-1.5 py-0.5 bg-slate-100 text-slate-500 rounded text-[9px] font-bold uppercase tracking-wider">React</span>
+                                            <span
+                                                class="px-1.5 py-0.5 bg-slate-100 text-slate-500 rounded text-[9px] font-bold uppercase tracking-wider">Node.js</span>
+                                        </div>
+                                        <div class="flex items-center justify-between text-xs text-slate-500">
+                                            <span
+                                                class="flex items-center gap-1 text-emerald-600 font-bold bg-emerald-50 px-1.5 py-0.5 rounded"><span
+                                                    class="material-symbols-outlined text-[12px]">check_circle</span>
+                                                Solved</span>
+                                            <span>3 answers</span>
+                                        </div>
+                                    </div>
+                                    <hr class="border-surface-container-highest">
+                                    <div class="group cursor-pointer">
+                                        <h4
+                                            class="font-semibold text-sm mb-2 text-slate-800 group-hover:text-primary transition-colors leading-snug">
+                                            Best practices for state management in large Vue 3 applications?</h4>
+                                        <div class="flex gap-1.5 mb-2">
+                                            <span
+                                                class="px-1.5 py-0.5 bg-slate-100 text-slate-500 rounded text-[9px] font-bold uppercase tracking-wider">Vue</span>
+                                            <span
+                                                class="px-1.5 py-0.5 bg-slate-100 text-slate-500 rounded text-[9px] font-bold uppercase tracking-wider">Pinia</span>
+                                        </div>
+                                        <div class="flex items-center justify-between text-xs text-slate-500">
+                                            <span
+                                                class="flex items-center gap-1 text-primary font-bold bg-primary/10 px-1.5 py-0.5 rounded"><span
+                                                    class="material-symbols-outlined text-[12px]">school</span> Mentor
+                                                Replied</span>
+                                            <span>1 answer</span>
+                                        </div>
+                                    </div>
+                                    <hr class="border-surface-container-highest">
+                                    <div class="group cursor-pointer">
+                                        <h4
+                                            class="font-semibold text-sm mb-2 text-slate-800 group-hover:text-primary transition-colors leading-snug">
+                                            Setting up a recurrent neural network with PyTorch for time-series...</h4>
+                                        <div class="flex gap-1.5 mb-2">
+                                            <span
+                                                class="px-1.5 py-0.5 bg-slate-100 text-slate-500 rounded text-[9px] font-bold uppercase tracking-wider">Python</span>
+                                            <span
+                                                class="px-1.5 py-0.5 bg-slate-100 text-slate-500 rounded text-[9px] font-bold uppercase tracking-wider">PyTorch</span>
+                                        </div>
+                                        <div class="flex items-center justify-between text-xs text-slate-500 mt-1">
+                                            <span class="text-slate-400">Not answered yet</span>
+                                            <span>0 answers</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Upcoming Events Sidebar -->
+                            <div
+                                class="sticky top-28 bg-surface-container-lowest rounded-2xl p-5 border border-surface-container-highest shadow-sm">
+                                <h3 class="font-bold text-lg mb-4 flex items-center gap-2 text-on-surface"><span
+                                        class="material-symbols-outlined text-amber-500">event_upcoming</span> Tech
+                                    Events</h3>
+                                <div class="flex flex-col gap-4">
+                                    <div
+                                        class="flex gap-3 items-start hover:bg-slate-50 p-2 -mx-2 rounded-xl cursor-pointer transition-colors">
+                                        <div
+                                            class="bg-amber-100 text-amber-700 min-w-10 h-10 rounded-lg flex flex-col items-center justify-center border border-amber-200">
+                                            <span class="text-[9px] font-bold uppercase tracking-wider">May</span>
+                                            <span class="text-sm font-black leading-none mt-0.5">25</span>
+                                        </div>
+                                        <div>
+                                            <h4 class="text-sm font-bold text-slate-800 mb-0.5">Competitive Programming
+                                                Workshop</h4>
+                                            <p class="text-[11px] text-slate-500">Room 412 • 3:00 PM</p>
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="flex gap-3 items-start hover:bg-slate-50 p-2 -mx-2 rounded-xl cursor-pointer transition-colors">
+                                        <div
+                                            class="bg-blue-100 text-blue-700 min-w-10 h-10 rounded-lg flex flex-col items-center justify-center border border-blue-200">
+                                            <span class="text-[9px] font-bold uppercase tracking-wider">Jun</span>
+                                            <span class="text-sm font-black leading-none mt-0.5">02</span>
+                                        </div>
+                                        <div>
+                                            <h4 class="text-sm font-bold text-slate-800 mb-0.5">Google Cloud Study Jam
+                                            </h4>
+                                            <p class="text-[11px] text-slate-500">Online Webinar • 7:00 PM</p>
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="flex gap-3 items-start hover:bg-slate-50 p-2 -mx-2 rounded-xl cursor-pointer transition-colors">
+                                        <div
+                                            class="bg-teal-100 text-teal-700 min-w-10 h-10 rounded-lg flex flex-col items-center justify-center border border-teal-200">
+                                            <span class="text-[9px] font-bold uppercase tracking-wider">Jun</span>
+                                            <span class="text-sm font-black leading-none mt-0.5">15</span>
+                                        </div>
+                                        <div>
+                                            <h4 class="text-sm font-bold text-slate-800 mb-0.5">UIU App Dev Bootcamp
+                                            </h4>
+                                            <p class="text-[11px] text-slate-500">Lab 3 • Multi-day</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="explore-research-view" class="hidden animate-in fade-in slide-in-from-bottom-4 duration-500">
+                    <button onclick="switchExploreTab('main')"
+                        class="mb-6 flex items-center gap-2 text-primary font-bold hover:underline transition-all group">
+                        <span
+                            class="material-symbols-outlined text-sm group-hover:-translate-x-1 transition-transform">arrow_back</span>
+                        Back to Explore
+                    </button>
+                    <!-- Hero Section -->
+                    <div
+                        class="relative bg-gradient-to-r from-teal-900 to-cyan-900 rounded-3xl overflow-hidden mb-8 p-8 md:p-12 shadow-xl group">
+                        <div
+                            class="absolute inset-0 z-0 opacity-20 bg-[url('https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&q=80')] bg-cover bg-center mix-blend-overlay group-hover:scale-105 transition-transform duration-700">
+                        </div>
+                        <div class="absolute inset-0 bg-gradient-to-t from-teal-900 via-transparent to-transparent z-0">
+                        </div>
+                        <div class="relative z-10 max-w-2xl text-white">
+                            <span
+                                class="inline-block px-3 py-1 bg-white/10 backdrop-blur-md rounded-full text-[10px] font-bold tracking-widest uppercase mb-4 text-cyan-300 border border-white/10 shadow-sm">Research
+                                & Labs</span>
+                            <h1 class="text-4xl md:text-6xl font-black mb-4 leading-tight tracking-tight">Innovate &
+                                <span class="text-teal-400">Discover</span>
+                            </h1>
+                            <p class="text-lg md:text-xl text-teal-100 font-medium leading-relaxed mb-8">Connect closely
+                                with faculty, join active labs, and publish groundbreaking research.</p>
+                            <div class="flex flex-wrap gap-4">
+                                <button onclick="openExplorePopup({
+                                    title: 'Apply to Research Lab',
+                                    subtitle: 'Join active research teams',
+                                    icon: 'science',
+                                    theme: 'teal',
+                                    bodyHtml: '<p class=\'text-slate-600\'>Browse through active labs looking for student researchers. You will need a strong GPA and interest in the specific field.</p><select class=\'w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-2 text-sm focus:ring-1 focus:ring-teal-500 outline-none mt-4\'><option>Advanced Machine Learning Lab</option><option>Renewable Networks Lab</option><option>Biotech Research Center</option></select>',
+                                    footerHtml: '<button onclick=\'closeExplorePopup(); switchExploreTab(&quot;main&quot;);\' class=\'flex-1 py-2.5 bg-teal-600 text-white font-bold rounded-xl shadow-md hover:bg-teal-500 transition-all\'>View Lab Directory</button>'
+                                })"
+                                    class="px-6 py-3 bg-teal-500 hover:bg-teal-400 text-slate-900 font-bold rounded-xl transition-all shadow-[0_0_20px_rgba(20,184,166,0.4)] hover:scale-105 active:scale-95 flex items-center gap-2">
+                                    <span class="material-symbols-outlined text-sm">science</span> Join Lab
+                                </button>
+                                <button onclick="openExplorePopup({
+                                    title: 'Submit Research Idea',
+                                    subtitle: 'Pitch your innovation',
+                                    icon: 'emoji_objects',
+                                    theme: 'teal',
+                                    bodyHtml: '<div class=\'space-y-4\'><p class=\'text-slate-600\'>Do you have a groundbreaking research idea? Submit a brief abstract and we will match you with a faculty mentor.</p><textarea placeholder=\'Brief Abstract (max 500 words)\' class=\'w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-2 text-sm focus:ring-1 focus:ring-teal-500 outline-none h-24\'></textarea></div>',
+                                    footerHtml: '<button onclick=\'closeExplorePopup(); showToast(&quot;Idea submitted to Research Office!&quot;)\' class=\'flex-1 py-2.5 bg-slate-900 text-white font-bold rounded-xl shadow-md hover:bg-slate-800 transition-all\'>Submit for Review</button>'
+                                })"
+                                    class="px-6 py-3 bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-white/20 text-white font-bold rounded-xl transition-all hover:scale-105 active:scale-95 flex items-center gap-2">
+                                    <span class="material-symbols-outlined text-sm">emoji_objects</span> Submit Idea
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 xl:grid-cols-12 gap-8">
+                        <div class="xl:col-span-8 flex flex-col gap-10">
+                            <!-- Currently Active Labs -->
+                            <div>
+                                <div class="flex items-center justify-between mb-5">
+                                    <h3 class="text-xl font-bold flex items-center gap-2 text-on-surface">
+                                        <span class="material-symbols-outlined text-cyan-600">biotech</span> Active
+                                        Research Labs
+                                    </h3>
+                                    <button class="text-sm text-cyan-600 font-bold hover:underline">View
+                                        Directory</button>
+                                </div>
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                    <!-- Lab Card 1 -->
+                                    <div
+                                        class="bg-surface-container-lowest border border-surface-container-highest rounded-2xl p-5 shadow-sm hover:shadow-md transition-shadow cursor-pointer group hover:border-cyan-200">
+                                        <div class="flex items-start justify-between mb-4">
+                                            <div
+                                                class="w-12 h-12 rounded-xl bg-cyan-50 text-cyan-600 flex items-center justify-center font-bold text-xl mb-2 group-hover:scale-110 transition-transform">
+                                                AI</div>
+                                            <span
+                                                class="px-2 py-1 bg-emerald-50 text-emerald-600 rounded text-[10px] font-bold uppercase tracking-widest"><span
+                                                    class="w-1.5 h-1.5 inline-block rounded-full bg-emerald-500 mr-1"></span>Hiring</span>
+                                        </div>
+                                        <h4 class="font-bold text-lg mb-1 group-hover:text-cyan-600 transition-colors">
+                                            Advanced Machine Learning Lab</h4>
+                                        <p class="text-xs text-slate-500 mb-4 line-clamp-2">Focusing on NLP models for
+                                            Bengali language and predictive analytics for climate data.</p>
+                                        <div
+                                            class="flex items-center justify-between pt-4 border-t border-surface-container-highest">
+                                            <div class="flex items-center gap-2">
+                                                <img src="https://ui-avatars.com/api/?name=Dr.+S.&background=random"
+                                                    class="w-6 h-6 rounded-full border border-slate-200">
+                                                <span class="text-[11px] font-semibold text-slate-700">Dr.
+                                                    Salekul</span>
+                                            </div>
+                                            <button onclick="openExplorePopup({
+                                                title: 'Apply to AML Lab',
+                                                subtitle: 'Advanced Machine Learning',
+                                                icon: 'psychology',
+                                                theme: 'teal',
+                                                bodyHtml: '<p class=\'text-slate-600\'>Requirement: CSE 3rd year+, ML basic knowledge. Attachment of your GitHub profile or research paper is preferred.</p>',
+                                                footerHtml: '<button onclick=\'closeExplorePopup(); showToast(&quot;Application sent to Dr. Salekul!&quot;)\' class=\'flex-1 py-2.5 bg-teal-600 text-white font-bold rounded-xl shadow-md hover:bg-teal-500 transition-all\'>Send Application</button>'
+                                            })" class="text-xs font-bold text-cyan-600 hover:underline">Apply
+                                                →</button>
+                                        </div>
+                                    </div>
+                                    <!-- Lab Card 2 -->
+                                    <div
+                                        class="bg-surface-container-lowest border border-surface-container-highest rounded-2xl p-5 shadow-sm hover:shadow-md transition-shadow cursor-pointer group hover:border-teal-200">
+                                        <div class="flex items-start justify-between mb-4">
+                                            <div
+                                                class="w-12 h-12 rounded-xl bg-teal-50 text-teal-600 flex items-center justify-center font-bold text-xl mb-2 group-hover:scale-110 transition-transform">
+                                                RN</div>
+                                            <span
+                                                class="px-2 py-1 bg-slate-100 text-slate-500 rounded text-[10px] font-bold uppercase tracking-widest">Full</span>
+                                        </div>
+                                        <h4 class="font-bold text-lg mb-1 group-hover:text-teal-600 transition-colors">
+                                            Renewable Networks Lab</h4>
+                                        <p class="text-xs text-slate-500 mb-4 line-clamp-2">Research into sustainable
+                                            microgrids and smart-grid integration technologies.</p>
+                                        <div
+                                            class="flex items-center justify-between pt-4 border-t border-surface-container-highest">
+                                            <div class="flex items-center gap-2">
+                                                <img src="https://ui-avatars.com/api/?name=Dr.+K.&background=random"
+                                                    class="w-6 h-6 rounded-full border border-slate-200">
+                                                <span class="text-[11px] font-semibold text-slate-700">Dr.
+                                                    Khademul</span>
+                                            </div>
+                                            <button onclick="openExplorePopup({
+                                                title: 'Renewable Networks Lab',
+                                                subtitle: 'Lab Information',
+                                                icon: 'bolt',
+                                                theme: 'teal',
+                                                bodyHtml: '<p class=\'text-slate-600\'>The lab is currently at full capacity for funded projects. However, volunteer positions for data collection are available. Visit Lab 5A for info.</p>',
+                                                footerHtml: '<button onclick=\'closeExplorePopup()\' class=\'flex-1 py-2.5 bg-slate-900 text-white font-bold rounded-xl hover:bg-slate-800 transition-colors\'>Got it</button>'
+                                            })"
+                                                class="text-xs font-bold text-slate-500 hover:text-teal-600 transition-colors">View
+                                                Info</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Thesis Opportunities -->
+                            <div>
+                                <h3 class="text-xl font-bold mb-5 text-on-surface flex items-center gap-2">
+                                    <span class="material-symbols-outlined text-indigo-500">menu_book</span> Thesis &
+                                    Project Board
+                                </h3>
+                                <div class="flex flex-col gap-4">
+                                    <!-- Board Item 1 -->
+                                    <div
+                                        class="bg-surface-container-lowest border border-surface-container-highest rounded-2xl p-5 shadow-sm hover:shadow-md transition-shadow group flex flex-col md:flex-row gap-5 items-start">
+                                        <div
+                                            class="bg-indigo-50 text-indigo-600 w-12 h-12 rounded-xl flex-shrink-0 flex items-center justify-center">
+                                            <span class="material-symbols-outlined">satellite_alt</span>
+                                        </div>
+                                        <div class="flex-1">
+                                            <div class="flex justify-between items-start mb-1">
+                                                <h4
+                                                    class="font-bold text-lg group-hover:text-indigo-600 transition-colors">
+                                                    Satellite Image Processing for Agriculture</h4>
+                                                <span
+                                                    class="px-2 py-0.5 bg-orange-50 text-orange-600 rounded text-[10px] font-bold uppercase tracking-widest border border-orange-100">Thesis</span>
+                                            </div>
+                                            <p class="text-sm text-slate-600 mb-3">Looking for 2 CSE students (final
+                                                year) with experience in Python and OpenCV. Goal is to publish in Q1
+                                                journal.</p>
+                                            <div class="flex gap-2">
+                                                <span
+                                                    class="px-2 py-1 bg-slate-100 text-slate-500 rounded text-[10px] font-bold">Python</span>
+                                                <span
+                                                    class="px-2 py-1 bg-slate-100 text-slate-500 rounded text-[10px] font-bold">Computer
+                                                    Vision</span>
+                                                <span
+                                                    class="px-2 py-1 bg-slate-100 text-slate-500 rounded text-[10px] font-bold border border-rose-200 text-rose-500"><span
+                                                        class="mr-1 material-symbols-outlined text-[10px]">timer</span>
+                                                    Deadline: 3 Days</span>
+                                            </div>
+                                        </div>
+                                        <div class="mt-4 md:mt-0 w-full md:w-auto text-right">
+                                            <button onclick="openExplorePopup({
+                                                title: 'Thesis Application',
+                                                subtitle: 'Satellite Image Processing',
+                                                icon: 'menu_book',
+                                                theme: 'indigo',
+                                                bodyHtml: '<p class=\'text-slate-600\'>Apply to join this thesis group. Prerequisites: Grade A in Computer Vision or Image Processing course.</p>',
+                                                footerHtml: '<button onclick=\'closeExplorePopup(); showToast(&quot;Thesis application submitted!&quot;)\' class=\'flex-1 py-2.5 bg-indigo-600 text-white font-bold rounded-xl shadow-md hover:bg-indigo-500 transition-all\'>Apply to Group</button>'
+                                            })"
+                                                class="w-full px-5 py-2 bg-slate-900 text-white font-bold rounded-lg shadow-sm hover:bg-slate-800 transition-colors text-sm">Apply
+                                                Now</button>
+                                        </div>
+                                    </div>
+                                    <!-- Board Item 2 -->
+                                    <div
+                                        class="bg-surface-container-lowest border border-surface-container-highest rounded-2xl p-5 shadow-sm hover:shadow-md transition-shadow group flex flex-col md:flex-row gap-5 items-start">
+                                        <div
+                                            class="bg-amber-50 text-amber-600 w-12 h-12 rounded-xl flex-shrink-0 flex items-center justify-center">
+                                            <span class="material-symbols-outlined">database</span>
+                                        </div>
+                                        <div class="flex-1">
+                                            <div class="flex justify-between items-start mb-1">
+                                                <h4
+                                                    class="font-bold text-lg group-hover:text-amber-600 transition-colors">
+                                                    Blockchain in Healthcare Records</h4>
+                                                <span
+                                                    class="px-2 py-0.5 bg-blue-50 text-blue-600 rounded text-[10px] font-bold uppercase tracking-widest border border-blue-100">Project</span>
+                                            </div>
+                                            <p class="text-sm text-slate-600 mb-3">Need 1 teammate for our FYP group. We
+                                                are focusing on React and Solidity smart contracts.</p>
+                                            <div class="flex gap-2">
+                                                <span
+                                                    class="px-2 py-1 bg-slate-100 text-slate-500 rounded text-[10px] font-bold">Web3</span>
+                                                <span
+                                                    class="px-2 py-1 bg-slate-100 text-slate-500 rounded text-[10px] font-bold">Solidity</span>
+                                            </div>
+                                        </div>
+                                        <div class="mt-4 md:mt-0 w-full md:w-auto text-right">
+                                            <button
+                                                class="w-full px-5 py-2 bg-white text-slate-700 border border-slate-300 font-bold rounded-lg shadow-sm hover:bg-slate-50 transition-colors text-sm">Contact
+                                                Post</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="xl:col-span-4 flex flex-col gap-8">
+                            <!-- Publication Spotlight -->
+                            <div
+                                class="bg-surface-container-lowest rounded-2xl p-6 border border-surface-container-highest shadow-sm">
+                                <h3 class="font-bold text-lg mb-6 flex items-center gap-2 text-on-surface">
+                                    <span class="material-symbols-outlined text-purple-600">workspace_premium</span>
+                                    Publication Spotlight
+                                </h3>
+                                <div class="relative pl-6 border-l-2 border-slate-100 space-y-8">
+                                    <div class="relative">
+                                        <span
+                                            class="absolute -left-[31px] w-4 h-4 rounded-full bg-purple-500 border-4 border-white shadow-sm ring-1 ring-purple-100"></span>
+                                        <p class="text-xs text-purple-600 font-bold mb-1">Published in IEEE Access</p>
+                                        <h4
+                                            class="font-semibold text-sm leading-snug mb-2 hover:text-purple-600 cursor-pointer transition-colors">
+                                            A Novel Approach to IoT Device Security</h4>
+                                        <p class="text-xs text-slate-500 leading-relaxed mb-2">By Dr. Hasan & Team</p>
+                                        <button
+                                            class="text-[10px] bg-slate-100 hover:bg-slate-200 text-slate-600 px-3 py-1 rounded-full font-bold transition-colors">Read
+                                            PDF</button>
+                                    </div>
+                                    <div class="relative">
+                                        <span
+                                            class="absolute -left-[31px] w-4 h-4 rounded-full bg-teal-500 border-4 border-white shadow-sm ring-1 ring-teal-100"></span>
+                                        <p class="text-xs text-teal-600 font-bold mb-1">Nature Communications</p>
+                                        <h4
+                                            class="font-semibold text-sm leading-snug mb-2 hover:text-teal-600 cursor-pointer transition-colors">
+                                            Biodegradable Polymers from Algae</h4>
+                                        <p class="text-xs text-slate-500 leading-relaxed mb-2">Biotech Dept</p>
+                                        <button
+                                            class="text-[10px] bg-slate-100 hover:bg-slate-200 text-slate-600 px-3 py-1 rounded-full font-bold transition-colors">Read
+                                            Outline</button>
+                                    </div>
+                                    <div class="relative">
+                                        <span
+                                            class="absolute -left-[31px] w-4 h-4 rounded-full bg-slate-300 border-4 border-white shadow-sm"></span>
+                                        <p class="text-xs text-slate-500 font-bold mb-1">Under Review</p>
+                                        <h4 class="font-semibold text-sm leading-snug mb-2 text-slate-600">Smart Traffic
+                                            Light Optimization using RL</h4>
+                                        <p class="text-xs text-slate-400">By CSE Batch '21</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="explore-gaming-view"
+                    class="hidden animate-in fade-in slide-in-from-bottom-4 duration-500 rounded-[2rem] overflow-hidden bg-slate-950 text-slate-100 p-2 border border-slate-800 shadow-2xl">
+                    <div class="px-6 py-4 flex items-center justify-between z-10 relative">
+                        <button onclick="switchExploreTab('main')"
+                            class="flex items-center gap-2 text-fuchsia-400 font-bold hover:text-fuchsia-300 transition-all group">
+                            <span
+                                class="material-symbols-outlined text-sm group-hover:-translate-x-1 transition-transform">arrow_back</span>
+                            Exit Arena
+                        </button>
+                        <span
+                            class="px-3 py-1 bg-fuchsia-500/20 text-fuchsia-400 border border-fuchsia-500/30 rounded-full text-[10px] font-black tracking-widest uppercase shadow-[0_0_10px_rgba(217,70,239,0.2)] animate-pulse">Live</span>
+                    </div>
+
+                    <!-- Hero Section -->
+                    <div class="relative bg-black rounded-3xl overflow-hidden mb-8 p-8 md:p-12 mx-4 mt-2">
+                        <div
+                            class="absolute inset-0 z-0 opacity-40 bg-[url('https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&q=80')] bg-cover bg-center">
                         </div>
                         <div
-                            class="bg-surface-container-lowest p-6 rounded-xl shadow-sm text-center cursor-pointer hover:-translate-y-1 hover:shadow-md transition-all border border-surface-container-highest">
-                            <span class="material-symbols-outlined text-4xl text-primary mb-2">sports_esports</span>
-                            <h4 class="font-bold">Gaming Center</h4>
-                            <p class="text-xs text-on-surface-variant mt-1">3.4k posts</p>
+                            class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/80 to-transparent z-0">
+                        </div>
+                        <div class="absolute inset-0 bg-gradient-to-r from-fuchsia-900/40 to-cyan-900/40 z-0"></div>
+                        <div class="relative z-10 max-w-2xl text-white">
+                            <h1
+                                class="text-4xl md:text-6xl font-black mb-4 leading-tight tracking-tight drop-shadow-[0_0_15px_rgba(217,70,239,0.5)]">
+                                UIU <span
+                                    class="text-transparent bg-clip-text bg-gradient-to-r from-fuchsia-400 to-cyan-400">Esports</span>
+                            </h1>
+                            <p class="text-lg md:text-xl text-slate-300 font-medium leading-relaxed mb-8">Join
+                                tournaments, find your ultimate squad, and dominate the campus leaderboards.</p>
+                            <div class="flex flex-wrap gap-4">
+                                <button onclick="openExplorePopup({
+                                    title: 'UIU Gaming Arena',
+                                    subtitle: 'Join the competitive scene',
+                                    icon: 'sports_esports',
+                                    theme: 'fuchsia',
+                                    bodyHtml: '<p class=\'text-slate-600\'>The arena is currently offline. Matches usually happen every Thursday & Friday. Join our Discord to see the full schedule.</p>',
+                                    footerHtml: '<button onclick=\'closeExplorePopup();\' class=\'flex-1 py-2.5 bg-fuchsia-600 text-white font-bold rounded-xl shadow-md hover:bg-fuchsia-500 transition-all\'>Join Discord</button>'
+                                })"
+                                    class="px-8 py-3 bg-fuchsia-600 hover:bg-fuchsia-500 text-white font-black rounded-xl transition-all shadow-[0_0_20px_rgba(217,70,239,0.5)] hover:shadow-[0_0_30px_rgba(217,70,239,0.7)] hover:scale-105 active:scale-95 flex items-center gap-2">
+                                    <span class="material-symbols-outlined text-sm">sprint</span> Play Now
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 xl:grid-cols-12 gap-8 px-4 pb-8">
+                        <div class="xl:col-span-8 flex flex-col gap-10">
+                            <!-- Tournaments -->
+                            <div>
+                                <h3
+                                    class="text-xl font-black mb-5 flex items-center gap-2 text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.3)]">
+                                    <span class="material-symbols-outlined text-cyan-400">emoji_events</span>
+                                    Tournaments
+                                </h3>
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                    <div
+                                        class="bg-slate-900/80 border border-slate-700 hover:border-cyan-500/50 rounded-2xl p-5 shadow-[0_4px_20px_rgba(0,0,0,0.5)] transition-all cursor-pointer relative overflow-hidden group">
+                                        <div
+                                            class="absolute top-0 right-0 w-32 h-32 bg-cyan-500/10 rounded-full blur-[40px] group-hover:bg-cyan-500/20 transition-colors">
+                                        </div>
+                                        <div class="flex justify-between items-start mb-3 relative z-10">
+                                            <span
+                                                class="px-2 py-0.5 bg-red-500/20 text-red-400 rounded text-[10px] font-black uppercase tracking-widest border border-red-500/30">Live
+                                                Now</span>
+                                            <span class="text-xs text-slate-400 font-bold">Valorant</span>
+                                        </div>
+                                        <h4
+                                            class="font-black text-xl mb-1 text-white group-hover:text-cyan-400 transition-colors relative z-10">
+                                            Inter-Dept Masters</h4>
+                                        <p class="text-xs text-slate-400 mb-6 font-medium relative z-10">Prize Pool: 10K
+                                            BDT</p>
+                                        <div class="flex items-center justify-between relative z-10">
+                                            <div class="flex -space-x-2">
+                                                <img class="w-8 h-8 rounded-full border-2 border-slate-900 object-cover"
+                                                    src="https://ui-avatars.com/api/?name=TeamA&background=22d3ee&color=fff">
+                                                <img class="w-8 h-8 rounded-full border-2 border-slate-900 object-cover"
+                                                    src="https://ui-avatars.com/api/?name=VS&background=000&color=fff">
+                                                <img class="w-8 h-8 rounded-full border-2 border-slate-900 object-cover"
+                                                    src="https://ui-avatars.com/api/?name=TeamB&background=e879f9&color=fff">
+                                            </div>
+                                            <button onclick="openExplorePopup({
+                                                title: 'Valorant Stream',
+                                                subtitle: 'UIU Inter-Dept Masters',
+                                                icon: 'videocam',
+                                                theme: 'fuchsia',
+                                                bodyHtml: '<p class=\'text-slate-600\'>You are now watching the live feed of CSE vs EEE finals. High stakes match!</p><div class=\'bg-slate-900 aspect-video rounded-lg flex items-center justify-center text-slate-500 border border-slate-700 mt-4\'>[Video Player Placeholder]</div>',
+                                                footerHtml: '<button onclick=\'closeExplorePopup()\' class=\'flex-1 py-2.5 bg-slate-900 text-white font-bold rounded-xl\'>Close Stream</button>'
+                                            })"
+                                                class="px-4 py-1.5 bg-cyan-600/20 hover:bg-cyan-600/40 text-cyan-400 border border-cyan-600/50 text-xs font-bold rounded-lg transition-colors">Watch
+                                                Stream</button>
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="bg-slate-900/80 border border-slate-700 hover:border-fuchsia-500/50 rounded-2xl p-5 shadow-[0_4px_20px_rgba(0,0,0,0.5)] transition-all cursor-pointer relative overflow-hidden group">
+                                        <div
+                                            class="absolute bottom-0 right-0 w-32 h-32 bg-fuchsia-500/10 rounded-full blur-[40px] group-hover:bg-fuchsia-500/20 transition-colors">
+                                        </div>
+                                        <div class="flex justify-between items-start mb-3 relative z-10">
+                                            <span
+                                                class="px-2 py-0.5 bg-slate-800 text-slate-300 rounded text-[10px] font-black uppercase tracking-widest border border-slate-600">Starts
+                                                Tomorrow</span>
+                                            <span class="text-xs text-slate-400 font-bold">FIFA 24</span>
+                                        </div>
+                                        <h4
+                                            class="font-black text-xl mb-1 text-white group-hover:text-fuchsia-400 transition-colors relative z-10">
+                                            Campus Clash</h4>
+                                        <p class="text-xs text-slate-400 mb-6 font-medium relative z-10">Prize Pool: 5K
+                                            BDT</p>
+                                        <div class="flex items-center justify-between relative z-10">
+                                            <span class="text-xs text-slate-400 font-bold">32/64 Slots</span>
+                                            <button onclick="openExplorePopup({
+                                                title: 'Tournament Registration',
+                                                subtitle: 'Campus Clash - FIFA 24',
+                                                icon: 'stadium',
+                                                theme: 'fuchsia',
+                                                bodyHtml: '<p class=\'text-slate-600\'>Register for the upcoming FIFA 24 tournament. Entry fee: 100 BDT.</p><input type=\'text\' placeholder=\'In-game Handle\' class=\'w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-2 text-sm focus:ring-1 focus:ring-fuchsia-500 outline-none mt-4\'>',
+                                                footerHtml: '<button onclick=\'closeExplorePopup(); showToast(&quot;Registered for Campus Clash!&quot;)\' class=\'flex-1 py-2.5 bg-fuchsia-600 text-white font-bold rounded-xl shadow-md hover:bg-fuchsia-500 transition-all\'>Confirm & Pay</button>'
+                                            })"
+                                                class="px-4 py-1.5 bg-fuchsia-600 text-white text-xs font-bold rounded-lg shadow-[0_0_10px_rgba(217,70,239,0.3)] hover:bg-fuchsia-500 transition-colors">Register</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Team Finder -->
+                            <div>
+                                <h3 class="text-xl font-black mb-5 flex items-center gap-2 text-white">
+                                    <span class="material-symbols-outlined text-green-400">group_add</span> Team Finder
+                                </h3>
+                                <div class="bg-slate-900 border border-slate-800 rounded-2xl p-3">
+                                    <!-- LFG Item -->
+                                    <div
+                                        class="flex items-center gap-4 p-3 hover:bg-slate-800/50 rounded-xl transition-colors cursor-pointer group border-b border-slate-800 last:border-0">
+                                        <div
+                                            class="w-12 h-12 bg-slate-800 rounded-xl flex items-center justify-center font-bold text-slate-300 border border-slate-700">
+                                            CS2</div>
+                                        <div class="flex-1">
+                                            <h4
+                                                class="font-bold text-white group-hover:text-cyan-400 transition-colors">
+                                                Need a dedicated AWPer</h4>
+                                            <p class="text-xs text-slate-400">Rank: Master Guardian+ • Comm: Discord</p>
+                                        </div>
+                                        <button
+                                            class="w-8 h-8 bg-slate-800 hover:bg-cyan-600 hover:text-white text-slate-300 rounded-full flex items-center justify-center transition-colors"><span
+                                                class="material-symbols-outlined text-[16px]">chat</span></button>
+                                    </div>
+                                    <!-- LFG Item -->
+                                    <div
+                                        class="flex items-center gap-4 p-3 hover:bg-slate-800/50 rounded-xl transition-colors cursor-pointer group border-b border-slate-800 last:border-0">
+                                        <div
+                                            class="w-12 h-12 bg-slate-800 rounded-xl flex items-center justify-center font-bold text-slate-300 border border-slate-700">
+                                            MLBB</div>
+                                        <div class="flex-1">
+                                            <h4
+                                                class="font-bold text-white group-hover:text-fuchsia-400 transition-colors">
+                                                Looking for Tank/Roam</h4>
+                                            <p class="text-xs text-slate-400">Rank: Mythic • Tournament Prep</p>
+                                        </div>
+                                        <button
+                                            class="w-8 h-8 bg-slate-800 hover:bg-fuchsia-600 hover:text-white text-slate-300 rounded-full flex items-center justify-center transition-colors"><span
+                                                class="material-symbols-outlined text-[16px]">chat</span></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="xl:col-span-4 flex flex-col gap-8">
+                            <!-- Leaderboard -->
+                            <div
+                                class="bg-slate-900 border border-slate-700 rounded-2xl p-6 shadow-[0_4px_20px_rgba(0,0,0,0.3)] relative overflow-hidden">
+                                <div class="absolute top-0 right-0 w-40 h-40 bg-amber-500/10 rounded-full blur-[50px]">
+                                </div>
+                                <div class="flex items-center justify-between mb-6 relative z-10">
+                                    <h3 class="font-bold text-lg flex items-center gap-2 text-white"><span
+                                            class="material-symbols-outlined text-amber-500">leaderboard</span> Top
+                                        Players</h3>
+                                    <select
+                                        class="bg-slate-800 border-none text-xs text-slate-300 rounded-lg px-2 py-1 focus:ring-1 focus:ring-amber-500">
+                                        <option>Valorant</option>
+                                        <option>FIFA 24</option>
+                                        <option>MLBB</option>
+                                    </select>
+                                </div>
+                                <div class="flex flex-col gap-1 relative z-10">
+                                    <div
+                                        class="flex items-center gap-3 p-2 bg-gradient-to-r from-amber-500/20 to-transparent border border-amber-500/30 rounded-xl">
+                                        <span class="font-black text-amber-400 w-4 text-center">1</span>
+                                        <img src="https://ui-avatars.com/api/?name=Saimon&background=random"
+                                            class="w-8 h-8 rounded-full border border-amber-500">
+                                        <div class="flex-1">
+                                            <h4 class="font-bold text-sm text-white">Saimon</h4>
+                                            <p class="text-[10px] text-amber-200">Radiant</p>
+                                        </div>
+                                        <span class="text-xs font-black text-amber-400">4,200 pts</span>
+                                    </div>
+                                    <div class="flex items-center gap-3 p-2 bg-slate-800/50 rounded-xl">
+                                        <span class="font-black text-slate-400 w-4 text-center">2</span>
+                                        <img src="https://ui-avatars.com/api/?name=Rafi&background=random"
+                                            class="w-8 h-8 rounded-full">
+                                        <div class="flex-1">
+                                            <h4 class="font-bold text-sm text-slate-200">Rafi</h4>
+                                            <p class="text-[10px] text-slate-400">Immortal 3</p>
+                                        </div>
+                                        <span class="text-xs font-bold text-slate-300">3,950 pts</span>
+                                    </div>
+                                    <div class="flex items-center gap-3 p-2 bg-slate-800/50 rounded-xl">
+                                        <span class="font-black text-amber-700 w-4 text-center">3</span>
+                                        <img src="https://ui-avatars.com/api/?name=Emon&background=random"
+                                            class="w-8 h-8 rounded-full">
+                                        <div class="flex-1">
+                                            <h4 class="font-bold text-sm text-slate-200">Emon</h4>
+                                            <p class="text-[10px] text-slate-400">Immortal 2</p>
+                                        </div>
+                                        <span class="text-xs font-bold text-slate-300">3,800 pts</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="explore-career-view" class="hidden animate-in fade-in slide-in-from-bottom-4 duration-500">
+                    <button onclick="switchExploreTab('main')"
+                        class="mb-6 flex items-center gap-2 text-primary font-bold hover:underline transition-all group">
+                        <span
+                            class="material-symbols-outlined text-sm group-hover:-translate-x-1 transition-transform">arrow_back</span>
+                        Back to Explore
+                    </button>
+                    <!-- Hero Section -->
+                    <div
+                        class="relative bg-gradient-to-br from-blue-900 to-slate-900 rounded-3xl overflow-hidden mb-8 p-8 md:p-12 shadow-xl group">
+                        <div
+                            class="absolute inset-0 z-0 opacity-20 bg-[url('https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80')] bg-cover bg-center mix-blend-overlay group-hover:scale-105 transition-transform duration-700">
                         </div>
                         <div
-                            class="bg-surface-container-lowest p-6 rounded-xl shadow-sm text-center cursor-pointer hover:-translate-y-1 hover:shadow-md transition-all border border-surface-container-highest">
-                            <span class="material-symbols-outlined text-4xl text-primary mb-2">business_center</span>
-                            <h4 class="font-bold">Career & Jobs</h4>
-                            <p class="text-xs text-on-surface-variant mt-1">940 posts</p>
+                            class="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent z-0">
+                        </div>
+                        <div class="relative z-10 max-w-2xl text-white">
+                            <span
+                                class="inline-block px-3 py-1 bg-white/10 backdrop-blur-md rounded-full text-[10px] font-bold tracking-widest uppercase mb-4 text-blue-300 border border-white/10 shadow-sm">Career
+                                & Jobs</span>
+                            <h1 class="text-4xl md:text-6xl font-black mb-4 leading-tight tracking-tight">Launch Your
+                                <span class="text-blue-400">Career</span>
+                            </h1>
+                            <p class="text-lg md:text-xl text-blue-100 font-medium leading-relaxed mb-8">AI-driven job
+                                suggestions, alumni mentorship, and tools to perfect your resume.</p>
+                            <div class="flex flex-wrap gap-4">
+                                <button onclick="openExplorePopup({
+                                    title: 'Available Jobs & Internships',
+                                    subtitle: 'UIU Career Hub',
+                                    icon: 'work',
+                                    theme: 'blue',
+                                    bodyHtml: '<p class=\'text-slate-600\'>Access our exclusive database of internships and full-time roles provided by UIU Corporate partners. Filter by department or skill.</p>',
+                                    footerHtml: '<button onclick=\'closeExplorePopup()\' class=\'flex-1 py-2.5 bg-blue-600 text-white font-bold rounded-xl shadow-md hover:bg-blue-500 transition-all\'>Explore Job Feed</button>'
+                                })"
+                                    class="px-6 py-3 bg-blue-500 hover:bg-blue-400 text-white font-bold rounded-xl transition-all shadow-[0_0_20px_rgba(59,130,246,0.4)] hover:scale-105 active:scale-95 flex items-center gap-2">
+                                    <span class="material-symbols-outlined text-sm">work</span> View Jobs
+                                </button>
+                                <button onclick="openExplorePopup({
+                                    title: 'Resume Booster',
+                                    subtitle: 'Upload for AI Analysis',
+                                    icon: 'upload_file',
+                                    theme: 'blue',
+                                    bodyHtml: '<div class=\'space-y-4\'><p class=\'text-slate-600\'>Upload your resume (PDF/Doc) to get instant feedback and compatibility score for top tech roles.</p><div class=\'border-2 border-dashed border-slate-200 rounded-xl p-8 text-center bg-slate-50 hover:bg-slate-100 transition-colors cursor-pointer\'><span class=\'material-symbols-outlined text-3xl text-slate-300\'>cloud_upload</span><p class=\'text-xs text-slate-500 mt-2\'>Click to select or drag and drop</p></div></div>',
+                                    footerHtml: '<button onclick=\'closeExplorePopup(); showToast(&quot;Resume uploaded for analysis!&quot;)\' class=\'flex-1 py-2.5 bg-slate-900 text-white font-bold rounded-xl shadow-md hover:bg-slate-800 transition-all\'>Analyze Resume</button>'
+                                })"
+                                    class="px-6 py-3 bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-white/20 text-white font-bold rounded-xl transition-all hover:scale-105 active:scale-95 flex items-center gap-2">
+                                    <span class="material-symbols-outlined text-sm">upload_file</span> Upload Resume
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 xl:grid-cols-12 gap-8">
+                        <div class="xl:col-span-8 flex flex-col gap-10">
+                            <!-- AI Recommended Jobs -->
+                            <div>
+                                <h3 class="text-xl font-bold mb-5 flex items-center gap-2 text-on-surface">
+                                    <span class="material-symbols-outlined text-blue-600">auto_awesome</span>
+                                    Recommended for You
+                                </h3>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div
+                                        class="bg-surface-container-lowest border border-surface-container-highest rounded-2xl p-5 shadow-sm hover:shadow-md transition-shadow group relative overflow-hidden">
+                                        <div class="absolute top-0 right-0 p-4">
+                                            <div
+                                                class="w-10 h-10 rounded-full border-4 border-blue-100 flex items-center justify-center text-[10px] font-bold text-blue-600 relative">
+                                                <svg class="absolute inset-0 w-full h-full text-blue-500"
+                                                    viewBox="0 0 36 36">
+                                                    <path stroke-dasharray="85, 100" class="stroke-current"
+                                                        stroke-width="4" fill="none"
+                                                        d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                                </svg>
+                                                85%
+                                            </div>
+                                        </div>
+                                        <div
+                                            class="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                                            <span class="font-black text-blue-600 text-xl">D</span>
+                                        </div>
+                                        <h4
+                                            class="font-bold text-lg mb-1 group-hover:text-blue-600 transition-colors pr-12">
+                                            Frontend Developer Intern</h4>
+                                        <p class="text-xs text-slate-500 mb-4 line-clamp-1">DataSoft Systems Bangladesh
+                                        </p>
+                                        <div class="flex gap-2 mb-4">
+                                            <span
+                                                class="px-2 py-0.5 bg-slate-100 text-slate-600 text-[10px] rounded font-bold">React</span>
+                                            <span
+                                                class="px-2 py-0.5 bg-slate-100 text-slate-600 text-[10px] rounded font-bold">Remote</span>
+                                        </div>
+                                        <div
+                                            class="flex items-center justify-between pt-4 border-t border-surface-container-highest">
+                                            <span class="text-[11px] text-slate-500 font-medium">Applied by 12
+                                                UIUians</span>
+                                            <button onclick="openExplorePopup({
+                                                title: 'Job Application',
+                                                subtitle: 'Frontend Developer Intern',
+                                                icon: 'assignment_turned_in',
+                                                theme: 'blue',
+                                                bodyHtml: '<p class=\'text-slate-600\'>Company: DataSoft Systems. Requirements: React, Tailwind, Next.js. Your profile matches 85%.</p>',
+                                                footerHtml: '<button onclick=\'closeExplorePopup(); showToast(&quot;Application sent! Check your email.&quot;)\' class=\'flex-1 py-2.5 bg-blue-600 text-white font-bold rounded-xl shadow-md hover:bg-blue-500 transition-all\'>Apply Now</button>'
+                                            })"
+                                                class="text-xs font-bold text-white bg-slate-900 px-4 py-1.5 rounded-lg shadow-sm hover:bg-slate-800 transition-colors">Apply</button>
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="bg-surface-container-lowest border border-surface-container-highest rounded-2xl p-5 shadow-sm hover:shadow-md transition-shadow group relative overflow-hidden">
+                                        <div class="absolute top-0 right-0 p-4">
+                                            <div
+                                                class="w-10 h-10 rounded-full border-4 border-emerald-100 flex items-center justify-center text-[10px] font-bold text-emerald-600 relative">
+                                                <svg class="absolute inset-0 w-full h-full text-emerald-500"
+                                                    viewBox="0 0 36 36">
+                                                    <path stroke-dasharray="92, 100" class="stroke-current"
+                                                        stroke-width="4" fill="none"
+                                                        d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                                </svg>
+                                                92%
+                                            </div>
+                                        </div>
+                                        <div
+                                            class="w-12 h-12 bg-emerald-50 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                                            <span class="font-black text-emerald-600 text-xl">B</span>
+                                        </div>
+                                        <h4
+                                            class="font-bold text-lg mb-1 group-hover:text-emerald-600 transition-colors pr-12">
+                                            Junior Data Analyst</h4>
+                                        <p class="text-xs text-slate-500 mb-4 line-clamp-1">BrainStation 23</p>
+                                        <div class="flex gap-2 mb-4">
+                                            <span
+                                                class="px-2 py-0.5 bg-slate-100 text-slate-600 text-[10px] rounded font-bold">SQL</span>
+                                            <span
+                                                class="px-2 py-0.5 bg-slate-100 text-slate-600 text-[10px] rounded font-bold">Python</span>
+                                        </div>
+                                        <div
+                                            class="flex items-center justify-between pt-4 border-t border-surface-container-highest">
+                                            <span class="text-[11px] text-slate-500 font-medium">Full-time •
+                                                Dhaka</span>
+                                            <button onclick="openExplorePopup({
+                                                title: 'Job Application',
+                                                subtitle: 'Junior Data Analyst',
+                                                icon: 'analytics',
+                                                theme: 'emerald',
+                                                bodyHtml: '<p class=\'text-slate-600\'>Company: BrainStation 23. Requirements: SQL, Python, Excel. Your profile matches 92%.</p>',
+                                                footerHtml: '<button onclick=\'closeExplorePopup(); showToast(&quot;Application sent! Check your email.&quot;)\' class=\'flex-1 py-2.5 bg-emerald-600 text-white font-bold rounded-xl shadow-md hover:bg-emerald-500 transition-all\'>Apply Now</button>'
+                                            })"
+                                                class="text-xs font-bold text-white bg-slate-900 px-4 py-1.5 rounded-lg shadow-sm hover:bg-slate-800 transition-colors">Apply</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Job Feed -->
+                            <div>
+                                <div class="flex items-center justify-between mb-5">
+                                    <h3 class="text-xl font-bold flex items-center gap-2 text-on-surface">
+                                        <span class="material-symbols-outlined text-slate-600">list_alt</span> Latest
+                                        Openings
+                                    </h3>
+                                    <div class="flex gap-2">
+                                        <select
+                                            class="bg-surface-container-high border-none text-xs text-slate-700 font-medium rounded-lg px-3 py-1 cursor-pointer">
+                                            <option>All Types</option>
+                                            <option>Internship</option>
+                                            <option>Full-time</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div
+                                    class="bg-surface-container-lowest border border-surface-container-highest rounded-2xl overflow-hidden shadow-sm">
+                                    <div class="flex flex-col">
+                                        <div
+                                            class="flex items-center gap-4 p-4 hover:bg-surface-container-low transition-colors cursor-pointer border-b border-surface-container-highest">
+                                            <img src="https://ui-avatars.com/api/?name=P&background=f87171&color=fff"
+                                                class="w-12 h-12 rounded-lg object-cover">
+                                            <div class="flex-1">
+                                                <h4 class="font-bold text-sm text-slate-800">Software Engineer I</h4>
+                                                <p class="text-xs text-slate-500">Pathao • Dhaka, BD</p>
+                                            </div>
+                                            <span
+                                                class="px-2 py-1 bg-green-50 text-green-700 rounded text-[10px] font-bold">Full-time</span>
+                                        </div>
+                                        <div
+                                            class="flex items-center gap-4 p-4 hover:bg-surface-container-low transition-colors cursor-pointer border-b border-surface-container-highest">
+                                            <img src="https://ui-avatars.com/api/?name=G&background=3b82f6&color=fff"
+                                                class="w-12 h-12 rounded-lg object-cover">
+                                            <div class="flex-1">
+                                                <h4 class="font-bold text-sm text-slate-800">Digital Marketing Intern
+                                                </h4>
+                                                <p class="text-xs text-slate-500">Grameenphone • Hybrid</p>
+                                            </div>
+                                            <span
+                                                class="px-2 py-1 bg-blue-50 text-blue-700 rounded text-[10px] font-bold">Internship</span>
+                                        </div>
+                                        <div
+                                            class="flex items-center gap-4 p-4 hover:bg-surface-container-low transition-colors cursor-pointer">
+                                            <img src="https://ui-avatars.com/api/?name=S&background=10b981&color=fff"
+                                                class="w-12 h-12 rounded-lg object-cover">
+                                            <div class="flex-1">
+                                                <h4 class="font-bold text-sm text-slate-800">UI/UX Designer</h4>
+                                                <p class="text-xs text-slate-500">Selise • Remote</p>
+                                            </div>
+                                            <span
+                                                class="px-2 py-1 bg-purple-50 text-purple-700 rounded text-[10px] font-bold">Contract</span>
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="p-3 bg-surface-container-low border-t border-surface-container-highest text-center">
+                                        <button onclick="openExplorePopup({
+                                            title: 'View all Jobs',
+                                            subtitle: 'UIU Job Database',
+                                            icon: 'view_list',
+                                            theme: 'blue',
+                                            bodyHtml: '<p class=\'text-slate-600\'>Redirecting you to the full job portal with advanced filters for location, pay grade, and company type.</p>',
+                                            footerHtml: '<button onclick=\'closeExplorePopup()\' class=\'flex-1 py-2.5 bg-blue-600 text-white font-bold rounded-xl shadow-md hover:bg-blue-500 transition-all\'>Go to Portal</button>'
+                                        })" class="text-xs font-bold text-blue-600 hover:underline">View 150+ More
+                                            Jobs</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="xl:col-span-4 flex flex-col gap-8">
+                            <!-- Career Tools -->
+                            <div
+                                class="bg-gradient-to-br from-blue-50 to-indigo-50 border border-blue-100 rounded-2xl p-6 shadow-sm">
+                                <h3 class="font-bold text-lg mb-4 text-blue-900 flex items-center gap-2"><span
+                                        class="material-symbols-outlined text-blue-500">build</span> Career Tools</h3>
+                                <div class="grid grid-cols-2 gap-3">
+                                    <div
+                                        class="bg-white p-4 rounded-xl shadow-sm hover:shadow text-center cursor-pointer group transition-all">
+                                        <div
+                                            class="w-8 h-8 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center mx-auto mb-2 group-hover:bg-blue-600 group-hover:text-white transition-colors">
+                                            <span class="material-symbols-outlined text-[16px]">description</span>
+                                        </div>
+                                        <h4 class="font-bold text-[11px] text-slate-700">Resume Builder</h4>
+                                    </div>
+                                    <div
+                                        class="bg-white p-4 rounded-xl shadow-sm hover:shadow text-center cursor-pointer group transition-all">
+                                        <div
+                                            class="w-8 h-8 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto mb-2 group-hover:bg-emerald-600 group-hover:text-white transition-colors">
+                                            <span class="material-symbols-outlined text-[16px]">fact_check</span>
+                                        </div>
+                                        <h4 class="font-bold text-[11px] text-slate-700">Mock Interview</h4>
+                                    </div>
+                                    <div
+                                        class="bg-white p-4 rounded-xl shadow-sm hover:shadow text-center cursor-pointer group transition-all">
+                                        <div
+                                            class="w-8 h-8 rounded-full bg-purple-100 text-purple-600 flex items-center justify-center mx-auto mb-2 group-hover:bg-purple-600 group-hover:text-white transition-colors">
+                                            <span class="material-symbols-outlined text-[16px]">school</span>
+                                        </div>
+                                        <h4 class="font-bold text-[11px] text-slate-700">Skill Tests</h4>
+                                    </div>
+                                    <div
+                                        class="bg-white p-4 rounded-xl shadow-sm hover:shadow text-center cursor-pointer group transition-all">
+                                        <div
+                                            class="w-8 h-8 rounded-full bg-orange-100 text-orange-600 flex items-center justify-center mx-auto mb-2 group-hover:bg-orange-600 group-hover:text-white transition-colors">
+                                            <span class="material-symbols-outlined text-[16px]">how_to_reg</span>
+                                        </div>
+                                        <h4 class="font-bold text-[11px] text-slate-700">Profile Review</h4>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Alumni Mentorship -->
+                            <div
+                                class="bg-surface-container-lowest rounded-2xl p-6 border border-surface-container-highest shadow-sm">
+                                <div class="flex items-center justify-between mb-5">
+                                    <h3 class="font-bold text-lg flex items-center gap-2 text-on-surface">
+                                        <span
+                                            class="material-symbols-outlined text-indigo-500">connect_without_contact</span>
+                                        Alumni Mentors
+                                    </h3>
+                                </div>
+                                <div class="flex flex-col gap-4">
+                                    <div class="flex items-center gap-3">
+                                        <img src="https://ui-avatars.com/api/?name=Hasan&background=random"
+                                            class="w-10 h-10 rounded-full border border-slate-200">
+                                        <div class="flex-1">
+                                            <h4 class="font-bold text-sm text-slate-800 leading-none mb-1">Hasan Mahmud
+                                            </h4>
+                                            <p class="text-[10px] text-slate-500">Software Eng. at Google (Batch '18)
+                                            </p>
+                                        </div>
+                                        <button
+                                            class="bg-surface-container-high hover:bg-surface-container-highest w-8 h-8 rounded-full flex items-center justify-center transition-colors"><span
+                                                class="material-symbols-outlined text-[16px] text-primary">person_add</span></button>
+                                    </div>
+                                    <div class="flex items-center gap-3">
+                                        <img src="https://ui-avatars.com/api/?name=Farhana&background=random"
+                                            class="w-10 h-10 rounded-full border border-slate-200">
+                                        <div class="flex-1">
+                                            <h4 class="font-bold text-sm text-slate-800 leading-none mb-1">Farhana Islam
+                                            </h4>
+                                            <p class="text-[10px] text-slate-500">Product Mgr. at Optimizely (Batch '19)
+                                            </p>
+                                        </div>
+                                        <button
+                                            class="bg-surface-container-high hover:bg-surface-container-highest w-8 h-8 rounded-full flex items-center justify-center transition-colors"><span
+                                                class="material-symbols-outlined text-[16px] text-primary">person_add</span></button>
+                                    </div>
+                                    <div class="flex items-center gap-3">
+                                        <img src="https://ui-avatars.com/api/?name=Tanvir&background=random"
+                                            class="w-10 h-10 rounded-full border border-slate-200">
+                                        <div class="flex-1">
+                                            <h4 class="font-bold text-sm text-slate-800 leading-none mb-1">Tanvir Ahmed
+                                            </h4>
+                                            <p class="text-[10px] text-slate-500">Data Scientist at bkash (Batch '20)
+                                            </p>
+                                        </div>
+                                        <button
+                                            class="bg-surface-container-high hover:bg-surface-container-highest w-8 h-8 rounded-full flex items-center justify-center transition-colors"><span
+                                                class="material-symbols-outlined text-[16px] text-primary">person_add</span></button>
+                                    </div>
+                                </div>
+                                <button
+                                    class="w-full mt-4 py-2 text-xs font-bold text-indigo-600 bg-indigo-50 hover:bg-indigo-100 border border-indigo-100 rounded-lg transition-colors">Find
+                                    a Mentor</button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -832,182 +2176,165 @@
                 </div>
             </div>
 
-<!-- COMMUNITIES VIEW -->
-<div id="communities-view" class="view-section hidden opacity-0 transition-opacity duration-300">
-
-    <!-- Hero Banner -->
-    <div id="cv-hero">
-        <span id="cv-hero-badge">
-            <span class="material-symbols-outlined" style="font-size:14px;vertical-align:middle;">groups</span>
-            UIU Communities
-        </span>
-        <h1 id="cv-hero-title">Find Your Tribe</h1>
-        <p id="cv-hero-sub">Join clubs, share research, and stay connected with the UIU family.</p>
-        <div id="cv-search-wrap">
-            <span class="material-symbols-outlined" id="cv-search-icon">search</span>
-            <input id="cv-search-input" type="text" placeholder="Search communities…"
-                   oninput="cvFilter(this.value)" autocomplete="off">
-        </div>
-    </div>
-
-    <!-- Stats Strip -->
-    <div id="cv-stats-strip">
-        <div class="cv-stat">
-            <span class="cv-stat-num">15</span>
-            <span class="cv-stat-lbl">Communities</span>
-        </div>
-        <div class="cv-stat-divider"></div>
-        <div class="cv-stat">
-            <span class="cv-stat-num">27k+</span>
-            <span class="cv-stat-lbl">Total Members</span>
-        </div>
-        <div class="cv-stat-divider"></div>
-        <div class="cv-stat">
-            <span class="cv-stat-num" id="cv-joined-count">0</span>
-            <span class="cv-stat-lbl">You've Joined</span>
-        </div>
-    </div>
-
-    <!-- Filter Pills -->
-    <div id="cv-filters">
-        <button class="cv-pill cv-pill-active" onclick="cvSetFilter('all',this)">All</button>
-        <button class="cv-pill" onclick="cvSetFilter('joined',this)">
-            <span class="material-symbols-outlined" style="font-size:13px;vertical-align:middle;">check_circle</span> Joined
-        </button>
-        <button class="cv-pill" onclick="cvSetFilter('tech',this)">
-            <span class="material-symbols-outlined" style="font-size:13px;vertical-align:middle;">code</span> Tech &amp; Science
-        </button>
-        <button class="cv-pill" onclick="cvSetFilter('arts',this)">
-            <span class="material-symbols-outlined" style="font-size:13px;vertical-align:middle;">palette</span> Arts &amp; Culture
-        </button>
-        <button class="cv-pill" onclick="cvSetFilter('sports',this)">
-            <span class="material-symbols-outlined" style="font-size:13px;vertical-align:middle;">sports_soccer</span> Sports &amp; Gaming
-        </button>
-    </div>
-
-    <!-- Main Two-Column Layout -->
-    <div id="cv-main-grid">
-
-        <!-- LEFT: Community Cards -->
-        <div id="cv-left-col">
-            <div class="cv-col-header">
-                <h2 class="cv-col-title">
-                    <span class="material-symbols-outlined icon-filled" style="font-size:18px;color:#a14000;vertical-align:middle;">groups</span>
-                    Trending Communities
-                </h2>
-                <span id="cv-comm-count" class="cv-col-meta">15 communities</span>
+            <!-- COMMUNITIES VIEW -->
+            <div id="communities-view" class="view-section hidden opacity-0 transition-opacity duration-300">
+                <div class="grid grid-cols-1 xl:grid-cols-12 gap-8">
+                    <div class="xl:col-span-4">
+                        <div class="flex items-center justify-between mb-6">
+                            <h2 class="text-xl font-extrabold tracking-tight">Trending Communities</h2>
+                            <span class="material-symbols-outlined text-on-surface-variant/40">info</span>
+                        </div>
+                        <div id="communities-list-container" class="flex flex-col gap-4">
+                            <!-- Injected by renderCommunitiesList() -->
+                        </div>
+                    </div>
+                    <div class="xl:col-span-8">
+                        <div class="flex items-center justify-between mb-6">
+                            <h2 class="text-xl font-extrabold tracking-tight">Featured Research</h2>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <article
+                                class="bg-surface-container-lowest p-6 rounded-xl border-l-4 border-primary shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between">
+                                <div>
+                                    <h3 class="text-lg font-bold mb-3">Sustainable AI: Optimization for
+                                        Low-Resource Languages</h3>
+                                    <p class="text-sm text-on-surface-variant mb-4">Research exploring
+                                        transformer models for regional dialects like Sylheti and Chakma to preserve
+                                        linguistic diversity.</p>
+                                </div>
+                                <div class="flex items-center justify-between pt-4 border-t border-slate-100 mt-auto">
+                                    <div class="flex items-center gap-2">
+                                        <div
+                                            class="w-8 h-8 rounded-full bg-orange-100 flex items-center justify-center font-bold text-xs text-orange-700">
+                                            AK</div>
+                                        <span class="text-xs font-bold">Dr. Ahmed Kabir</span>
+                                    </div>
+                                </div>
+                            </article>
+                            <article
+                                class="bg-surface-container-lowest p-6 rounded-xl border-l-4 border-secondary shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between">
+                                <div>
+                                    <h3 class="text-lg font-bold mb-3">Renewable Energy: Solar Micro-Grids in
+                                        Rural Bangladesh</h3>
+                                    <p class="text-sm text-on-surface-variant mb-4">Developing scalable and
+                                        affordable solar energy solutions for off-grid communities in the coastal
+                                        regions.</p>
+                                </div>
+                                <div class="flex items-center justify-between pt-4 border-t border-slate-100 mt-auto">
+                                    <div class="flex items-center gap-2">
+                                        <div
+                                            class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center font-bold text-xs text-blue-700">
+                                            SI</div>
+                                        <span class="text-xs font-bold">Prof. Syed Islam</span>
+                                    </div>
+                                </div>
+                            </article>
+                            <article
+                                class="bg-surface-container-lowest p-6 rounded-xl border-l-4 border-emerald-500 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between">
+                                <div>
+                                    <h3 class="text-lg font-bold mb-3">Smart Traffic Management System using
+                                        IoT</h3>
+                                    <p class="text-sm text-on-surface-variant mb-4">A novel approach to reduce
+                                        traffic congestion in Dhaka city utilizing IoT-based real-time data analysis.
+                                    </p>
+                                </div>
+                                <div class="flex items-center justify-between pt-4 border-t border-slate-100 mt-auto">
+                                    <div class="flex items-center gap-2">
+                                        <div
+                                            class="w-8 h-8 rounded-full bg-emerald-100 flex items-center justify-center font-bold text-xs text-emerald-700">
+                                            RR</div>
+                                        <span class="text-xs font-bold">Dr. Rubaiya Rahman</span>
+                                    </div>
+                                </div>
+                            </article>
+                            <article
+                                class="bg-surface-container-lowest p-6 rounded-xl border-l-4 border-purple-500 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between">
+                                <div>
+                                    <h3 class="text-lg font-bold mb-3">Impact of Microfinance on Female
+                                        Entrepreneurs</h3>
+                                    <p class="text-sm text-on-surface-variant mb-4">An empirical study
+                                        analyzing the economic empowerment of women through micro-credit in semi-urban
+                                        areas.</p>
+                                </div>
+                                <div class="flex items-center justify-between pt-4 border-t border-slate-100 mt-auto">
+                                    <div class="flex items-center gap-2">
+                                        <div
+                                            class="w-8 h-8 rounded-full bg-purple-100 flex items-center justify-center font-bold text-xs text-purple-700">
+                                            FH</div>
+                                        <span class="text-xs font-bold">Dr. Fahima Hossain</span>
+                                    </div>
+                                </div>
+                            </article>
+                            <article
+                                class="bg-surface-container-lowest p-6 rounded-xl border-l-4 border-amber-500 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between">
+                                <div>
+                                    <h3 class="text-lg font-bold mb-3">Next-Gen Robotics in Agriculture</h3>
+                                    <p class="text-sm text-on-surface-variant mb-4">Implementing automated farming
+                                        machinery to increase crop yield and monitor soil health across rural farms.</p>
+                                </div>
+                                <div class="flex items-center justify-between pt-4 border-t border-slate-100 mt-auto">
+                                    <div class="flex items-center gap-2">
+                                        <div
+                                            class="w-8 h-8 rounded-full bg-amber-100 flex items-center justify-center font-bold text-xs text-amber-700">
+                                            MS</div>
+                                        <span class="text-xs font-bold">Dr. Mahmudul Shojib</span>
+                                    </div>
+                                </div>
+                            </article>
+                            <article
+                                class="bg-surface-container-lowest p-6 rounded-xl border-l-4 border-teal-500 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between">
+                                <div>
+                                    <h3 class="text-lg font-bold mb-3">Blockchain for Transparent Supply Chains</h3>
+                                    <p class="text-sm text-on-surface-variant mb-4">Investigating the use of
+                                        decentralized ledgers to ensure ethical sourcing in the ready-made garment (RMG)
+                                        sector.</p>
+                                </div>
+                                <div class="flex items-center justify-between pt-4 border-t border-slate-100 mt-auto">
+                                    <div class="flex items-center gap-2">
+                                        <div
+                                            class="w-8 h-8 rounded-full bg-teal-100 flex items-center justify-center font-bold text-xs text-teal-700">
+                                            TJ</div>
+                                        <span class="text-xs font-bold">Dr. Tanvir Jahan</span>
+                                    </div>
+                                </div>
+                            </article>
+                            <article
+                                class="bg-surface-container-lowest p-6 rounded-xl border-l-4 border-rose-500 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between">
+                                <div>
+                                    <h3 class="text-lg font-bold mb-3">Urban Air Quality Prediction Models</h3>
+                                    <p class="text-sm text-on-surface-variant mb-4">Machine learning frameworks to
+                                        forecast PM2.5 levels using real-time meteorological and vehicular data.</p>
+                                </div>
+                                <div class="flex items-center justify-between pt-4 border-t border-slate-100 mt-auto">
+                                    <div class="flex items-center gap-2">
+                                        <div
+                                            class="w-8 h-8 rounded-full bg-rose-100 flex items-center justify-center font-bold text-xs text-rose-700">
+                                            NA</div>
+                                        <span class="text-xs font-bold">Dr. Nadia Ahmed</span>
+                                    </div>
+                                </div>
+                            </article>
+                            <article
+                                class="bg-surface-container-lowest p-6 rounded-xl border-l-4 border-indigo-500 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between">
+                                <div>
+                                    <h3 class="text-lg font-bold mb-3">Cybersecurity in E-Governance</h3>
+                                    <p class="text-sm text-on-surface-variant mb-4">A comprehensive analysis of
+                                        vulnerabilities in public sector digital services and strategies for robust
+                                        protection.</p>
+                                </div>
+                                <div class="flex items-center justify-between pt-4 border-t border-slate-100 mt-auto">
+                                    <div class="flex items-center gap-2">
+                                        <div
+                                            class="w-8 h-8 rounded-full bg-indigo-100 flex items-center justify-center font-bold text-xs text-indigo-700">
+                                            KH</div>
+                                        <span class="text-xs font-bold">Prof. Kamrul Hasan</span>
+                                    </div>
+                                </div>
+                            </article>
+                        </div>
+                    </div>
+                </div>
             </div>
-
-            <!-- Empty state -->
-            <div id="cv-empty" style="display:none;text-align:center;padding:2.5rem 1rem;">
-                <span class="material-symbols-outlined" style="font-size:3rem;color:#cbd5e1;display:block;margin-bottom:.5rem;">search_off</span>
-                <p style="font-size:.85rem;color:#94a3b8;font-weight:600;">No communities found.</p>
-            </div>
-
-            <!-- Cards grid -->
-            <div id="communities-list-container" class="cv-cards-grid">
-                <!-- Injected by renderCommunitiesList() -->
-            </div>
-        </div>
-
-        <!-- RIGHT: Featured Research -->
-        <div id="cv-right-col">
-            <div class="cv-col-header">
-                <h2 class="cv-col-title">
-                    <span class="material-symbols-outlined icon-filled" style="font-size:18px;color:#a14000;vertical-align:middle;">science</span>
-                    Featured Research
-                </h2>
-                <span class="cv-col-meta">8 papers</span>
-            </div>
-
-            <div class="cv-research-grid">
-
-                <article class="cv-research-card cv-r-orange">
-                    <h3 class="cv-r-title">Sustainable AI: Optimization for Low-Resource Languages</h3>
-                    <p class="cv-r-desc">Research exploring transformer models for regional dialects like Sylheti and Chakma to preserve linguistic diversity.</p>
-                    <div class="cv-r-footer">
-                        <div class="cv-r-avatar cv-ra-orange">AK</div>
-                        <span class="cv-r-author">Dr. Ahmed Kabir</span>
-                        <span class="cv-r-tag">AI / NLP</span>
-                    </div>
-                </article>
-
-                <article class="cv-research-card cv-r-blue">
-                    <h3 class="cv-r-title">Renewable Energy: Solar Micro-Grids in Rural Bangladesh</h3>
-                    <p class="cv-r-desc">Developing scalable and affordable solar energy solutions for off-grid communities in the coastal regions.</p>
-                    <div class="cv-r-footer">
-                        <div class="cv-r-avatar cv-ra-blue">SI</div>
-                        <span class="cv-r-author">Prof. Syed Islam</span>
-                        <span class="cv-r-tag">Energy</span>
-                    </div>
-                </article>
-
-                <article class="cv-research-card cv-r-emerald">
-                    <h3 class="cv-r-title">Smart Traffic Management System using IoT</h3>
-                    <p class="cv-r-desc">A novel approach to reduce traffic congestion in Dhaka city utilizing IoT-based real-time data analysis.</p>
-                    <div class="cv-r-footer">
-                        <div class="cv-r-avatar cv-ra-emerald">RR</div>
-                        <span class="cv-r-author">Dr. Rubaiya Rahman</span>
-                        <span class="cv-r-tag">IoT</span>
-                    </div>
-                </article>
-
-                <article class="cv-research-card cv-r-purple">
-                    <h3 class="cv-r-title">Impact of Microfinance on Female Entrepreneurs</h3>
-                    <p class="cv-r-desc">An empirical study analyzing the economic empowerment of women through micro-credit in semi-urban areas.</p>
-                    <div class="cv-r-footer">
-                        <div class="cv-r-avatar cv-ra-purple">FH</div>
-                        <span class="cv-r-author">Dr. Fahima Hossain</span>
-                        <span class="cv-r-tag">Economics</span>
-                    </div>
-                </article>
-
-                <article class="cv-research-card cv-r-amber">
-                    <h3 class="cv-r-title">Next-Gen Robotics in Agriculture</h3>
-                    <p class="cv-r-desc">Implementing automated farming machinery to increase crop yield and monitor soil health across rural farms.</p>
-                    <div class="cv-r-footer">
-                        <div class="cv-r-avatar cv-ra-amber">MS</div>
-                        <span class="cv-r-author">Dr. Mahmudul Shojib</span>
-                        <span class="cv-r-tag">Robotics</span>
-                    </div>
-                </article>
-
-                <article class="cv-research-card cv-r-teal">
-                    <h3 class="cv-r-title">Blockchain for Transparent Supply Chains</h3>
-                    <p class="cv-r-desc">Investigating decentralized ledgers to ensure ethical sourcing in the ready-made garment (RMG) sector.</p>
-                    <div class="cv-r-footer">
-                        <div class="cv-r-avatar cv-ra-teal">TJ</div>
-                        <span class="cv-r-author">Dr. Tanvir Jahan</span>
-                        <span class="cv-r-tag">Blockchain</span>
-                    </div>
-                </article>
-
-                <article class="cv-research-card cv-r-rose">
-                    <h3 class="cv-r-title">Urban Air Quality Prediction Models</h3>
-                    <p class="cv-r-desc">Machine learning frameworks to forecast PM2.5 levels using real-time meteorological and vehicular data.</p>
-                    <div class="cv-r-footer">
-                        <div class="cv-r-avatar cv-ra-rose">NA</div>
-                        <span class="cv-r-author">Dr. Nadia Ahmed</span>
-                        <span class="cv-r-tag">ML / Env</span>
-                    </div>
-                </article>
-
-                <article class="cv-research-card cv-r-indigo">
-                    <h3 class="cv-r-title">Cybersecurity in E-Governance</h3>
-                    <p class="cv-r-desc">A comprehensive analysis of vulnerabilities in public sector digital services and strategies for protection.</p>
-                    <div class="cv-r-footer">
-                        <div class="cv-r-avatar cv-ra-indigo">KH</div>
-                        <span class="cv-r-author">Prof. Kamrul Hasan</span>
-                        <span class="cv-r-tag">Security</span>
-                    </div>
-                </article>
-
-            </div><!-- /.cv-research-grid -->
-        </div><!-- /#cv-right-col -->
-
-    </div><!-- /#cv-main-grid -->
-</div>
-<!-- END COMMUNITIES VIEW -->
 
             <!-- EVENTS VIEW -->
             <div id="events-view" class="view-section hidden opacity-0 transition-opacity duration-300">
@@ -1029,7 +2356,268 @@
                 </div>
             </div>
 
+            <!-- SETTINGS VIEW -->
+            <div id="settings-view" class="view-section hidden opacity-0 transition-opacity duration-300">
+                <div class="max-w-4xl mx-auto">
+                    <div class="flex items-center justify-between mb-8">
+                        <div>
+                            <h2 class="text-3xl font-black tracking-tight text-on-surface">Settings</h2>
+                            <p class="text-on-surface-variant font-medium mt-1">Manage your account preferences and
+                                privacy.</p>
+                        </div>
+                    </div>
 
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                        <!-- Settings Sidebar -->
+                        <div class="md:col-span-1 flex flex-col gap-2">
+                            <button
+                                class="settings-tab-btn account font-bold text-left px-4 py-2.5 rounded-xl flex items-center gap-3 bg-primary text-white shadow-sm transition-all"
+                                onclick="switchSettingsTab('account')">
+                                <span class="material-symbols-outlined text-[18px]">manage_accounts</span> Account
+                            </button>
+                            <button
+                                class="settings-tab-btn preferences font-bold text-left px-4 py-2.5 rounded-xl flex items-center gap-3 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all"
+                                onclick="switchSettingsTab('preferences')">
+                                <span class="material-symbols-outlined text-[18px]">tune</span> Preferences
+                            </button>
+                            <button
+                                class="settings-tab-btn privacy font-bold text-left px-4 py-2.5 rounded-xl flex items-center gap-3 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all"
+                                onclick="switchSettingsTab('privacy')">
+                                <span class="material-symbols-outlined text-[18px]">shield</span> Privacy
+                            </button>
+                            <button
+                                class="settings-tab-btn notifications font-bold text-left px-4 py-2.5 rounded-xl flex items-center gap-3 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all"
+                                onclick="switchSettingsTab('notifications')">
+                                <span class="material-symbols-outlined text-[18px]">notifications</span> Notifications
+                            </button>
+                        </div>
+
+                        <!-- Settings Content -->
+                        <div class="md:col-span-3">
+                            <!-- Account Settings -->
+                            <div id="settings-account-panel"
+                                class="settings-panel block animate-in fade-in slide-in-from-bottom-4 duration-300">
+                                <div
+                                    class="bg-surface-container-lowest border border-surface-container-highest rounded-2xl p-6 shadow-sm mb-6">
+                                    <h3
+                                        class="font-bold text-lg mb-4 flex items-center gap-2 text-slate-800 dark:text-slate-200">
+                                        <span class="material-symbols-outlined text-primary">person</span> Profile
+                                        Details
+                                    </h3>
+                                    <div class="space-y-4">
+                                        <div>
+                                            <label class="block text-xs font-bold text-slate-500 mb-1">Full Name</label>
+                                            <input type="text"
+                                                class="w-full bg-surface-container-high border-none rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-primary outline-none text-slate-700 dark:text-slate-200 font-medium"
+                                                id="settings-name-input">
+                                        </div>
+                                        <div>
+                                            <label class="block text-xs font-bold text-slate-500 mb-1">Email
+                                                Address</label>
+                                            <input type="email"
+                                                class="w-full bg-surface-container-low border-none rounded-xl px-4 py-2.5 text-sm outline-none text-slate-500 dark:text-slate-400 cursor-not-allowed"
+                                                value="student@uiu.ac.bd" readonly>
+                                            <p class="text-[10px] text-slate-400 mt-1">To change your email, please
+                                                contact UIU IT services.</p>
+                                        </div>
+                                        <div>
+                                            <label class="block text-xs font-bold text-slate-500 mb-1">Bio</label>
+                                            <textarea
+                                                class="w-full bg-surface-container-high border-none rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-primary outline-none h-24 resize-none text-slate-700 dark:text-slate-200 font-medium"
+                                                id="settings-bio-input"></textarea>
+                                        </div>
+                                        <div class="pt-2">
+                                            <button
+                                                class="px-6 py-2.5 bg-primary text-white rounded-xl font-bold shadow-sm hover:scale-105 active:scale-95 transition-all text-sm"
+                                                onclick="saveAccountSettings()">Save Changes</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div
+                                    class="bg-surface-container-lowest border border-surface-container-highest rounded-2xl p-6 shadow-sm">
+                                    <h3 class="font-bold text-lg mb-4 text-red-500 flex items-center gap-2"><span
+                                            class="material-symbols-outlined">warning</span> Danger Zone</h3>
+                                    <div
+                                        class="flex items-center justify-between p-4 border border-red-200 bg-red-50 dark:bg-red-900/10 dark:border-red-900/30 rounded-xl">
+                                        <div>
+                                            <h4 class="font-bold text-red-700 dark:text-red-400 text-sm">Deactivate
+                                                Account</h4>
+                                            <p class="text-xs text-red-600/80 dark:text-red-400/80">Temporarily disable
+                                                your profile.</p>
+                                        </div>
+                                        <button
+                                            class="px-4 py-2 bg-red-100 text-red-600 hover:bg-red-200 dark:bg-red-900/40 dark:hover:bg-red-900/60 font-bold rounded-lg text-sm transition-colors"
+                                            onclick="alert('Account deactivation is disabled in this environment.')">Deactivate</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Preferences -->
+                            <div id="settings-preferences-panel"
+                                class="settings-panel hidden animate-in fade-in slide-in-from-bottom-4 duration-300">
+                                <div
+                                    class="bg-surface-container-lowest border border-surface-container-highest rounded-2xl p-6 shadow-sm mb-6">
+                                    <h3
+                                        class="font-bold text-lg mb-4 flex items-center gap-2 text-slate-800 dark:text-slate-200">
+                                        <span class="material-symbols-outlined text-primary">palette</span> Appearance
+                                    </h3>
+                                    <div
+                                        class="flex items-center justify-between py-3 border-b border-surface-container-highest">
+                                        <div>
+                                            <h4 class="font-bold text-sm text-slate-800 dark:text-slate-200">Dark Mode
+                                            </h4>
+                                            <p class="text-xs text-slate-500">Toggle dark theme across the application.
+                                            </p>
+                                        </div>
+                                        <label class="relative inline-flex items-center cursor-pointer">
+                                            <input type="checkbox" class="sr-only peer" id="dark-mode-toggle"
+                                                onchange="toggleDarkMode(this.checked)">
+                                            <div
+                                                class="w-11 h-6 bg-slate-200 peer-focus:outline-none rounded-full peer dark:bg-slate-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary">
+                                            </div>
+                                        </label>
+                                    </div>
+                                    <div
+                                        class="flex items-center justify-between py-3 border-b border-surface-container-highest">
+                                        <div>
+                                            <h4 class="font-bold text-sm text-slate-800 dark:text-slate-200">Compact
+                                                Feed</h4>
+                                            <p class="text-xs text-slate-500">Reduce spacing between posts on your feed.
+                                            </p>
+                                        </div>
+                                        <label class="relative inline-flex items-center cursor-pointer">
+                                            <input type="checkbox" class="sr-only peer">
+                                            <div
+                                                class="w-11 h-6 bg-slate-200 peer-focus:outline-none rounded-full peer dark:bg-slate-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary">
+                                            </div>
+                                        </label>
+                                    </div>
+                                    <div class="flex items-center justify-between py-3">
+                                        <div>
+                                            <h4 class="font-bold text-sm text-slate-800 dark:text-slate-200">Language
+                                            </h4>
+                                            <p class="text-xs text-slate-500">Select application language display.</p>
+                                        </div>
+                                        <select
+                                            class="bg-surface-container-high border-none rounded-lg px-3 py-1.5 text-sm font-bold text-slate-700 dark:text-slate-300 outline-none">
+                                            <option>English</option>
+                                            <option>Bangla</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Privacy -->
+                            <div id="settings-privacy-panel"
+                                class="settings-panel hidden animate-in fade-in slide-in-from-bottom-4 duration-300">
+                                <div
+                                    class="bg-surface-container-lowest border border-surface-container-highest rounded-2xl p-6 shadow-sm mb-6">
+                                    <h3
+                                        class="font-bold text-lg mb-4 flex items-center gap-2 text-slate-800 dark:text-slate-200">
+                                        <span class="material-symbols-outlined text-primary">visibility</span> Profile
+                                        Visibility
+                                    </h3>
+                                    <div class="space-y-4">
+                                        <div class="flex items-center justify-between py-2">
+                                            <div>
+                                                <h4 class="font-bold text-sm text-slate-800 dark:text-slate-200">Who can
+                                                    see your posts?</h4>
+                                                <p class="text-xs text-slate-500">Default audience for your community
+                                                    posts.</p>
+                                            </div>
+                                            <select
+                                                class="bg-surface-container-high border-none rounded-lg px-3 py-1.5 text-sm font-bold text-slate-700 dark:text-slate-300 outline-none">
+                                                <option>Everyone</option>
+                                                <option>Friends Only</option>
+                                                <option>Only Me</option>
+                                            </select>
+                                        </div>
+                                        <div
+                                            class="flex items-center justify-between py-2 border-t border-surface-container-highest">
+                                            <div>
+                                                <h4 class="font-bold text-sm text-slate-800 dark:text-slate-200">Allow
+                                                    search by ID</h4>
+                                                <p class="text-xs text-slate-500">Let classmates find you via university
+                                                    ID.</p>
+                                            </div>
+                                            <label class="relative inline-flex items-center cursor-pointer">
+                                                <input type="checkbox" class="sr-only peer" checked>
+                                                <div
+                                                    class="w-11 h-6 bg-slate-200 peer-focus:outline-none rounded-full peer dark:bg-slate-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary">
+                                                </div>
+                                            </label>
+                                        </div>
+                                        <div
+                                            class="flex items-center justify-between py-2 border-t border-surface-container-highest">
+                                            <div>
+                                                <h4 class="font-bold text-sm text-slate-800 dark:text-slate-200">Show
+                                                    online status</h4>
+                                                <p class="text-xs text-slate-500">Let friends know when you are active.
+                                                </p>
+                                            </div>
+                                            <label class="relative inline-flex items-center cursor-pointer">
+                                                <input type="checkbox" class="sr-only peer" checked>
+                                                <div
+                                                    class="w-11 h-6 bg-slate-200 peer-focus:outline-none rounded-full peer dark:bg-slate-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary">
+                                                </div>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Notifications -->
+                            <div id="settings-notifications-panel"
+                                class="settings-panel hidden animate-in fade-in slide-in-from-bottom-4 duration-300">
+                                <div
+                                    class="bg-surface-container-lowest border border-surface-container-highest rounded-2xl p-6 shadow-sm mb-6">
+                                    <h3
+                                        class="font-bold text-lg mb-4 flex items-center gap-2 text-slate-800 dark:text-slate-200">
+                                        <span class="material-symbols-outlined text-primary">notifications_active</span>
+                                        Push Notifications
+                                    </h3>
+                                    <div class="space-y-3">
+                                        <div class="flex items-center justify-between py-2">
+                                            <span class="font-bold text-sm text-slate-800 dark:text-slate-200">Likes &
+                                                Comments</span>
+                                            <label class="relative inline-flex items-center cursor-pointer">
+                                                <input type="checkbox" class="sr-only peer" checked>
+                                                <div
+                                                    class="w-11 h-6 bg-slate-200 rounded-full peer hover:bg-slate-300 dark:bg-slate-700 dark:hover:bg-slate-600 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary">
+                                                </div>
+                                            </label>
+                                        </div>
+                                        <div
+                                            class="flex items-center justify-between py-2 border-t border-surface-container-highest">
+                                            <span class="font-bold text-sm text-slate-800 dark:text-slate-200">Friend
+                                                Requests</span>
+                                            <label class="relative inline-flex items-center cursor-pointer">
+                                                <input type="checkbox" class="sr-only peer" checked>
+                                                <div
+                                                    class="w-11 h-6 bg-slate-200 rounded-full peer dark:bg-slate-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary">
+                                                </div>
+                                            </label>
+                                        </div>
+                                        <div
+                                            class="flex items-center justify-between py-2 border-t border-surface-container-highest">
+                                            <span class="font-bold text-sm text-slate-800 dark:text-slate-200">Event
+                                                Reminders</span>
+                                            <label class="relative inline-flex items-center cursor-pointer">
+                                                <input type="checkbox" class="sr-only peer" checked>
+                                                <div
+                                                    class="w-11 h-6 bg-slate-200 rounded-full peer dark:bg-slate-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary">
+                                                </div>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
 
             <!-- Chat Widget -->
             <div id="chat-widget"
@@ -1080,7 +2668,7 @@
         <!-- RIGHT SIDEBAR – Facebook-style                                  -->
         <!-- ═══════════════════════════════════════════════════════════════ -->
         <aside id="right-sidebar"
-            class="hidden xl:flex flex-col gap-5 fixed right-0 top-0 h-screen w-80 bg-slate-50 dark:bg-slate-950 pt-20 pb-24 px-4 overflow-y-auto hide-scrollbar border-l border-slate-100 dark:border-slate-800">
+            class="hidden xl:flex flex-col gap-5 fixed right-0 top-8 h-screen w-80 bg-slate-50 dark:bg-slate-950 pt-20 pb-24 px-4 overflow-y-auto hide-scrollbar border-l border-slate-100 dark:border-slate-800">
 
             <!-- ── Contacts / Active Now ──────────────────────────────── -->
             <div class="right-sidebar-card">
@@ -1245,6 +2833,13 @@
             <a class="flex flex-col items-center gap-1 text-slate-400" href="#"><span
                     class="material-symbols-outlined">account_circle</span></a>
         </nav>
+
+        <!-- Global Floating Action Button -->
+        <button id="global-fab"
+            class="fixed bottom-24 right-6 md:bottom-10 md:right-10 w-fit px-6 h-14 bg-gradient-to-br from-primary to-orange-600 text-white rounded-full shadow-[0_10px_25px_rgba(243,109,33,0.4)] flex items-center justify-center gap-2 font-bold hover:scale-105 active:scale-95 transition-all z-[90] hidden">
+            <span class="material-symbols-outlined icon-filled" id="global-fab-icon">add</span>
+            <span id="global-fab-text" class="whitespace-nowrap">Quick Action</span>
+        </button>
     </div>
     <!-- Application Script -->
     <!-- Event Details Modal -->
@@ -1297,6 +2892,38 @@
                     </button>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <!-- Universal Explore Popup Modal -->
+    <div id="explore-popup"
+        class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden z-[400] flex items-center justify-center opacity-0 transition-opacity duration-300 px-4"
+        onclick="closeExplorePopup()">
+        <div class="bg-surface-container-lowest w-full max-w-lg rounded-2xl shadow-2xl overflow-hidden transform scale-95 transition-transform duration-300"
+            id="explore-popup-content" onclick="event.stopPropagation()">
+            <!-- Top Accent Bar -->
+            <div id="explore-popup-accent" class="h-1.5 w-full bg-gradient-to-r from-indigo-500 to-purple-500"></div>
+            <!-- Header -->
+            <div class="p-6 pb-0 flex items-start justify-between">
+                <div class="flex items-center gap-3">
+                    <div id="explore-popup-icon-wrap"
+                        class="w-12 h-12 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center shadow-sm">
+                        <span id="explore-popup-icon" class="material-symbols-outlined text-2xl">info</span>
+                    </div>
+                    <div>
+                        <h2 id="explore-popup-title" class="text-xl font-black text-slate-800 leading-tight"></h2>
+                        <p id="explore-popup-subtitle" class="text-xs text-slate-500 font-medium mt-0.5"></p>
+                    </div>
+                </div>
+                <button onclick="closeExplorePopup()"
+                    class="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 flex items-center justify-center text-slate-500 hover:text-slate-800 transition-colors flex-shrink-0 mt-1">
+                    <span class="material-symbols-outlined text-[18px]">close</span>
+                </button>
+            </div>
+            <!-- Body -->
+            <div id="explore-popup-body" class="p-6"></div>
+            <!-- Footer -->
+            <div id="explore-popup-footer" class="px-6 pb-6 flex gap-3"></div>
         </div>
     </div>
 
