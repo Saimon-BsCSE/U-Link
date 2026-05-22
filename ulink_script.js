@@ -1355,33 +1355,104 @@ function renderFriendsView() {
     }
 }
 
-// --- Communities View & Profile ---
+const CV_CATEGORIES = {
+    c1:'tech', c2:'arts', c3:'tech', c4:'tech', c5:'arts',
+    c6:'tech', c7:'tech', c8:'arts', c9:'sports', c10:'sports',
+    c11:'tech', c12:'arts', c13:'tech', c14:'tech', c15:'tech'
+};
+
+let cvActiveFilter = 'all';
+let cvSearchQuery  = '';
+
+// --- Communities View & Profile render---
+
+
 function renderCommunitiesList() {
-    const container = document.getElementById('communities-list-container');
+    const container  = document.getElementById('communities-list-container');
+    const emptyState = document.getElementById('cv-empty');
+    const countLabel = document.getElementById('cv-comm-count');
+    const joinedStat = document.getElementById('cv-joined-count');
     if (!container) return;
 
-    container.innerHTML = MOCK_COMMUNITIES.map(c => {
-        let btnStatus = `<button onclick="openCommunityProfile('${c.id}'); event.stopPropagation();" class="px-4 py-1.5 rounded-full text-xs font-bold border border-primary text-primary hover:bg-primary hover:text-white transition-all shadow-sm">Join</button>`;
-        if (state.joinedCommunities.includes(c.id)) {
-            btnStatus = `<button class="px-4 py-1.5 rounded-full text-xs font-bold bg-primary text-white transition-all shadow-sm pointer-events-none">Joined</button>`;
-        } else if (state.pendingCommunities.includes(c.id)) {
-             btnStatus = `<button class="px-4 py-1.5 rounded-full text-xs font-bold bg-slate-200 text-slate-500 transition-all shadow-sm pointer-events-none">Pending...</button>`;
+    // Update joined counter
+    if (joinedStat) joinedStat.innerText = state.joinedCommunities.length;
+
+    // Build filtered list
+    const filtered = MOCK_COMMUNITIES.filter(c => {
+        const matchesSearch = !cvSearchQuery ||
+            c.name.toLowerCase().includes(cvSearchQuery.toLowerCase());
+        let matchesFilter = true;
+        if (cvActiveFilter === 'joined') {
+            matchesFilter = state.joinedCommunities.includes(c.id);
+        } else if (cvActiveFilter !== 'all') {
+            matchesFilter = CV_CATEGORIES[c.id] === cvActiveFilter;
+        }
+        return matchesSearch && matchesFilter;
+    });
+
+    // Count label
+    if (countLabel) {
+        countLabel.innerText = filtered.length + ' ' +
+            (filtered.length === 1 ? 'community' : 'communities');
+    }
+
+    // Empty state
+    if (filtered.length === 0) {
+        container.innerHTML = '';
+        if (emptyState) emptyState.style.display = 'block';
+        return;
+    }
+    if (emptyState) emptyState.style.display = 'none';
+
+    // Render cards
+    container.innerHTML = filtered.map(c => {
+        const isJoined  = state.joinedCommunities.includes(c.id);
+        const isPending = state.pendingCommunities.includes(c.id);
+
+        let btnClass = 'cv-join-btn';
+        let btnLabel = 'Join';
+        let btnAction = `onclick="openCommunityProfile('${c.id}'); event.stopPropagation();"`;
+
+        if (isJoined) {
+            btnClass += ' cv-btn-joined';
+            btnLabel = '✓ Joined';
+            btnAction = '';
+        } else if (isPending) {
+            btnClass += ' cv-btn-pending';
+            btnLabel = 'Pending…';
+            btnAction = '';
         }
 
+        const cardClass = 'cv-card' + (isJoined ? ' cv-joined' : '');
+
         return `
-        <div onclick="openCommunityProfile('${c.id}')" class="bg-surface-container-lowest p-4 rounded-xl flex items-center gap-4 group cursor-pointer hover:bg-surface-container-low transition-colors shadow-sm">
-            <div class="w-12 h-12 rounded-xl overflow-hidden flex-shrink-0">
-                <img src="${c.pic}" class="w-full h-full object-cover">
+        <div class="${cardClass}" onclick="openCommunityProfile('${c.id}')">
+            <div class="cv-card-cover"></div>
+            <div class="cv-card-body">
+                <img class="cv-card-pic" src="${c.pic}" alt="${c.name}"
+                     onerror="this.src='https://ui-avatars.com/api/?name=${encodeURIComponent(c.name)}&background=a14000&color=fff'">
+                <div class="cv-card-info">
+                    <div class="cv-card-name" title="${c.name}">${c.name}</div>
+                    <div class="cv-card-members">${c.members} Members</div>
+                </div>
+                <button class="${btnClass}" ${btnAction}>${btnLabel}</button>
             </div>
-            <div class="flex-1">
-                <h4 class="font-bold text-sm">${c.name}</h4>
-                <p class="text-xs text-on-surface-variant">${c.members} Members</p>
-            </div>
-            ${btnStatus}
-        </div>
-        `;
+        </div>`;
     }).join('');
 }
+
+function cvFilter(query) {
+    cvSearchQuery = query;
+    renderCommunitiesList();
+}
+
+function cvSetFilter(tag, btnEl) {
+    cvActiveFilter = tag;
+    document.querySelectorAll('.cv-pill').forEach(b => b.classList.remove('cv-pill-active'));
+    if (btnEl) btnEl.classList.add('cv-pill-active');
+    renderCommunitiesList();
+}
+
 
 function openCommunityProfile(communityId) {
     const community = MOCK_COMMUNITIES.find(c => c.id === communityId);
