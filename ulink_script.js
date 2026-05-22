@@ -27,7 +27,17 @@ const MOCK_USERS = [
     { id: "122", name: "Asma Ul Husna", dept: "English", role: "Student", batch: "221", pic: "https://ui-avatars.com/api/?name=Asma+Ul+Husna&background=F72585&color=fff" },
     { id: "123", name: "Syed Muntasir", dept: "CSE", role: "Student", batch: "201", pic: "https://ui-avatars.com/api/?name=Syed+Muntasir&background=E85D04&color=fff" },
     { id: "124", name: "Dr. Rafiqul Ali", dept: "Civil", role: "Faculty", batch: "N/A", pic: "https://ui-avatars.com/api/?name=Rafiqul+Ali&background=023E8A&color=fff" },
-    { id: "125", name: "Jannatul Ferdaus", dept: "BBA", role: "Student", batch: "211", pic: "https://ui-avatars.com/api/?name=Jannatul+Ferdaus&background=7B2D8B&color=fff" }
+    { id: "125", name: "Jannatul Ferdaus", dept: "BBA", role: "Student", batch: "211", pic: "https://ui-avatars.com/api/?name=Jannatul+Ferdaus&background=7B2D8B&color=fff" },
+    { id: "126", name: "Sara Islam", dept: "Pharmacy", role: "Student", batch: "223", pic: "https://ui-avatars.com/api/?name=Sara+Islam&background=FF85A1&color=fff" },
+    { id: "127", name: "Tanvir Ahmed", dept: "EEE", role: "Student", batch: "212", pic: "https://ui-avatars.com/api/?name=Tanvir+Ahmed&background=4CC9F0&color=333" },
+    { id: "128", name: "Sabina Yeasmin", dept: "BBA", role: "Student", batch: "202", pic: "https://ui-avatars.com/api/?name=Sabina+Yeasmin&background=F72585&color=fff" },
+    { id: "129", name: "Mahir Chowdhury", dept: "CSE", role: "Student", batch: "231", pic: "https://ui-avatars.com/api/?name=Mahir+Chowdhury&background=023E8A&color=fff" },
+    { id: "130", name: "Nishat Mazumder", dept: "Civil", role: "Student", batch: "221", pic: "https://ui-avatars.com/api/?name=Nishat+Mazumder&background=2D6A4F&color=fff" },
+    { id: "131", name: "Dr. Shiblee Imtiaz", dept: "CSE", role: "Professor", batch: "N/A", pic: "https://ui-avatars.com/api/?name=Shiblee+Imtiaz&background=7209B7&color=fff" },
+    { id: "132", name: "Rina Akter", dept: "Admin", role: "Staff", batch: "N/A", pic: "https://ui-avatars.com/api/?name=Rina+Akter&background=D62828&color=fff" },
+    { id: "133", name: "Nafis Iqbal", dept: "Data Science", role: "Student", batch: "222", pic: "https://ui-avatars.com/api/?name=Nafis+Iqbal&background=4361EE&color=fff" },
+    { id: "134", name: "Zerin Khan", dept: "Architecture", role: "Student", batch: "213", pic: "https://ui-avatars.com/api/?name=Zerin+Khan&background=B5179E&color=fff" },
+    { id: "135", name: "Hasan Mahmud", dept: "Economics", role: "Student", batch: "233", pic: "https://ui-avatars.com/api/?name=Hasan+Mahmud&background=F4A261&color=fff" }
 ];
 
 const MOCK_EVENTS = [
@@ -77,8 +87,14 @@ const state = {
         { id: 5, type: "group", text: "HACKATHON GROUP: Registration closes tomorrow!", read: false },
         { id: 6, type: "group", text: "CULTURAL GROUP: Annual fest meeting at 3 PM in Room 102.", read: false },
         { id: 7, type: "like", text: "Mehedi Hassan reacted ❤️ to your post", read: false },
+        { id: 8, type: "comment", text: "Omar Faruk commented on your photo", read: false },
+        { id: 9, type: "event", text: "Reminder: 'Borshoboron (Pohela Boishakh)' is happening tomorrow!", read: false },
+        { id: 10, type: "mention", text: "Ayesha Siddiqa mentioned you in a post in UIU AI Explorers.", read: false },
+        { id: 11, type: "like", text: "Kamrul Hasan liked your comment on the programming hub.", read: false },
+        { id: 12, type: "group", text: "UIU Efootball Community: Tournament brackets are live!", read: true },
+        { id: 13, type: "event", text: "Dr. Laila Zaman invited you to 'Startup Pitch Deck Competition'.", read: true }
     ],
-    friends: ["101", "103"],
+    friends: ["101", "103", "104", "109", "110", "111", "112", "113", "114", "115"],
     joinedCommunities: [], // Definitively empty so join logic works natively
     pendingCommunities: [],
     contactsExpanded: false,
@@ -213,6 +229,186 @@ const state = {
                 { id: 148, userId: "108", name: "Priya Das", text: "Wow, this gave me chills! Talent right here 🌟" },
                 { id: 149, userId: "105", name: "Jamal Uddin", text: "Very touching words. Thank you for sharing this gem." }
             ]
+        },
+        {
+            id: 13, userId: "123",
+            text: "Late night coding session at the library. The grind never stops! 💻☕ #CSElife #UIU",
+            image: "https://images.unsplash.com/photo-1542831371-29b0f74f9713?w=800&auto=format&fit=crop&q=60",
+            likes: 156, comments: 4, liked: false,
+            commentsList: [
+                { id: 150, userId: "101", name: "Sadika Rahman", text: "Don't forget to stay hydrated! 💧" },
+                { id: 151, userId: "129", name: "Mahir Chowdhury", text: "I'm on the 3rd floor, come say hi!" }
+            ]
+        },
+        {
+            id: 14, userId: "126",
+            text: "Finally finished our lab report on organic chemistry! Chemistry is tough but so rewarding. 🧪📖",
+            image: "https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?w=800&auto=format&fit=crop&q=60",
+            likes: 89, comments: 2, liked: false,
+            commentsList: [
+                { id: 152, userId: "108", name: "Priya Das", text: "Congrats Sara! That lab was a nightmare lol." }
+            ]
+        },
+        {
+            id: 15, userId: "127",
+            text: "Sunset at UIU campus is just something else. ❤️ Campus beauty never gets old. 🌅",
+            image: "https://images.unsplash.com/photo-1620288627223-53302f4e8c74?w=800&auto=format&fit=crop&q=60",
+            likes: 542, comments: 12, liked: false,
+            commentsList: [
+                { id: 153, userId: "103", name: "Nusrat Jahan", text: "Wow, what a shot!! 😍" },
+                { id: 154, userId: "134", name: "Zerin Khan", text: "Perfect timing!" }
+            ]
+        },
+        {
+            id: 16, userId: "130",
+            text: "Testing our bridge model for the structural mechanics project. Fingers crossed! 🌉🏗️",
+            image: "https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=800&auto=format&fit=crop&q=60",
+            likes: 210, comments: 5, liked: false,
+            commentsList: [
+                { id: 155, userId: "109", name: "Arif Hossain", text: "Good luck guys! You got this." }
+            ]
+        },
+        {
+            id: 17, userId: "133",
+            text: "Exploring the new Data Science lab setup. Exciting times ahead with Big Data! 📊🤖",
+            image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&auto=format&fit=crop&q=60",
+            likes: 175, comments: 3, liked: false,
+            commentsList: [
+                { id: 156, userId: "104", name: "Dr. Ahmed Kabir", text: "Make the most of it, Nafis!" }
+            ]
+        },
+        {
+            id: 18, userId: "128",
+            text: "Group study session for the midterm. Business ethics can be quite debatable! 📚📈",
+            image: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=800&auto=format&fit=crop&q=60",
+            likes: 132, comments: 4, liked: false,
+            commentsList: [
+                { id: 157, userId: "102", name: "Rakib Hasan", text: "Save me a seat next time!" }
+            ]
+        },
+        {
+            id: 19, userId: "134",
+            text: "Working on my 3D model for the sustainable housing project. Slow progress but steady. 🏠📐",
+            image: "https://images.unsplash.com/photo-1503387762-592ed58ee44b?w=800&auto=format&fit=crop&q=60",
+            likes: 289, comments: 7, liked: false,
+            commentsList: [
+                { id: 158, userId: "113", name: "Ayesha Siddiqa", text: "That looks amazing, Zerin!" }
+            ]
+        },
+        {
+            id: 20, userId: "135",
+            text: "Analyzing GDP growth trends for the Economics assignment. Numbers don't lie! 📉🤔",
+            image: "https://images.unsplash.com/photo-1543286386-2e659306cd6c?w=800&auto=format&fit=crop&q=60",
+            likes: 67, comments: 1, liked: false,
+            commentsList: []
+        },
+        {
+            id: 21, userId: "121",
+            text: "Just hit a new PR at the campus gym! Feeling energized. 💪🏋️‍♂️ #UIUfitness",
+            image: "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=800&auto=format&fit=crop&q=60",
+            likes: 310, comments: 8, liked: false,
+            commentsList: [
+                { id: 159, userId: "111", name: "Omar Faruk", text: "Nice work bro! Getting strong." }
+            ]
+        },
+        {
+            id: 22, userId: "122",
+            text: "Fresh flowers from the campus garden. Spring is officially here! 🌸🌿 #UIUBeauty",
+            image: "https://images.unsplash.com/photo-1490750967868-88aa4486c946?w=800&auto=format&fit=crop&q=60",
+            likes: 425, comments: 10, liked: false,
+            commentsList: [
+                { id: 160, userId: "110", name: "Lamia Sultana", text: "So pretty! I saw them this morning too." }
+            ]
+        },
+        {
+            id: 23, userId: "107",
+            text: "Friday morning football with the boys! Best way to start the weekend. ⚽🏃‍♂️",
+            image: "https://images.unsplash.com/photo-1526232761682-d26e03ac148e?w=800&auto=format&fit=crop&q=60",
+            likes: 215, comments: 6, liked: false,
+            commentsList: [
+                { id: 161, userId: "131", name: "Dr. Shiblee Imtiaz", text: "Keep it up! Sports are essential for health." }
+            ]
+        },
+        {
+            id: 24, userId: "103",
+            text: "Designing my first PCB for the microcontrollers course. Loving the process! ⚡🔌",
+            image: "https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&auto=format&fit=crop&q=60",
+            likes: 198, comments: 4, liked: false,
+            commentsList: [
+                { id: 162, userId: "112", name: "Dr. Farzana Islam", text: "Excellent precision, Nusrat!" }
+            ]
+        },
+        {
+            id: 25, userId: "125",
+            text: "UIU Entrepreneurship Club meeting today. So many inspiring ideas! 💡🚀 #Startups",
+            image: "https://images.unsplash.com/photo-1517048676732-d65bc937f952?w=800&auto=format&fit=crop&q=60",
+            likes: 145, comments: 3, liked: false,
+            commentsList: [
+                { id: 163, userId: "116", name: "Dr. Laila Zaman", text: "Great energy in the room today." }
+            ]
+        },
+        {
+            id: 26, userId: "117",
+            text: "Site visit for our survey class. Practical learning is always better! 🏗️📏",
+            image: "https://images.unsplash.com/photo-1503387762-592ed58ee44b?w=800&auto=format&fit=crop&q=60",
+            likes: 182, comments: 2, liked: false,
+            commentsList: [
+                { id: 164, userId: "124", name: "Dr. Rafiqul Ali", text: "Hope you learned a lot today, Rifat." }
+            ]
+        },
+        {
+            id: 27, userId: "115",
+            text: "Debate competition prep. Researching our points for the final round. 🗣️🏛️",
+            image: "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=800&auto=format&fit=crop&q=60",
+            likes: 120, comments: 5, liked: false,
+            commentsList: [
+                { id: 165, userId: "110", name: "Lamia Sultana", text: "You guys will be amazing!" }
+            ]
+        },
+        {
+            id: 28, userId: "111",
+            text: "Coffee break with friends in between classes. Much needed! ☕🍩",
+            image: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800&auto=format&fit=crop&q=60",
+            likes: 245, comments: 9, liked: false,
+            commentsList: [
+                { id: 166, userId: "128", name: "Sabina Yeasmin", text: "Next round is on me!" }
+            ]
+        },
+        {
+            id: 29, userId: "109",
+            text: "Rainy day at campus. The view from the library is so peaceful. 🌧️📚",
+            image: "https://images.unsplash.com/photo-1515694346937-94d85e41e6f0?w=800&auto=format&fit=crop&q=60",
+            likes: 389, comments: 14, liked: false,
+            commentsList: [
+                { id: 167, userId: "101", name: "Sadika Rahman", text: "I love this weather! ⛈️" }
+            ]
+        },
+        {
+            id: 30, userId: "131",
+            text: "Just published my latest research paper on Artificial Intelligence in Healthcare. UIU is making strides! 🏥🤖",
+            image: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=800&auto=format&fit=crop&q=60",
+            likes: 670, comments: 25, liked: false,
+            commentsList: [
+                { id: 168, userId: "104", name: "Dr. Ahmed Kabir", text: "Congratulations Shiblee! Great work." },
+                { id: 169, userId: "106", name: "Tania Akter", text: "This is inspiring, Sir!" }
+            ]
+        },
+        {
+            id: 31, userId: "132",
+            text: "Remember to collect your ID cards from the admin office if you haven't yet! 🆔🏛️",
+            image: "", likes: 56, comments: 12, liked: false,
+            commentsList: [
+                { id: 170, userId: "129", name: "Mahir Chowdhury", text: "Will be there soon!" }
+            ]
+        },
+        {
+            id: 32, userId: "102",
+            text: "Gaming tournament registrations are live! Who's in for League of Legends? 🎮🔥",
+            image: "https://images.unsplash.com/photo-1542751371-adc38448a05e?w=800&auto=format&fit=crop&q=60",
+            likes: 198, comments: 34, liked: false,
+            commentsList: [
+                { id: 171, userId: "121", name: "Tahsin Alam", text: "Count me in!!" }
+            ]
         }
     ]
 };
@@ -220,7 +416,7 @@ const state = {
 // -- System Initialization --
 function generateCommunityPosts() {
     const roles = ["President", "Vice President", "HR", "General Secretary", "Executive Member", "Member"];
-    
+
     const communitySpecificContexts = {
         'c1': [
             "Just finished a great coding competition! 💻",
@@ -332,12 +528,12 @@ function generateCommunityPosts() {
     MOCK_COMMUNITIES.forEach(community => {
         const posts = [];
         const contexts = communitySpecificContexts[community.id] || ["Hey everyone! Welcome to our community.", "Excited to share our progress."];
-        
+
         for (let i = 1; i <= 20; i++) {
             const randomUser = MOCK_USERS[Math.floor(Math.random() * MOCK_USERS.length)];
             const randomRole = roles[Math.floor(Math.random() * roles.length)];
             const text = contexts[Math.floor(Math.random() * contexts.length)];
-            
+
             // 40% chance of having an image
             const hasImage = Math.random() < 0.4;
             const postImage = hasImage && community.feedImages ? community.feedImages[Math.floor(Math.random() * community.feedImages.length)] : "";
@@ -359,6 +555,44 @@ function generateCommunityPosts() {
     });
 }
 generateCommunityPosts();
+
+function generateNewsfeedPosts() {
+    const postTexts = [
+        "Has anyone tried the new pasta at the cafeteria? 🍝 It's actually pretty good!",
+        "Midterms got me like 😵‍💫 Keep pushing everyone!",
+        "Missing my 8am class because Dhaka traffic is undefeated. 🚗🚕🚙",
+        "Just saw the cutest cat near the admin building! 🐈",
+        "Library is completely full. Where else can I study quietly?",
+        "Beautiful weather today. Perfect for a walk around the campus between classes. ☀️",
+        "Does anyone know if we have a holiday next Thursday?",
+        "Can someone explain the last slide of DSP lecture? I'm completely lost. 😭",
+        "I finally got my campus ID badge today! Feeling official. 🎓",
+        "Just deployed my first Next.js project on Vercel! It works! 🚀",
+        "Is it just me or is the Wi-Fi acting up again?",
+        "The recent seminar on AI in Medicine was absolutely mind-blowing. 🧠",
+        "Anybody down for a quick match of FIFA in the common room? 🎮",
+        "Shoutout to the guard at Gate 2, always smiling! Have a great day everyone.",
+        "Pro tip: Always bring an umbrella. The weather app lies. ☔"
+    ];
+    
+    for (let i = 0; i < 20; i++) {
+        const randomUser = MOCK_USERS[Math.floor(Math.random() * MOCK_USERS.length)];
+        const text = postTexts[i % postTexts.length];
+        const postImage = Math.random() < 0.7 ? `https://picsum.photos/seed/nf${Math.random().toString().substring(2, 8)}/800/400` : "";
+        
+        state.posts.push({
+            id: `nf_${i}`,
+            userId: randomUser.id,
+            text: text,
+            image: postImage,
+            likes: Math.floor(Math.random() * 300) + 15,
+            comments: Math.floor(Math.random() * 40),
+            liked: false,
+            commentsList: []
+        });
+    }
+}
+generateNewsfeedPosts();
 
 let activeTab = 'home';
 let activeCommunityId = null;
@@ -423,6 +657,12 @@ function updateUI() {
     if (profilePicField) profilePicField.src = state.user.pic;
     document.getElementById('profile-friends-count').innerText = state.friends.length;
     document.getElementById('profile-posts-count').innerText = state.user.postsCount;
+
+    // Settings view updates
+    const settingsNameInput = document.getElementById('settings-name-input');
+    if (settingsNameInput) settingsNameInput.value = state.user.name;
+    const settingsBioInput = document.getElementById('settings-bio-input');
+    if (settingsBioInput) settingsBioInput.value = state.user.bio || "";
 }
 
 // --- Navigation & Views ---
@@ -464,7 +704,70 @@ function switchTab(tabId) {
         if (tabId === 'friends') renderFriendsView();
         if (tabId === 'events') renderEventsGrid();
         if (tabId === 'communities') renderCommunitiesList();
+        if (tabId === 'explore') switchExploreTab('main');
     }
+
+    updateGlobalFab(tabId);
+}
+
+function switchExploreTab(subTabId) {
+    // Hide all explore sub-views
+    const exploreViews = ['explore-main-view', 'explore-programming-view', 'explore-research-view', 'explore-gaming-view', 'explore-career-view'];
+    exploreViews.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.classList.add('hidden');
+    });
+
+    const target = document.getElementById(`explore-${subTabId}-view`);
+    if (target) {
+        target.classList.remove('hidden');
+    }
+
+    // Scroll to top when switching internal tabs
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    // Update FAB based on explore sub-tab
+    updateGlobalFab('explore', subTabId);
+}
+
+function updateGlobalFab(tabId, subTabId = 'main') {
+    const fabButton = document.getElementById('global-fab');
+    if (!fabButton) return;
+    
+    let icon = 'edit';
+    let text = 'Create Post';
+    let action = 'focusCreatePost()';
+    let colorClass = 'bg-primary';
+
+    if (tabId === 'explore') {
+        if (subTabId === 'programming') {
+            icon = 'code'; text = 'Share Project'; colorClass = 'bg-indigo-600'; action = "alert('Share Project feature coming soon!')";
+        } else if (subTabId === 'research') {
+            icon = 'emoji_objects'; text = 'Submit Idea'; colorClass = 'bg-teal-600'; action = "alert('Submit Research Idea feature coming soon!')";
+        } else if (subTabId === 'gaming') {
+            icon = 'sports_esports'; text = 'Find Squad'; colorClass = 'bg-fuchsia-600'; action = "alert('Find Squad feature coming soon!')";
+        } else if (subTabId === 'career') {
+            icon = 'upload_file'; text = 'Upload CV'; colorClass = 'bg-blue-600'; action = "alert('Upload CV feature coming soon!')";
+        } else {
+            fabButton.classList.add('hidden');
+            return;
+        }
+    } else if (tabId === 'events') {
+        icon = 'event'; text = 'Host Event'; action = "alert('Host event feature coming soon!')"; colorClass = 'bg-orange-600';
+    } else if (tabId === 'communities') {
+        icon = 'group_add'; text = 'New Community'; action = "alert('Create community feature coming soon!')"; colorClass = 'bg-primary';
+    } else if (tabId === 'friends') {
+        icon = 'person_add'; text = 'Find Friends'; action = "document.getElementById('search-input').focus();"; colorClass = 'bg-secondary';
+    }
+
+    fabButton.className = `fixed bottom-6 right-6 z-50 text-white p-4 rounded-full shadow-lg hover:shadow-xl hover:scale-105 active:scale-95 transition-all flex items-center justify-center group ${colorClass}`;
+    fabButton.setAttribute('onclick', action);
+    
+    fabButton.innerHTML = `
+        <span class="material-symbols-outlined mr-0 group-hover:mr-2 transition-all text-xl">${icon}</span>
+        <span class="text-sm font-bold w-0 overflow-hidden group-hover:w-auto opacity-0 group-hover:opacity-100 transition-all whitespace-nowrap">${text}</span>
+    `;
+    fabButton.classList.remove('hidden');
 }
 
 // --- Post Creation & Formatting ---
@@ -549,6 +852,34 @@ function getUserDetails(id) {
     return MOCK_USERS.find(u => u.id === id) || { name: "Unknown", dept: "N/A", role: "Unknown", batch: "N/A", pic: "" };
 }
 
+function shuffleNewsfeed(btn) {
+    // Add visual feedback to the button's icon
+    const icon = btn?.querySelector('.material-symbols-outlined');
+    if (icon) {
+        icon.classList.add('rotate-180');
+        setTimeout(() => icon.classList.remove('rotate-180'), 500);
+    }
+    
+    // Shuffle the posts using Fisher-Yates
+    for (let i = state.posts.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [state.posts[i], state.posts[j]] = [state.posts[j], state.posts[i]];
+    }
+    
+    const container = document.getElementById('feed-container');
+    if (container) {
+        container.style.opacity = '0'; // Fade out
+        setTimeout(() => {
+            renderFeed();
+            // Optional: scroll to top of feed
+            document.getElementById('home-view').scrollTo({ top: 0, behavior: 'smooth' });
+            container.style.opacity = '1'; // Fade in
+        }, 300);
+    } else {
+        renderFeed();
+    }
+}
+
 function renderFeed() {
     const container = document.getElementById('feed-container');
     container.innerHTML = state.posts.map(post => createPostHTML(post)).join('');
@@ -566,39 +897,40 @@ function renderUserPosts() {
 
 function createPostHTML(post) {
     const author = getUserDetails(post.userId);
-    const imgHtml = post.image ? `<img src="${post.image}" class="w-full mt-3 rounded-xl max-h-96 object-cover border border-surface-container-highest">` : '';
+    const fallbackImage = `https://picsum.photos/seed/fallback_${post.id}/800/500`;
+    const imgHtml = post.image ? `<div class="overflow-hidden rounded-xl mt-4 border border-slate-200 dark:border-slate-700/60 shadow-sm transition-transform duration-500 hover:scale-[1.01]"><img src="${post.image}" onerror="this.onerror=null; this.src='${fallbackImage}';" class="w-full max-h-96 object-cover bg-slate-100 dark:bg-slate-800"></div>` : '';
     const likeIcon = post.liked ? 'favorite' : 'favorite_border';
     const likeClass = post.liked ? 'text-red-500' : 'text-slate-500';
     const likeFill = post.liked ? '1' : '0';
 
     const commentsHtml = post.commentsList ? post.commentsList.map(c => `
-        <div class="bg-surface-container-high rounded-lg p-2.5 mb-2">
-            <span class="font-bold text-xs mr-1 cursor-pointer hover:underline text-primary" onclick="openPublicProfile('${c.userId || '101'}')">${c.name}</span>
-            <span class="text-sm">${c.text}</span>
+        <div class="bg-surface-container-high rounded-xl p-3 mb-2 border border-slate-100 dark:border-slate-800">
+            <span class="font-extrabold text-xs mr-1 cursor-pointer hover:underline text-primary" onclick="openPublicProfile('${c.userId || '101'}')">${c.name}</span>
+            <span class="text-sm text-slate-700 dark:text-slate-300 font-medium">${c.text}</span>
         </div>`).join('') : "";
 
-    return `<div class="bg-surface-container-lowest rounded-xl p-5 shadow-sm border border-surface-container-highest/20 hover:shadow-md transition-shadow">
-        <div class="flex gap-3 mb-3 cursor-pointer group w-fit" onclick="openPublicProfile('${author.id}')">
-            <img src="${author.pic}" class="w-10 h-10 rounded-full object-cover border border-slate-100 group-hover:opacity-80 transition-opacity">
-            <div>
-                <h4 class="font-bold text-sm leading-tight group-hover:underline text-on-surface">${author.name}</h4>
-                <p class="text-xs text-on-surface-variant group-hover:text-primary transition-colors">${author.role === 'Student' ? author.dept + ' • Batch ' + author.batch : author.role + ' • ' + author.dept}</p>
+    return `<div class="bg-gradient-to-br from-white to-slate-50 dark:from-slate-900 dark:to-slate-800 rounded-2xl p-6 shadow-xl shadow-slate-200/50 dark:shadow-none border border-slate-200/60 dark:border-slate-700/60 hover:shadow-2xl transition-all duration-300">
+        <div class="flex gap-4 mb-4 cursor-pointer group w-fit" onclick="openPublicProfile('${author.id}')">
+            <img src="${author.pic}" class="w-12 h-12 rounded-full object-cover shadow-sm border-2 border-white dark:border-slate-700 group-hover:opacity-90 transition-all">
+            <div class="flex flex-col justify-center">
+                <h4 class="font-extrabold text-base leading-tight group-hover:underline text-slate-900 dark:text-slate-100">${author.name}</h4>
+                <p class="text-xs font-semibold text-slate-500 dark:text-slate-400 group-hover:text-primary transition-colors mt-0.5">${author.role === 'Student' ? author.dept + ' • Batch ' + author.batch : author.role + ' • ' + author.dept} <span class="mx-1">•</span> <span class="material-symbols-outlined text-[10px] inline-block align-middle">public</span></p>
             </div>
         </div>
-        <p class="text-sm font-medium leading-relaxed whitespace-pre-wrap">${post.text}</p>
+        <p class="text-[15px] font-semibold text-slate-800 dark:text-slate-200 leading-relaxed whitespace-pre-wrap">${post.text}</p>
         ${imgHtml}
-        <div class="flex gap-6 mt-4 pt-4 border-t border-surface-container-highest/50">
-            <button onclick="toggleLike(${post.id})" class="flex items-center gap-2 group">
-                <div class="p-1.5 rounded-full group-hover:bg-red-50 transition-colors ${post.liked ? 'bg-red-50' : ''}">
-                  <span class="material-symbols-outlined text-xl ${likeClass} transition-transform group-active:scale-75" style="font-variation-settings: 'FILL' ${likeFill};">${likeIcon}</span>
+        <div class="flex items-center gap-6 mt-5 pt-4 border-t border-slate-200/60 dark:border-slate-700/60">
+            <button onclick="toggleLike('${post.id}', this)" class="flex items-center gap-2 group flex-1 justify-center sm:flex-none sm:justify-start">
+                <div class="p-2 rounded-full group-hover:bg-red-50 dark:group-hover:bg-red-900/20 transition-colors ${post.liked ? 'bg-red-50 dark:bg-red-900/20' : ''}">
+                  <span class="material-symbols-outlined text-2xl ${likeClass} transition-transform group-active:scale-75" style="font-variation-settings: 'FILL' ${likeFill};">${likeIcon}</span>
                 </div>
-                <span class="text-sm font-semibold ${likeClass}">${post.likes}</span>
+                <span class="text-sm font-bold ${likeClass}">${post.likes}</span>
             </button>
-            <button onclick="toggleComments(${post.id})" class="flex items-center gap-2 text-slate-500 group">
-                <div class="p-1.5 rounded-full group-hover:bg-blue-50 transition-colors">
-                  <span class="material-symbols-outlined text-xl">chat_bubble_outline</span>
+            <button onclick="toggleComments('${post.id}')" class="flex items-center gap-2 text-slate-500 dark:text-slate-400 group flex-1 justify-center sm:flex-none sm:justify-start">
+                <div class="p-2 rounded-full group-hover:bg-blue-50 dark:group-hover:bg-blue-900/20 transition-colors">
+                  <span class="material-symbols-outlined text-2xl">chat_bubble_outline</span>
                 </div>
-                <span class="text-sm font-semibold">${post.comments}</span>
+                <span class="text-sm font-bold">${post.comments}</span>
             </button>
         </div>
         <!-- Comments Section -->
@@ -616,15 +948,44 @@ function createPostHTML(post) {
     </div>`;
 }
 
-function toggleLike(postId) {
-    const post = state.posts.find(p => p.id === postId);
+function toggleLike(postId, btn) {
+    const post = state.posts.find(p => String(p.id) === String(postId));
     if (post) {
         post.liked = !post.liked;
         post.likes += post.liked ? 1 : -1;
 
-        if (activeTab === 'home') renderFeed();
-        if (activeTab === 'profile') renderUserPosts();
-        if (activeTab === 'other-profile' && currentOtherUserId) openPublicProfile(currentOtherUserId);
+        if (btn) {
+            const iconDiv = btn.querySelector('div');
+            const iconSpan = btn.querySelector('span.material-symbols-outlined');
+            const textSpan = btn.querySelectorAll('span')[1];
+
+            if (post.liked) {
+                iconDiv.classList.add('bg-red-50', 'dark:bg-red-900/20');
+                iconSpan.classList.remove('text-slate-500');
+                iconSpan.classList.add('text-red-500', 'like-animation');
+                iconSpan.innerText = 'favorite';
+                iconSpan.style.fontVariationSettings = "'FILL' 1";
+                
+                textSpan.classList.remove('text-slate-500');
+                textSpan.classList.add('text-red-500');
+                
+                setTimeout(() => iconSpan.classList.remove('like-animation'), 500);
+            } else {
+                iconDiv.classList.remove('bg-red-50', 'dark:bg-red-900/20');
+                iconSpan.classList.remove('text-red-500');
+                iconSpan.classList.add('text-slate-500');
+                iconSpan.innerText = 'favorite_border';
+                iconSpan.style.fontVariationSettings = "'FILL' 0";
+                
+                textSpan.classList.remove('text-red-500');
+                textSpan.classList.add('text-slate-500');
+            }
+            textSpan.innerText = post.likes;
+        } else {
+            if (activeTab === 'home') renderFeed();
+            if (activeTab === 'profile') renderUserPosts();
+            if (activeTab === 'other-profile' && currentOtherUserId) openPublicProfile(currentOtherUserId);
+        }
     }
 }
 
@@ -1355,104 +1716,33 @@ function renderFriendsView() {
     }
 }
 
-const CV_CATEGORIES = {
-    c1:'tech', c2:'arts', c3:'tech', c4:'tech', c5:'arts',
-    c6:'tech', c7:'tech', c8:'arts', c9:'sports', c10:'sports',
-    c11:'tech', c12:'arts', c13:'tech', c14:'tech', c15:'tech'
-};
-
-let cvActiveFilter = 'all';
-let cvSearchQuery  = '';
-
-// --- Communities View & Profile render---
-
-
+// --- Communities View & Profile ---
 function renderCommunitiesList() {
-    const container  = document.getElementById('communities-list-container');
-    const emptyState = document.getElementById('cv-empty');
-    const countLabel = document.getElementById('cv-comm-count');
-    const joinedStat = document.getElementById('cv-joined-count');
+    const container = document.getElementById('communities-list-container');
     if (!container) return;
 
-    // Update joined counter
-    if (joinedStat) joinedStat.innerText = state.joinedCommunities.length;
-
-    // Build filtered list
-    const filtered = MOCK_COMMUNITIES.filter(c => {
-        const matchesSearch = !cvSearchQuery ||
-            c.name.toLowerCase().includes(cvSearchQuery.toLowerCase());
-        let matchesFilter = true;
-        if (cvActiveFilter === 'joined') {
-            matchesFilter = state.joinedCommunities.includes(c.id);
-        } else if (cvActiveFilter !== 'all') {
-            matchesFilter = CV_CATEGORIES[c.id] === cvActiveFilter;
+    container.innerHTML = MOCK_COMMUNITIES.map(c => {
+        let btnStatus = `<button onclick="openCommunityProfile('${c.id}'); event.stopPropagation();" class="px-4 py-1.5 rounded-full text-xs font-bold border border-primary text-primary hover:bg-primary hover:text-white transition-all shadow-sm">Join</button>`;
+        if (state.joinedCommunities.includes(c.id)) {
+            btnStatus = `<button class="px-4 py-1.5 rounded-full text-xs font-bold bg-primary text-white transition-all shadow-sm pointer-events-none">Joined</button>`;
+        } else if (state.pendingCommunities.includes(c.id)) {
+            btnStatus = `<button class="px-4 py-1.5 rounded-full text-xs font-bold bg-slate-200 text-slate-500 transition-all shadow-sm pointer-events-none">Pending...</button>`;
         }
-        return matchesSearch && matchesFilter;
-    });
-
-    // Count label
-    if (countLabel) {
-        countLabel.innerText = filtered.length + ' ' +
-            (filtered.length === 1 ? 'community' : 'communities');
-    }
-
-    // Empty state
-    if (filtered.length === 0) {
-        container.innerHTML = '';
-        if (emptyState) emptyState.style.display = 'block';
-        return;
-    }
-    if (emptyState) emptyState.style.display = 'none';
-
-    // Render cards
-    container.innerHTML = filtered.map(c => {
-        const isJoined  = state.joinedCommunities.includes(c.id);
-        const isPending = state.pendingCommunities.includes(c.id);
-
-        let btnClass = 'cv-join-btn';
-        let btnLabel = 'Join';
-        let btnAction = `onclick="openCommunityProfile('${c.id}'); event.stopPropagation();"`;
-
-        if (isJoined) {
-            btnClass += ' cv-btn-joined';
-            btnLabel = '✓ Joined';
-            btnAction = '';
-        } else if (isPending) {
-            btnClass += ' cv-btn-pending';
-            btnLabel = 'Pending…';
-            btnAction = '';
-        }
-
-        const cardClass = 'cv-card' + (isJoined ? ' cv-joined' : '');
 
         return `
-        <div class="${cardClass}" onclick="openCommunityProfile('${c.id}')">
-            <div class="cv-card-cover"></div>
-            <div class="cv-card-body">
-                <img class="cv-card-pic" src="${c.pic}" alt="${c.name}"
-                     onerror="this.src='https://ui-avatars.com/api/?name=${encodeURIComponent(c.name)}&background=a14000&color=fff'">
-                <div class="cv-card-info">
-                    <div class="cv-card-name" title="${c.name}">${c.name}</div>
-                    <div class="cv-card-members">${c.members} Members</div>
-                </div>
-                <button class="${btnClass}" ${btnAction}>${btnLabel}</button>
+        <div onclick="openCommunityProfile('${c.id}')" class="bg-surface-container-lowest p-4 rounded-xl flex items-center gap-4 group cursor-pointer hover:bg-surface-container-low transition-colors shadow-sm">
+            <div class="w-12 h-12 rounded-xl overflow-hidden flex-shrink-0">
+                <img src="${c.pic}" class="w-full h-full object-cover">
             </div>
-        </div>`;
+            <div class="flex-1">
+                <h4 class="font-bold text-sm">${c.name}</h4>
+                <p class="text-xs text-on-surface-variant">${c.members} Members</p>
+            </div>
+            ${btnStatus}
+        </div>
+        `;
     }).join('');
 }
-
-function cvFilter(query) {
-    cvSearchQuery = query;
-    renderCommunitiesList();
-}
-
-function cvSetFilter(tag, btnEl) {
-    cvActiveFilter = tag;
-    document.querySelectorAll('.cv-pill').forEach(b => b.classList.remove('cv-pill-active'));
-    if (btnEl) btnEl.classList.add('cv-pill-active');
-    renderCommunitiesList();
-}
-
 
 function openCommunityProfile(communityId) {
     const community = MOCK_COMMUNITIES.find(c => c.id === communityId);
@@ -1491,7 +1781,7 @@ function handleJoinCommunity(communityId) {
     btn.innerText = "Pending...";
     btn.className = "px-8 py-2 rounded-xl text-sm font-bold bg-slate-200 text-slate-500 shadow-sm pointer-events-none";
     state.pendingCommunities.push(communityId);
-    
+
     // Re-render feed instantly to show pending status
     renderCommunityFeed(communityId);
     renderCommunitiesList(); // Update the main list page if navigated back
@@ -1500,7 +1790,7 @@ function handleJoinCommunity(communityId) {
     setTimeout(() => {
         state.pendingCommunities = state.pendingCommunities.filter(id => id !== communityId);
         state.joinedCommunities.push(communityId);
-        
+
         if (activeCommunityId === communityId) {
             btn.innerText = "Joined";
             btn.className = "px-8 py-2 rounded-xl text-sm font-bold bg-primary text-white shadow-sm pointer-events-none";
@@ -1513,7 +1803,7 @@ function renderCommunityFeed(communityId) {
     const container = document.getElementById('community-feed-container');
     const warning = document.getElementById('community-locked-warning');
     const isJoined = state.joinedCommunities.includes(communityId);
-    
+
     const postInput = document.getElementById('community-post-input');
     const postBtn = document.getElementById('community-post-btn');
     const postImgInput = document.getElementById('post-image-input-community');
@@ -1521,8 +1811,8 @@ function renderCommunityFeed(communityId) {
     if (postInput && postBtn) {
         postInput.disabled = !isJoined;
         postBtn.disabled = !isJoined;
-        if(postImgInput) postImgInput.disabled = !isJoined;
-        if(postImgBtn) postImgBtn.disabled = !isJoined;
+        if (postImgInput) postImgInput.disabled = !isJoined;
+        if (postImgBtn) postImgBtn.disabled = !isJoined;
     }
 
     if (isJoined) {
@@ -1532,18 +1822,18 @@ function renderCommunityFeed(communityId) {
     }
 
     const posts = MOCK_COMMUNITY_POSTS[communityId] || [];
-    
+
     container.innerHTML = posts.map(post => {
         const author = getUserDetails(post.userId);
-        
+
         // Feed interaction locking logic depending on isJoined
         let heartIcon = post.liked ? 'favorite' : 'favorite_border';
-        let heartAction = isJoined ? `onclick="toggleCommunityLike('${communityId}', '${post.id}')"` : '';
+        let heartAction = isJoined ? `onclick="toggleCommunityLike('${communityId}', '${post.id}', this)"` : '';
         let heartClass = post.liked ? 'text-red-500 material-symbols-outlined' : 'text-on-surface hover:text-red-500 material-symbols-outlined';
         let heartFill = post.liked ? '1' : '0';
-        
+
         const opacityLock = isJoined ? '' : 'opacity-50 pointer-events-none';
-        
+
         // Show comments logic
         const commentsHtml = (post.showComments && post.commentsList) ? `
             <div class="mt-4 pt-4 border-t border-slate-100 space-y-3">
@@ -1605,11 +1895,11 @@ function submitCommunityPost() {
     if (!input || !activeCommunityId) return;
     const text = input.value.trim();
     if (!text && !uploadedImageBase64) return;
-    
+
     if (!MOCK_COMMUNITY_POSTS[activeCommunityId]) {
         MOCK_COMMUNITY_POSTS[activeCommunityId] = [];
     }
-    
+
     const newPost = {
         id: `cp_${activeCommunityId}_new_${Date.now()}`,
         userId: state.user.id,
@@ -1622,7 +1912,7 @@ function submitCommunityPost() {
         commentsList: [],
         timestamp: "Just now"
     };
-    
+
     MOCK_COMMUNITY_POSTS[activeCommunityId].unshift(newPost);
     input.value = "";
     removeImage('community');
@@ -1634,7 +1924,7 @@ function toggleCommunityComments(communityId, postId) {
     const posts = MOCK_COMMUNITY_POSTS[communityId];
     const post = posts.find(p => p.id === postId);
     if (!post) return;
-    
+
     post.showComments = !post.showComments;
     renderCommunityFeed(communityId);
 }
@@ -1661,9 +1951,9 @@ function handleCommunityShare(communityId, postId) {
         const community = MOCK_COMMUNITIES.find(c => c.id === communityId);
         const posts = MOCK_COMMUNITY_POSTS[communityId];
         const sharedPost = posts.find(p => p.id === postId);
-        if(!sharedPost) return;
+        if (!sharedPost) return;
         const originalAuthor = getUserDetails(sharedPost.userId);
-        
+
         const newPost = {
             id: Date.now(),
             userId: state.user.id,
@@ -1675,20 +1965,218 @@ function handleCommunityShare(communityId, postId) {
             commentsList: []
         };
         state.posts.unshift(newPost);
-        if(state.user) state.user.postsCount++;
+        if (state.user) state.user.postsCount++;
         showToast("Post shared to your timeline!");
     }
 }
 
-function toggleCommunityLike(communityId, postId) {
+function toggleCommunityLike(communityId, postId, btn) {
     if (!state.joinedCommunities.includes(communityId)) return;
     const posts = MOCK_COMMUNITY_POSTS[communityId];
-    const post = posts.find(p => p.id === postId);
+    const post = posts.find(p => String(p.id) === String(postId));
     if (!post) return;
-    
+
     post.liked = !post.liked;
     post.likes += post.liked ? 1 : -1;
-    renderCommunityFeed(communityId);
+
+    if (btn) {
+        const iconSpan = btn.querySelector('span.material-symbols-outlined');
+        const textSpan = btn.querySelectorAll('span')[1];
+
+        if (post.liked) {
+            iconSpan.classList.remove('text-on-surface', 'hover:text-red-500');
+            iconSpan.classList.add('text-red-500', 'like-animation');
+            iconSpan.innerText = 'favorite';
+            iconSpan.style.fontVariationSettings = "'FILL' 1";
+
+            setTimeout(() => iconSpan.classList.remove('like-animation'), 500);
+        } else {
+            iconSpan.classList.remove('text-red-500');
+            iconSpan.classList.add('text-on-surface', 'hover:text-red-500');
+            iconSpan.innerText = 'favorite_border';
+            iconSpan.style.fontVariationSettings = "'FILL' 0";
+        }
+        textSpan.innerText = post.likes;
+    } else {
+        renderCommunityFeed(communityId);
+    }
 }
 
+// --- Explore Popup Logic ---
+window.openExplorePopup = function(config) {
+    const modal = document.getElementById('explore-popup');
+    const content = document.getElementById('explore-popup-content');
+    const accent = document.getElementById('explore-popup-accent');
+    const iconWrap = document.getElementById('explore-popup-icon-wrap');
+    const icon = document.getElementById('explore-popup-icon');
+    const title = document.getElementById('explore-popup-title');
+    const subtitle = document.getElementById('explore-popup-subtitle');
+    const body = document.getElementById('explore-popup-body');
+    const footer = document.getElementById('explore-popup-footer');
 
+    if (!modal) return;
+
+    // Reset items
+    title.innerText = config.title || 'Information';
+    subtitle.innerText = config.subtitle || '';
+    icon.innerText = config.icon || 'info';
+    body.innerHTML = config.bodyHtml || '<p class="text-slate-600">No details available at the moment.</p>';
+    
+    // Default footer if none provided
+    if (config.footerHtml) {
+        footer.innerHTML = config.footerHtml;
+    } else {
+        footer.innerHTML = `<button onclick="closeExplorePopup()" class="flex-1 py-2.5 bg-slate-900 text-white font-bold rounded-xl shadow-sm hover:bg-slate-800 transition-colors">Close</button>`;
+    }
+
+    // Apply color theme (using Tailwind colors)
+    const colorMap = {
+        indigo: { accent: 'bg-indigo-600', iconBg: 'bg-indigo-50', iconText: 'text-indigo-600' },
+        teal: { accent: 'bg-teal-600', iconBg: 'bg-teal-50', iconText: 'text-teal-600' },
+        fuchsia: { accent: 'bg-fuchsia-600', iconBg: 'bg-fuchsia-100', iconText: 'text-fuchsia-600' },
+        blue: { accent: 'bg-blue-600', iconBg: 'bg-blue-50', iconText: 'text-blue-600' },
+        emerald: { accent: 'bg-emerald-600', iconBg: 'bg-emerald-50', iconText: 'text-emerald-600' },
+        amber: { accent: 'bg-amber-600', iconBg: 'bg-amber-50', iconText: 'text-amber-600' },
+        pink: { accent: 'bg-pink-600', iconBg: 'bg-pink-50', iconText: 'text-pink-600' },
+        slate: { accent: 'bg-slate-600', iconBg: 'bg-slate-50', iconText: 'text-slate-600' }
+    };
+
+    const theme = colorMap[config.theme] || colorMap.indigo;
+    accent.className = `h-1.5 w-full ${theme.accent}`;
+    iconWrap.className = `w-12 h-12 rounded-xl ${theme.iconBg} ${theme.iconText} flex items-center justify-center shadow-sm`;
+
+    // Show modal
+    modal.classList.remove('hidden');
+    setTimeout(() => {
+        modal.classList.remove('opacity-0');
+        content.classList.remove('scale-95');
+        content.classList.add('scale-100');
+    }, 10);
+};
+
+window.closeExplorePopup = function() {
+    const modal = document.getElementById('explore-popup');
+    const content = document.getElementById('explore-popup-content');
+    if (!modal) return;
+    modal.classList.add('opacity-0');
+    content.classList.remove('scale-100');
+    content.classList.add('scale-95');
+    setTimeout(() => modal.classList.add('hidden'), 300);
+};
+
+window.scrollSlider = function(sliderId, direction) {
+    const slider = document.getElementById(sliderId);
+    if (!slider) return;
+    const scrollAmount = 300;
+    slider.scrollBy({
+        left: direction === 'left' ? -scrollAmount : scrollAmount,
+        behavior: 'smooth'
+    });
+};
+
+window.postQuestion = function() {
+    const subjectInput = document.getElementById('qa-subject');
+    const detailsInput = document.getElementById('qa-details');
+    const list = document.getElementById('qa-forum-list');
+    
+    if (!subjectInput || !detailsInput || !list) return;
+    
+    const subject = subjectInput.value.trim();
+    if (!subject) {
+        showToast("Please enter a subject!");
+        return;
+    }
+    
+    const newQuestionHtml = `
+        <hr class="border-surface-container-highest">
+        <div class="group cursor-pointer">
+            <h4 class="font-semibold text-sm mb-2 text-slate-800 group-hover:text-primary transition-colors leading-snug">${subject}</h4>
+            <div class="flex gap-1.5 mb-2">
+                <span class="px-1.5 py-0.5 bg-slate-100 text-slate-500 rounded text-[9px] font-bold uppercase tracking-wider">New</span>
+                <span class="px-1.5 py-0.5 bg-indigo-50 text-indigo-600 rounded text-[9px] font-bold uppercase tracking-wider">Recent</span>
+            </div>
+            <div class="flex items-center justify-between text-xs text-slate-500">
+                <span class="flex items-center gap-1 text-slate-400 font-bold bg-slate-50 px-1.5 py-0.5 rounded"><span class="material-symbols-outlined text-[12px]">schedule</span> Pending</span>
+                <span>0 answers</span>
+            </div>
+        </div>
+    `;
+    
+    list.insertAdjacentHTML('beforeend', newQuestionHtml);
+    
+    closeExplorePopup();
+    showToast("Question posted successfully!");
+};
+
+// --- Settings ---
+function switchSettingsTab(tabId) {
+    // Hide all panels
+    document.querySelectorAll('.settings-panel').forEach(el => {
+        el.classList.remove('block');
+        el.classList.add('hidden');
+    });
+    // Show active panel
+    const activePanel = document.getElementById(`settings-${tabId}-panel`);
+    if (activePanel) {
+        activePanel.classList.remove('hidden');
+        activePanel.classList.add('block');
+    }
+    
+    // Update button styles
+    document.querySelectorAll('.settings-tab-btn').forEach(btn => {
+        if (btn.classList.contains(tabId)) {
+            btn.classList.remove('text-slate-600', 'dark:text-slate-400', 'hover:bg-slate-100', 'dark:hover:bg-slate-800');
+            btn.classList.add('bg-primary', 'text-white');
+        } else {
+            btn.classList.add('text-slate-600', 'dark:text-slate-400', 'hover:bg-slate-100', 'dark:hover:bg-slate-800');
+            btn.classList.remove('bg-primary', 'text-white');
+        }
+    });
+}
+
+function saveAccountSettings() {
+    const newName = document.getElementById('settings-name-input').value.trim();
+    const newBio = document.getElementById('settings-bio-input').value.trim();
+    
+    if (!newName) {
+        if (typeof showToast === 'function') showToast("Name cannot be empty!");
+        else alert("Name cannot be empty!");
+        return;
+    }
+    
+    state.user.name = newName;
+    state.user.bio = newBio;
+    
+    updateUI();
+    
+    if (typeof showToast === 'function') showToast("Settings saved successfully!");
+    else alert("Settings saved successfully!");
+}
+
+function toggleDarkMode(isDark) {
+    if (isDark) {
+        document.documentElement.classList.add('dark');
+        localStorage.setItem('theme', 'dark');
+    } else {
+        document.documentElement.classList.remove('dark');
+        localStorage.setItem('theme', 'light');
+    }
+}
+
+// Initialize theme on load
+(function initTheme() {
+    const savedTheme = localStorage.getItem('theme');
+    const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const isDark = savedTheme === 'dark' || (!savedTheme && prefersDark);
+    
+    if (isDark) {
+        document.documentElement.classList.add('dark');
+    } else {
+        document.documentElement.classList.remove('dark');
+    }
+
+    const darkModeToggle = document.getElementById('dark-mode-toggle');
+    if (darkModeToggle) {
+        darkModeToggle.checked = isDark;
+    }
+})();
