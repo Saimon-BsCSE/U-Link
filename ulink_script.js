@@ -3,41 +3,41 @@
 
 // --- Mock Data & State ---
 const MOCK_USERS = [
-    { id: "101", name: "Sadika Rahman", dept: "CSE", role: "Student", batch: "211", pic: "https://ui-avatars.com/api/?name=Sadika+Rahman&background=E85D04&color=fff" },
-    { id: "102", name: "Rakib Hasan", dept: "BBA", role: "Student", batch: "203", pic: "https://ui-avatars.com/api/?name=Rakib+Hasan&background=0077B6&color=fff" },
-    { id: "103", name: "Nusrat Jahan", dept: "EEE", role: "Student", batch: "221", pic: "https://ui-avatars.com/api/?name=Nusrat+Jahan&background=7B2D8B&color=fff" },
-    { id: "104", name: "Dr. Ahmed Kabir", dept: "CSE", role: "Professor", batch: "N/A", pic: "https://ui-avatars.com/api/?name=Dr+Ahmed+Kabir&background=023E8A&color=fff" },
-    { id: "105", name: "Jamal Uddin", dept: "Admin", role: "Staff", batch: "N/A", pic: "https://ui-avatars.com/api/?name=Jamal+Uddin&background=2D6A4F&color=fff" },
-    { id: "106", name: "Tania Akter", dept: "Data Science", role: "Student", batch: "231", pic: "https://ui-avatars.com/api/?name=Tania+Akter&background=D62828&color=fff" },
-    { id: "107", name: "Mehedi Hassan", dept: "CSE", role: "Student", batch: "223", pic: "https://ui-avatars.com/api/?name=Mehedi+Hassan&background=457B9D&color=fff" },
-    { id: "108", name: "Priya Das", dept: "Pharmacy", role: "Student", batch: "225", pic: "https://ui-avatars.com/api/?name=Priya+Das&background=C77DFF&color=fff" },
-    { id: "109", name: "Arif Hossain", dept: "Civil", role: "Student", batch: "212", pic: "https://ui-avatars.com/api/?name=Arif+Hossain&background=F4A261&color=fff" },
-    { id: "110", name: "Lamia Sultana", dept: "English", role: "Student", batch: "234", pic: "https://ui-avatars.com/api/?name=Lamia+Sultana&background=06D6A0&color=fff" },
-    { id: "111", name: "Omar Faruk", dept: "BBA", role: "Student", batch: "221", pic: "https://ui-avatars.com/api/?name=Omar+Faruk&background=FFB703&color=333" },
-    { id: "112", name: "Dr. Farzana Islam", dept: "EEE", role: "Professor", batch: "N/A", pic: "https://ui-avatars.com/api/?name=Farzana+Islam&background=8338EC&color=fff" },
-    { id: "113", name: "Ayesha Siddiqa", dept: "Architecture", role: "Student", batch: "211", pic: "https://ui-avatars.com/api/?name=Ayesha+Siddiqa&background=B5179E&color=fff" },
-    { id: "114", name: "Kamrul Hasan", dept: "CSE", role: "Lecturer", batch: "N/A", pic: "https://ui-avatars.com/api/?name=Kamrul+Hasan&background=4CC9F0&color=333" },
-    { id: "115", name: "Nazmul Huda", dept: "Economics", role: "Student", batch: "222", pic: "https://ui-avatars.com/api/?name=Nazmul+Huda&background=3A0CA3&color=fff" },
-    { id: "116", name: "Dr. Laila Zaman", dept: "BBA", role: "Professor", batch: "N/A", pic: "https://ui-avatars.com/api/?name=Laila+Zaman&background=7209B7&color=fff" },
-    { id: "117", name: "Rifat Ahmed", dept: "Civil", role: "Student", batch: "213", pic: "https://ui-avatars.com/api/?name=Rifat+Ahmed&background=F72585&color=fff" },
-    { id: "118", name: "Shammi Akter", dept: "IT Support", role: "Staff", batch: "N/A", pic: "https://ui-avatars.com/api/?name=Shammi+Akter&background=4361EE&color=fff" },
-    { id: "119", name: "Fahim Faysal", dept: "EEE", role: "Student", batch: "233", pic: "https://ui-avatars.com/api/?name=Fahim+Faysal&background=3F37C9&color=fff" },
-    { id: "120", name: "Sumaiya Binte", dept: "Pharmacy", role: "Lecturer", batch: "N/A", pic: "https://ui-avatars.com/api/?name=Sumaiya+Binte&background=4895EF&color=fff" },
-    { id: "121", name: "Tahsin Alam", dept: "Data Science", role: "Student", batch: "232", pic: "https://ui-avatars.com/api/?name=Tahsin+Alam&background=560BAD&color=fff" },
-    { id: "122", name: "Asma Ul Husna", dept: "English", role: "Student", batch: "221", pic: "https://ui-avatars.com/api/?name=Asma+Ul+Husna&background=F72585&color=fff" },
-    { id: "123", name: "Syed Muntasir", dept: "CSE", role: "Student", batch: "201", pic: "https://ui-avatars.com/api/?name=Syed+Muntasir&background=E85D04&color=fff" },
-    { id: "124", name: "Dr. Rafiqul Ali", dept: "Civil", role: "Faculty", batch: "N/A", pic: "https://ui-avatars.com/api/?name=Rafiqul+Ali&background=023E8A&color=fff" },
-    { id: "125", name: "Jannatul Ferdaus", dept: "BBA", role: "Student", batch: "211", pic: "https://ui-avatars.com/api/?name=Jannatul+Ferdaus&background=7B2D8B&color=fff" },
-    { id: "126", name: "Sara Islam", dept: "Pharmacy", role: "Student", batch: "223", pic: "https://ui-avatars.com/api/?name=Sara+Islam&background=FF85A1&color=fff" },
-    { id: "127", name: "Tanvir Ahmed", dept: "EEE", role: "Student", batch: "212", pic: "https://ui-avatars.com/api/?name=Tanvir+Ahmed&background=4CC9F0&color=333" },
-    { id: "128", name: "Sabina Yeasmin", dept: "BBA", role: "Student", batch: "202", pic: "https://ui-avatars.com/api/?name=Sabina+Yeasmin&background=F72585&color=fff" },
-    { id: "129", name: "Mahir Chowdhury", dept: "CSE", role: "Student", batch: "231", pic: "https://ui-avatars.com/api/?name=Mahir+Chowdhury&background=023E8A&color=fff" },
-    { id: "130", name: "Nishat Mazumder", dept: "Civil", role: "Student", batch: "221", pic: "https://ui-avatars.com/api/?name=Nishat+Mazumder&background=2D6A4F&color=fff" },
-    { id: "131", name: "Dr. Shiblee Imtiaz", dept: "CSE", role: "Professor", batch: "N/A", pic: "https://ui-avatars.com/api/?name=Shiblee+Imtiaz&background=7209B7&color=fff" },
-    { id: "132", name: "Rina Akter", dept: "Admin", role: "Staff", batch: "N/A", pic: "https://ui-avatars.com/api/?name=Rina+Akter&background=D62828&color=fff" },
-    { id: "133", name: "Nafis Iqbal", dept: "Data Science", role: "Student", batch: "222", pic: "https://ui-avatars.com/api/?name=Nafis+Iqbal&background=4361EE&color=fff" },
-    { id: "134", name: "Zerin Khan", dept: "Architecture", role: "Student", batch: "213", pic: "https://ui-avatars.com/api/?name=Zerin+Khan&background=B5179E&color=fff" },
-    { id: "135", name: "Hasan Mahmud", dept: "Economics", role: "Student", batch: "233", pic: "https://ui-avatars.com/api/?name=Hasan+Mahmud&background=F4A261&color=fff" }
+    { id: "101", name: "Sadika Rahman", dept: "CSE", role: "Student", batch: "211", pic: "Asserts/sadika_Rahman.jpeg" },
+    { id: "102", name: "Rakib Hasan", dept: "BBA", role: "Student", batch: "203", pic: "Asserts/rakib.jpeg" },
+    { id: "103", name: "Nusrat Jahan", dept: "EEE", role: "Student", batch: "221", pic: "Asserts/nusrat_jahan.jpeg" },
+    { id: "104", name: "Dr. Ahmed Kabir", dept: "CSE", role: "Professor", batch: "N/A", pic: "Asserts/Dr. Ahmed Kabir.jpeg" },
+    { id: "105", name: "Jamal Uddin", dept: "Admin", role: "Staff", batch: "N/A", pic: "Asserts/jamal.jpg" },
+    { id: "106", name: "Tania Akter", dept: "Data Science", role: "Student", batch: "231", pic: "Asserts/tania.jpeg" },
+    { id: "107", name: "Mehedi Hassan", dept: "CSE", role: "Student", batch: "223", pic: "Asserts/mehedi.jpeg" },
+    { id: "108", name: "Priya Das", dept: "Pharmacy", role: "Student", batch: "225", pic: "Asserts/priya.jpeg" },
+    { id: "109", name: "Arif Hossain", dept: "Civil", role: "Student", batch: "212", pic: "Asserts/arif.jpeg" },
+    { id: "110", name: "Lamia Sultana", dept: "English", role: "Student", batch: "234", pic: "Asserts/lamia.jpeg" },
+    { id: "111", name: "Omar Faruk", dept: "BBA", role: "Student", batch: "221", pic: "Asserts/faruk.jpeg" },
+    { id: "112", name: "Dr. Farzana Islam", dept: "Pharmacy", role: "Professor", batch: "N/A", pic: "Asserts/Dr. Farzana Islam.jpeg" },
+    { id: "113", name: "Ayesha Siddiqa", dept: "Architecture", role: "Student", batch: "211", pic: "Asserts/ayesha.jpeg" },
+    { id: "114", name: "Kamrul Hasan", dept: "CSE", role: "Lecturer", batch: "N/A", pic: "Asserts/Kamrul Hasan.jpeg" },
+    { id: "115", name: "Nazmul Huda", dept: "Economics", role: "Student", batch: "222", pic: "Asserts/nazmul.jpeg" },
+    { id: "116", name: "Dr. Laila Zaman", dept: "BBA", role: "Professor", batch: "N/A", pic: "Asserts/Dr. Laila Zaman.jpeg" },
+    { id: "117", name: "Rifat Ahmed", dept: "Civil", role: "Student", batch: "213", pic: "Asserts/rifat.jpeg" },
+    { id: "118", name: "Shammi Akter", dept: "IT Support", role: "Staff", batch: "N/A", pic: "Asserts/shammi.jpeg" },
+    { id: "119", name: "Fahim Faysal", dept: "EEE", role: "Student", batch: "233", pic: "Asserts/fahim.jpeg" },
+    { id: "120", name: "Sumaiya Binte", dept: "Pharmacy", role: "Lecturer", batch: "N/A", pic: "Asserts/sumaiya.jpeg" },
+    { id: "121", name: "Tahsin Alam", dept: "Data Science", role: "Student", batch: "232", pic: "Asserts/tahsin.jpeg" },
+    { id: "122", name: "Asma Ul Husna", dept: "English", role: "Student", batch: "221", pic: "Asserts/asma.jpeg" },
+    { id: "123", name: "Syed Muntasir", dept: "CSE", role: "Student", batch: "201", pic: "Asserts/sayed.jpeg" },
+    { id: "124", name: "Dr. Rafiqul Ali", dept: "Civil", role: "Faculty", batch: "N/A", pic: "Asserts/rafikul.jpeg" },
+    { id: "125", name: "Jannatul Ferdaus", dept: "BBA", role: "Student", batch: "211", pic: "Asserts/jannat.jpg" },
+    { id: "126", name: "Sara Islam", dept: "Pharmacy", role: "Student", batch: "223", pic: "Asserts/sara.jpeg" },
+    { id: "127", name: "Tanvir Ahmed", dept: "EEE", role: "Student", batch: "212", pic: "Asserts/tanvir.jpeg" },
+    { id: "128", name: "Sabina Yeasmin", dept: "BBA", role: "Student", batch: "202", pic: "Asserts/sabrina.jpeg" },
+    { id: "129", name: "Mahir Chowdhury", dept: "CSE", role: "Student", batch: "231", pic: "Asserts/mahir.jpeg" },
+    { id: "130", name: "Nishat Mazumder", dept: "Civil", role: "Student", batch: "221", pic: "Asserts/nishat.jpeg" },
+    { id: "131", name: "Dr. Shiblee Imtiaz", dept: "CSE", role: "Professor", batch: "N/A", pic: "Asserts/shibli.jpeg" },
+    { id: "132", name: "Rina Akter", dept: "Admin", role: "Staff", batch: "N/A", pic: "Asserts/rina.jpeg" },
+    { id: "133", name: "Nafis Iqbal", dept: "Data Science", role: "Student", batch: "222", pic: "Asserts/nafis.jpeg" },
+    { id: "134", name: "Zerin Khan", dept: "Architecture", role: "Student", batch: "213", pic: "Asserts/zerin.jpeg" },
+    { id: "135", name: "Hasan Mahmud", dept: "Economics", role: "Student", batch: "233", pic: "Asserts/hasan.jpeg" }
 ];
 
 const MOCK_EVENTS = [
@@ -574,12 +574,12 @@ function generateNewsfeedPosts() {
         "Shoutout to the guard at Gate 2, always smiling! Have a great day everyone.",
         "Pro tip: Always bring an umbrella. The weather app lies. ☔"
     ];
-    
+
     for (let i = 0; i < 20; i++) {
         const randomUser = MOCK_USERS[Math.floor(Math.random() * MOCK_USERS.length)];
         const text = postTexts[i % postTexts.length];
         const postImage = Math.random() < 0.7 ? `https://picsum.photos/seed/nf${Math.random().toString().substring(2, 8)}/800/400` : "";
-        
+
         state.posts.push({
             id: `nf_${i}`,
             userId: randomUser.id,
@@ -733,7 +733,7 @@ function switchExploreTab(subTabId) {
 function updateGlobalFab(tabId, subTabId = 'main') {
     const fabButton = document.getElementById('global-fab');
     if (!fabButton) return;
-    
+
     let icon = 'edit';
     let text = 'Create Post';
     let action = 'focusCreatePost()';
@@ -762,7 +762,7 @@ function updateGlobalFab(tabId, subTabId = 'main') {
 
     fabButton.className = `fixed bottom-6 right-6 z-50 text-white p-4 rounded-full shadow-lg hover:shadow-xl hover:scale-105 active:scale-95 transition-all flex items-center justify-center group ${colorClass}`;
     fabButton.setAttribute('onclick', action);
-    
+
     fabButton.innerHTML = `
         <span class="material-symbols-outlined mr-0 group-hover:mr-2 transition-all text-xl">${icon}</span>
         <span class="text-sm font-bold w-0 overflow-hidden group-hover:w-auto opacity-0 group-hover:opacity-100 transition-all whitespace-nowrap">${text}</span>
@@ -859,13 +859,13 @@ function shuffleNewsfeed(btn) {
         icon.classList.add('rotate-180');
         setTimeout(() => icon.classList.remove('rotate-180'), 500);
     }
-    
+
     // Shuffle the posts using Fisher-Yates
     for (let i = state.posts.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
         [state.posts[i], state.posts[j]] = [state.posts[j], state.posts[i]];
     }
-    
+
     const container = document.getElementById('feed-container');
     if (container) {
         container.style.opacity = '0'; // Fade out
@@ -965,10 +965,10 @@ function toggleLike(postId, btn) {
                 iconSpan.classList.add('text-red-500', 'like-animation');
                 iconSpan.innerText = 'favorite';
                 iconSpan.style.fontVariationSettings = "'FILL' 1";
-                
+
                 textSpan.classList.remove('text-slate-500');
                 textSpan.classList.add('text-red-500');
-                
+
                 setTimeout(() => iconSpan.classList.remove('like-animation'), 500);
             } else {
                 iconDiv.classList.remove('bg-red-50', 'dark:bg-red-900/20');
@@ -976,7 +976,7 @@ function toggleLike(postId, btn) {
                 iconSpan.classList.add('text-slate-500');
                 iconSpan.innerText = 'favorite_border';
                 iconSpan.style.fontVariationSettings = "'FILL' 0";
-                
+
                 textSpan.classList.remove('text-red-500');
                 textSpan.classList.add('text-slate-500');
             }
@@ -2003,7 +2003,7 @@ function toggleCommunityLike(communityId, postId, btn) {
 }
 
 // --- Explore Popup Logic ---
-window.openExplorePopup = function(config) {
+window.openExplorePopup = function (config) {
     const modal = document.getElementById('explore-popup');
     const content = document.getElementById('explore-popup-content');
     const accent = document.getElementById('explore-popup-accent');
@@ -2021,7 +2021,7 @@ window.openExplorePopup = function(config) {
     subtitle.innerText = config.subtitle || '';
     icon.innerText = config.icon || 'info';
     body.innerHTML = config.bodyHtml || '<p class="text-slate-600">No details available at the moment.</p>';
-    
+
     // Default footer if none provided
     if (config.footerHtml) {
         footer.innerHTML = config.footerHtml;
@@ -2054,7 +2054,7 @@ window.openExplorePopup = function(config) {
     }, 10);
 };
 
-window.closeExplorePopup = function() {
+window.closeExplorePopup = function () {
     const modal = document.getElementById('explore-popup');
     const content = document.getElementById('explore-popup-content');
     if (!modal) return;
@@ -2064,7 +2064,7 @@ window.closeExplorePopup = function() {
     setTimeout(() => modal.classList.add('hidden'), 300);
 };
 
-window.scrollSlider = function(sliderId, direction) {
+window.scrollSlider = function (sliderId, direction) {
     const slider = document.getElementById(sliderId);
     if (!slider) return;
     const scrollAmount = 300;
@@ -2074,19 +2074,19 @@ window.scrollSlider = function(sliderId, direction) {
     });
 };
 
-window.postQuestion = function() {
+window.postQuestion = function () {
     const subjectInput = document.getElementById('qa-subject');
     const detailsInput = document.getElementById('qa-details');
     const list = document.getElementById('qa-forum-list');
-    
+
     if (!subjectInput || !detailsInput || !list) return;
-    
+
     const subject = subjectInput.value.trim();
     if (!subject) {
         showToast("Please enter a subject!");
         return;
     }
-    
+
     const newQuestionHtml = `
         <hr class="border-surface-container-highest">
         <div class="group cursor-pointer">
@@ -2101,9 +2101,9 @@ window.postQuestion = function() {
             </div>
         </div>
     `;
-    
+
     list.insertAdjacentHTML('beforeend', newQuestionHtml);
-    
+
     closeExplorePopup();
     showToast("Question posted successfully!");
 };
@@ -2121,7 +2121,7 @@ function switchSettingsTab(tabId) {
         activePanel.classList.remove('hidden');
         activePanel.classList.add('block');
     }
-    
+
     // Update button styles
     document.querySelectorAll('.settings-tab-btn').forEach(btn => {
         if (btn.classList.contains(tabId)) {
@@ -2137,18 +2137,18 @@ function switchSettingsTab(tabId) {
 function saveAccountSettings() {
     const newName = document.getElementById('settings-name-input').value.trim();
     const newBio = document.getElementById('settings-bio-input').value.trim();
-    
+
     if (!newName) {
         if (typeof showToast === 'function') showToast("Name cannot be empty!");
         else alert("Name cannot be empty!");
         return;
     }
-    
+
     state.user.name = newName;
     state.user.bio = newBio;
-    
+
     updateUI();
-    
+
     if (typeof showToast === 'function') showToast("Settings saved successfully!");
     else alert("Settings saved successfully!");
 }
@@ -2168,7 +2168,7 @@ function toggleDarkMode(isDark) {
     const savedTheme = localStorage.getItem('theme');
     const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
     const isDark = savedTheme === 'dark' || (!savedTheme && prefersDark);
-    
+
     if (isDark) {
         document.documentElement.classList.add('dark');
     } else {
