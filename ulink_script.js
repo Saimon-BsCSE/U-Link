@@ -705,6 +705,13 @@ function switchTab(tabId) {
         if (tabId === 'events') renderEventsGrid();
         if (tabId === 'communities') renderCommunitiesList();
         if (tabId === 'explore') switchExploreTab('main');
+        if (tabId === 'messages') {
+            document.getElementById('right-sidebar').classList.add('hidden');
+            renderMessagesViewList();
+        } else {
+            document.getElementById('right-sidebar').classList.remove('hidden');
+            document.getElementById('right-sidebar').classList.add('xl:flex');
+        }
     }
 
     updateGlobalFab(tabId);
@@ -1102,6 +1109,224 @@ function openPublicProfile(userId) {
 
 function closePublicProfile() { } // Stub for compatibility
 
+// --- Messages View Logic ---
+function renderMessagesViewList(query = '') {
+    const container = document.getElementById('messages-contact-list');
+    container.innerHTML = '';
+    
+    // Get unique users from chat history or fallback to friends if empty
+    let chatUserIds = Object.keys(state.chatHistory);
+    if (chatUserIds.length === 0) chatUserIds = state.friends.slice(0, 5); // Just show some friends initially
+    
+    let users = chatUserIds.map(id => MOCK_USERS.find(u => u.id === id)).filter(Boolean);
+    
+    if (query) {
+        users = users.filter(u => u.name.toLowerCase().includes(query.toLowerCase()));
+    }
+    
+    container.innerHTML = users.map(user => {
+        const history = state.chatHistory[user.id] || [];
+        const lastMsg = history.length > 0 ? history[history.length - 1].text : 'Start chatting...';
+        const isMe = history.length > 0 && history[history.length - 1].sender === 'me';
+        
+        return `<div class="p-3 hover:bg-white dark:hover:bg-slate-700/50 rounded-2xl cursor-pointer transition-all flex gap-3 items-center border border-transparent hover:border-slate-200 dark:hover:border-slate-600 hover:shadow-sm" onclick="openMessagesViewChat('${user.id}')">
+            <div class="relative">
+                <img src="${user.pic}" class="w-12 h-12 rounded-full object-cover border-2 border-white dark:border-slate-800 shadow-[0_2px_5px_rgba(0,0,0,0.05)]">
+                <div class="absolute bottom-0 right-0 w-3 h-3 bg-green-500 border-2 border-white dark:border-slate-800 rounded-full shadow-sm"></div>
+            </div>
+            <div class="flex-1 overflow-hidden">
+                <h4 class="font-bold text-[14px] text-slate-800 dark:text-slate-200 truncate">${user.name}</h4>
+                <p class="text-[12px] text-slate-500 dark:text-slate-400 truncate mt-0.5 font-medium">${isMe ? 'You: ' : ''}${lastMsg}</p>
+            </div>
+            <div class="text-[10px] text-slate-400 font-bold uppercase tracking-wide">Now</div>
+        </div>`;
+    }).join('');
+}
+
+function handleMessagesSearch() {
+    const query = document.getElementById('messages-search-input').value;
+    renderMessagesViewList(query);
+}
+
+function refreshMessagesList() {
+    const btn = document.querySelector('[title="Refresh"] span');
+    if (btn) {
+        btn.classList.add('animate-spin');
+        setTimeout(() => btn.classList.remove('animate-spin'), 500);
+    }
+    
+    // Shuffle friends artificially for demonstration
+    state.friends.sort(() => Math.random() - 0.5);
+    
+    document.getElementById('messages-search-input').value = '';
+    renderMessagesViewList();
+}
+
+function startNewMessage() {
+    const searchInput = document.getElementById('messages-search-input');
+    if (searchInput) {
+        searchInput.focus();
+        // Optional: show some visual hint
+        searchInput.parentElement.classList.add('ring-2', 'ring-primary');
+        setTimeout(() => searchInput.parentElement.classList.remove('ring-2', 'ring-primary'), 1000);
+    }
+}
+
+function openMessagesViewChat(userId) {
+    const user = MOCK_USERS.find(u => u.id === userId);
+    if (!user) return;
+    
+    state.activeMessagesUserId = userId;
+    
+    // Hide empty state, show active chat
+    document.getElementById('messages-empty-state').classList.add('hidden');
+    document.getElementById('messages-active-header').classList.remove('hidden');
+    document.getElementById('messages-active-header').classList.add('flex');
+    document.getElementById('messages-active-body').classList.remove('hidden');
+    document.getElementById('messages-active-body').classList.add('flex');
+    document.getElementById('messages-active-input').classList.remove('hidden');
+    document.getElementById('messages-active-input').classList.add('flex');
+    
+    // Set Header
+    document.getElementById('messages-active-pic').src = user.pic;
+    document.getElementById('messages-active-name').innerText = user.name;
+    
+    renderMessagesViewBody();
+    setTimeout(() => document.getElementById('messages-input-field').focus(), 100);
+}
+
+function renderMessagesViewBody() {
+    const container = document.getElementById('messages-active-body');
+    const history = state.chatHistory[state.activeMessagesUserId] || [];
+    
+    if (history.length === 0) {
+        const user = MOCK_USERS.find(u => u.id === state.activeMessagesUserId);
+        container.innerHTML = `<div class="text-center w-full my-auto flex flex-col items-center justify-center opacity-70">
+            <img src="${user.pic}" class="w-20 h-20 rounded-full object-cover mb-4 shadow-sm border border-slate-200">
+            <h4 class="font-bold text-lg text-slate-800 dark:text-slate-200">${user.name}</h4>
+            <p class="text-xs text-slate-500 mt-1">Say hi to start the conversation!</p>
+        </div>`;
+        return;
+    }
+    
+    container.innerHTML = history.map(msg => {
+        const isMe = msg.sender === 'me';
+        if (isMe) {
+            return `<div class="flex justify-end mb-2 slide-in-bottom">
+                <div class="bg-gradient-to-br from-primary to-orange-500 text-white max-w-[75%] rounded-[20px] rounded-br-[4px] px-5 py-2.5 text-[14px] font-medium shadow-[0_4px_10px_rgba(243,109,33,0.2)] tracking-wide leading-relaxed">
+                    ${msg.text}
+                </div>
+            </div>`;
+        } else {
+            const user = MOCK_USERS.find(u => u.id === state.activeMessagesUserId);
+            return `<div class="flex justify-start mb-2 gap-3 slide-in-bottom">
+                <img src="${user.pic}" class="w-8 h-8 rounded-full object-cover mt-auto border-2 border-white dark:border-slate-800 shadow-sm">
+                <div class="bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 text-slate-700 dark:text-slate-200 max-w-[75%] rounded-[20px] rounded-bl-[4px] px-5 py-2.5 text-[14px] font-medium shadow-[0_4px_10px_rgba(0,0,0,0.02)] tracking-wide leading-relaxed">
+                    ${msg.text}
+                </div>
+            </div>`;
+        }
+    }).join('');
+    
+    // Scroll to bottom
+    container.scrollTop = container.scrollHeight;
+}
+
+function generateAutoReply(text) {
+    const lowerText = text.toLowerCase();
+    
+    // Greetings
+    if (lowerText.match(/\\b(hi|hello|hey|sup)\\b/)) {
+        const replies = ["Hi there! How's your day going?", "Hello! What's up?", "Hey! Need anything?", "Hi! Doing well?"];
+        return replies[Math.floor(Math.random() * replies.length)];
+    } 
+    // How are you
+    else if (lowerText.includes("how are you") || lowerText.includes("how r u") || lowerText.includes("hows it going")) {
+        const replies = ["I'm doing well, just trying to focus on my assignments. You?", "Been a bit busy, but I'm good! How about you?", "Doing great! The weather is nice today."];
+        return replies[Math.floor(Math.random() * replies.length)];
+    }
+    // Academics: Assignment / Homework / Project
+    else if (lowerText.match(/\\b(project|assignment|homework|report|presentation)\\b/)) {
+        return "I'm still working on mine too. The deadline is pretty close!";
+    }
+    // Facilities: Canteen / Food / Hungry
+    else if (lowerText.match(/\\b(food|eat|lunch|canteen|cafeteria|hungry)\\b/)) {
+        return "Let's go to the cafeteria! I'm starving. 🍔";
+    }
+    // Facilities: Library / Study
+    else if (lowerText.match(/\\b(library|study|quiet)\\b/)) {
+        return "The library is totally packed right now. Any other good spots?";
+    }
+    // Campus life/Classes / Exams
+    else if (lowerText.match(/\\b(exam|quiz|midterm|final)\\b/)) {
+        return "Don't remind me... I need to start studying for that. 😭";
+    }
+    else if (lowerText.match(/\\b(class|room|schedule|routine)\\b/)) {
+        return "Not sure about the exact room, did you check the online portal?";
+    }
+    else if (lowerText.match(/\\b(notes|slide|pdf|material)\\b/)) {
+        return "I don't have the complete notes right now, but I can send you the slides later tonight!";
+    }
+    // Help / Questions
+    else if (lowerText.includes("help") || lowerText.includes("question") || lowerText.includes("confused")) {
+        return "Sure, what do you need help with? I'll try my best!";
+    }
+    // Fun / Love
+    else if (lowerText.includes("love") || lowerText.includes("miss you")) {
+        return "Are you sure? Actually I have the same feelings for you too! 😅";
+    }
+    // Goodbyes
+    else if (lowerText.match(/\\b(bye|goodbye|cya|see ya|ttyl)\\b/)) {
+        return "Talk to you later! Bye!";
+    }
+    // Thanks
+    else if (lowerText.includes("thanks") || lowerText.includes("thank you") || lowerText.includes("thnx")) {
+        return "You're very welcome! Let me know if you need anything else.";
+    }
+    // Default Fallback
+    else {
+        const defaults = ["That makes sense. Tell me more!", "Haha yeah, absolutely.", "I completely agree with you on that.", "Wait, really? 😅", "I'll have to think about that and let you know!"];
+        return defaults[Math.floor(Math.random() * defaults.length)];
+    }
+}
+
+function sendMessagesViewMessage() {
+    const input = document.getElementById('messages-input-field');
+    const text = input.value.trim();
+    if (!text || !state.activeMessagesUserId) return;
+    
+    if (!state.chatHistory[state.activeMessagesUserId]) {
+        state.chatHistory[state.activeMessagesUserId] = [];
+    }
+    
+    state.chatHistory[state.activeMessagesUserId].push({ sender: 'me', text: text });
+    input.value = "";
+    
+    renderMessagesViewBody();
+    renderMessagesViewList(); // update sidebar latest msg
+    
+    const botReply = generateAutoReply(text);
+    
+    // Simulate typing and reply
+    setTimeout(() => {
+        if (state.activeMessagesUserId) {
+            state.chatHistory[state.activeMessagesUserId].push({ sender: 'them', text: 'Typing...' });
+            renderMessagesViewBody();
+            renderMessagesViewList();
+            
+            setTimeout(() => {
+                const hist = state.chatHistory[state.activeMessagesUserId];
+                if (hist && hist.length > 0 && hist[hist.length - 1].text === 'Typing...') {
+                    hist.pop(); // remove typing indicator
+                    hist.push({ sender: 'them', text: botReply });
+                    renderMessagesViewBody();
+                    renderMessagesViewList();
+                }
+            }, 800 + Math.random() * 800);
+        }
+    }, 600);
+}
+
 // --- Chat Logic ---
 function openChat(userId) {
     const user = MOCK_USERS.find(u => u.id === userId);
@@ -1167,24 +1392,7 @@ function sendChatMessage() {
     renderChatHistory();
 
     // Bot logic
-    let botReply = "That makes sense. Tell me more!";
-    const lowerText = text.toLowerCase();
-
-    if (lowerText.includes("hello") || lowerText.includes("hi ") || lowerText === "hi") {
-        botReply = "Hi there! How's your day going?";
-    } else if (lowerText.includes("how are you")) {
-        botReply = "I'm doing well, just trying to focus on my assignments. You?";
-    } else if (lowerText.includes("project") || lowerText.includes("assignment")) {
-        botReply = "I'm still working on mine too. The deadline is pretty close!";
-    } else if (lowerText.includes("bye")) {
-        botReply = "Talk to you later! Bye!";
-    } else if (lowerText.includes("thanks") || lowerText.includes("thank you")) {
-        botReply = "You're very welcome!";
-    } else if (lowerText.includes("notes")) {
-        botReply = "I don't have the notes right now, but I can ask around and let you know.";
-    } else if (lowerText.includes("love")) {
-        botReply = "Are you sure? Actually I have the same feelings for you too!";
-    }
+    const botReply = generateAutoReply(text);
 
     // Mock receiving a reply
     setTimeout(() => {
@@ -1715,102 +1923,34 @@ function renderFriendsView() {
         `).join('');
     }
 }
-const CV_CATEGORIES = {
-    c1:'tech', c2:'arts', c3:'tech', c4:'tech', c5:'arts',
-    c6:'tech', c7:'tech', c8:'arts', c9:'sports', c10:'sports',
-    c11:'tech', c12:'arts', c13:'tech', c14:'tech', c15:'tech'
-};
-
-let cvActiveFilter = 'all';
-let cvSearchQuery  = '';
-
 
 // --- Communities View & Profile ---
 function renderCommunitiesList() {
-    const container  = document.getElementById('communities-list-container');
-    const emptyState = document.getElementById('cv-empty');
-    const countLabel = document.getElementById('cv-comm-count');
-    const joinedStat = document.getElementById('cv-joined-count');
+    const container = document.getElementById('communities-list-container');
     if (!container) return;
 
-    // Update joined counter
-    if (joinedStat) joinedStat.innerText = state.joinedCommunities.length;
-
-    // Build filtered list
-    const filtered = MOCK_COMMUNITIES.filter(c => {
-        const matchesSearch = !cvSearchQuery ||
-            c.name.toLowerCase().includes(cvSearchQuery.toLowerCase());
-        let matchesFilter = true;
-        if (cvActiveFilter === 'joined') {
-            matchesFilter = state.joinedCommunities.includes(c.id);
-        } else if (cvActiveFilter !== 'all') {
-            matchesFilter = CV_CATEGORIES[c.id] === cvActiveFilter;
+    container.innerHTML = MOCK_COMMUNITIES.map(c => {
+        let btnStatus = `<button onclick="openCommunityProfile('${c.id}'); event.stopPropagation();" class="px-4 py-1.5 rounded-full text-xs font-bold border border-primary text-primary hover:bg-primary hover:text-white transition-all shadow-sm">Join</button>`;
+        if (state.joinedCommunities.includes(c.id)) {
+            btnStatus = `<button class="px-4 py-1.5 rounded-full text-xs font-bold bg-primary text-white transition-all shadow-sm pointer-events-none">Joined</button>`;
+        } else if (state.pendingCommunities.includes(c.id)) {
+            btnStatus = `<button class="px-4 py-1.5 rounded-full text-xs font-bold bg-slate-200 text-slate-500 transition-all shadow-sm pointer-events-none">Pending...</button>`;
         }
-        return matchesSearch && matchesFilter;
-    });
-
-    // Count label
-    if (countLabel) {
-        countLabel.innerText = filtered.length + ' ' +
-            (filtered.length === 1 ? 'community' : 'communities');
-    }
-
-    // Empty state
-    if (filtered.length === 0) {
-        container.innerHTML = '';
-        if (emptyState) emptyState.style.display = 'block';
-        return;
-    }
-    if (emptyState) emptyState.style.display = 'none';
-
-    // Render cards
-    container.innerHTML = filtered.map(c => {
-        const isJoined  = state.joinedCommunities.includes(c.id);
-        const isPending = state.pendingCommunities.includes(c.id);
-
-        let btnClass = 'cv-join-btn';
-        let btnLabel = 'Join';
-        let btnAction = `onclick="openCommunityProfile('${c.id}'); event.stopPropagation();"`;
-
-        if (isJoined) {
-            btnClass += ' cv-btn-joined';
-            btnLabel = '✓ Joined';
-            btnAction = '';
-        } else if (isPending) {
-            btnClass += ' cv-btn-pending';
-            btnLabel = 'Pending…';
-            btnAction = '';
-        }
-
-        const cardClass = 'cv-card' + (isJoined ? ' cv-joined' : '');
 
         return `
-        <div class="${cardClass}" onclick="openCommunityProfile('${c.id}')">
-            <div class="cv-card-cover"></div>
-            <div class="cv-card-body">
-                <img class="cv-card-pic" src="${c.pic}" alt="${c.name}"
-                     onerror="this.src='https://ui-avatars.com/api/?name=${encodeURIComponent(c.name)}&background=a14000&color=fff'">
-                <div class="cv-card-info">
-                    <div class="cv-card-name" title="${c.name}">${c.name}</div>
-                    <div class="cv-card-members">${c.members} Members</div>
-                </div>
-                <button class="${btnClass}" ${btnAction}>${btnLabel}</button>
+        <div onclick="openCommunityProfile('${c.id}')" class="bg-surface-container-lowest p-4 rounded-xl flex items-center gap-4 group cursor-pointer hover:bg-surface-container-low transition-colors shadow-sm">
+            <div class="w-12 h-12 rounded-xl overflow-hidden flex-shrink-0">
+                <img src="${c.pic}" class="w-full h-full object-cover">
             </div>
-        </div>`;
+            <div class="flex-1">
+                <h4 class="font-bold text-sm">${c.name}</h4>
+                <p class="text-xs text-on-surface-variant">${c.members} Members</p>
+            </div>
+            ${btnStatus}
+        </div>
+        `;
     }).join('');
 }
-function cvFilter(query) {
-    cvSearchQuery = query;
-    renderCommunitiesList();
-}
-
-function cvSetFilter(tag, btnEl) {
-    cvActiveFilter = tag;
-    document.querySelectorAll('.cv-pill').forEach(b => b.classList.remove('cv-pill-active'));
-    if (btnEl) btnEl.classList.add('cv-pill-active');
-    renderCommunitiesList();
-}
-
 
 function openCommunityProfile(communityId) {
     const community = MOCK_COMMUNITIES.find(c => c.id === communityId);
