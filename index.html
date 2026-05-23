@@ -2176,165 +2176,184 @@
                 </div>
             </div>
 
-            <!-- COMMUNITIES VIEW -->
-            <div id="communities-view" class="view-section hidden opacity-0 transition-opacity duration-300">
-                <div class="grid grid-cols-1 xl:grid-cols-12 gap-8">
-                    <div class="xl:col-span-4">
-                        <div class="flex items-center justify-between mb-6">
-                            <h2 class="text-xl font-extrabold tracking-tight">Trending Communities</h2>
-                            <span class="material-symbols-outlined text-on-surface-variant/40">info</span>
-                        </div>
-                        <div id="communities-list-container" class="flex flex-col gap-4">
-                            <!-- Injected by renderCommunitiesList() -->
-                        </div>
-                    </div>
-                    <div class="xl:col-span-8">
-                        <div class="flex items-center justify-between mb-6">
-                            <h2 class="text-xl font-extrabold tracking-tight">Featured Research</h2>
-                        </div>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <article
-                                class="bg-surface-container-lowest p-6 rounded-xl border-l-4 border-primary shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between">
-                                <div>
-                                    <h3 class="text-lg font-bold mb-3">Sustainable AI: Optimization for
-                                        Low-Resource Languages</h3>
-                                    <p class="text-sm text-on-surface-variant mb-4">Research exploring
-                                        transformer models for regional dialects like Sylheti and Chakma to preserve
-                                        linguistic diversity.</p>
-                                </div>
-                                <div class="flex items-center justify-between pt-4 border-t border-slate-100 mt-auto">
-                                    <div class="flex items-center gap-2">
-                                        <div
-                                            class="w-8 h-8 rounded-full bg-orange-100 flex items-center justify-center font-bold text-xs text-orange-700">
-                                            AK</div>
-                                        <span class="text-xs font-bold">Dr. Ahmed Kabir</span>
-                                    </div>
-                                </div>
-                            </article>
-                            <article
-                                class="bg-surface-container-lowest p-6 rounded-xl border-l-4 border-secondary shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between">
-                                <div>
-                                    <h3 class="text-lg font-bold mb-3">Renewable Energy: Solar Micro-Grids in
-                                        Rural Bangladesh</h3>
-                                    <p class="text-sm text-on-surface-variant mb-4">Developing scalable and
-                                        affordable solar energy solutions for off-grid communities in the coastal
-                                        regions.</p>
-                                </div>
-                                <div class="flex items-center justify-between pt-4 border-t border-slate-100 mt-auto">
-                                    <div class="flex items-center gap-2">
-                                        <div
-                                            class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center font-bold text-xs text-blue-700">
-                                            SI</div>
-                                        <span class="text-xs font-bold">Prof. Syed Islam</span>
-                                    </div>
-                                </div>
-                            </article>
-                            <article
-                                class="bg-surface-container-lowest p-6 rounded-xl border-l-4 border-emerald-500 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between">
-                                <div>
-                                    <h3 class="text-lg font-bold mb-3">Smart Traffic Management System using
-                                        IoT</h3>
-                                    <p class="text-sm text-on-surface-variant mb-4">A novel approach to reduce
-                                        traffic congestion in Dhaka city utilizing IoT-based real-time data analysis.
-                                    </p>
-                                </div>
-                                <div class="flex items-center justify-between pt-4 border-t border-slate-100 mt-auto">
-                                    <div class="flex items-center gap-2">
-                                        <div
-                                            class="w-8 h-8 rounded-full bg-emerald-100 flex items-center justify-center font-bold text-xs text-emerald-700">
-                                            RR</div>
-                                        <span class="text-xs font-bold">Dr. Rubaiya Rahman</span>
-                                    </div>
-                                </div>
-                            </article>
-                            <article
-                                class="bg-surface-container-lowest p-6 rounded-xl border-l-4 border-purple-500 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between">
-                                <div>
-                                    <h3 class="text-lg font-bold mb-3">Impact of Microfinance on Female
-                                        Entrepreneurs</h3>
-                                    <p class="text-sm text-on-surface-variant mb-4">An empirical study
-                                        analyzing the economic empowerment of women through micro-credit in semi-urban
-                                        areas.</p>
-                                </div>
-                                <div class="flex items-center justify-between pt-4 border-t border-slate-100 mt-auto">
-                                    <div class="flex items-center gap-2">
-                                        <div
-                                            class="w-8 h-8 rounded-full bg-purple-100 flex items-center justify-center font-bold text-xs text-purple-700">
-                                            FH</div>
-                                        <span class="text-xs font-bold">Dr. Fahima Hossain</span>
-                                    </div>
-                                </div>
-                            </article>
-                            <article
-                                class="bg-surface-container-lowest p-6 rounded-xl border-l-4 border-amber-500 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between">
-                                <div>
-                                    <h3 class="text-lg font-bold mb-3">Next-Gen Robotics in Agriculture</h3>
-                                    <p class="text-sm text-on-surface-variant mb-4">Implementing automated farming
-                                        machinery to increase crop yield and monitor soil health across rural farms.</p>
-                                </div>
-                                <div class="flex items-center justify-between pt-4 border-t border-slate-100 mt-auto">
-                                    <div class="flex items-center gap-2">
-                                        <div
-                                            class="w-8 h-8 rounded-full bg-amber-100 flex items-center justify-center font-bold text-xs text-amber-700">
-                                            MS</div>
-                                        <span class="text-xs font-bold">Dr. Mahmudul Shojib</span>
-                                    </div>
-                                </div>
-                            </article>
-                            <article
-                                class="bg-surface-container-lowest p-6 rounded-xl border-l-4 border-teal-500 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between">
-                                <div>
-                                    <h3 class="text-lg font-bold mb-3">Blockchain for Transparent Supply Chains</h3>
-                                    <p class="text-sm text-on-surface-variant mb-4">Investigating the use of
-                                        decentralized ledgers to ensure ethical sourcing in the ready-made garment (RMG)
-                                        sector.</p>
-                                </div>
-                                <div class="flex items-center justify-between pt-4 border-t border-slate-100 mt-auto">
-                                    <div class="flex items-center gap-2">
-                                        <div
-                                            class="w-8 h-8 rounded-full bg-teal-100 flex items-center justify-center font-bold text-xs text-teal-700">
-                                            TJ</div>
-                                        <span class="text-xs font-bold">Dr. Tanvir Jahan</span>
-                                    </div>
-                                </div>
-                            </article>
-                            <article
-                                class="bg-surface-container-lowest p-6 rounded-xl border-l-4 border-rose-500 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between">
-                                <div>
-                                    <h3 class="text-lg font-bold mb-3">Urban Air Quality Prediction Models</h3>
-                                    <p class="text-sm text-on-surface-variant mb-4">Machine learning frameworks to
-                                        forecast PM2.5 levels using real-time meteorological and vehicular data.</p>
-                                </div>
-                                <div class="flex items-center justify-between pt-4 border-t border-slate-100 mt-auto">
-                                    <div class="flex items-center gap-2">
-                                        <div
-                                            class="w-8 h-8 rounded-full bg-rose-100 flex items-center justify-center font-bold text-xs text-rose-700">
-                                            NA</div>
-                                        <span class="text-xs font-bold">Dr. Nadia Ahmed</span>
-                                    </div>
-                                </div>
-                            </article>
-                            <article
-                                class="bg-surface-container-lowest p-6 rounded-xl border-l-4 border-indigo-500 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between">
-                                <div>
-                                    <h3 class="text-lg font-bold mb-3">Cybersecurity in E-Governance</h3>
-                                    <p class="text-sm text-on-surface-variant mb-4">A comprehensive analysis of
-                                        vulnerabilities in public sector digital services and strategies for robust
-                                        protection.</p>
-                                </div>
-                                <div class="flex items-center justify-between pt-4 border-t border-slate-100 mt-auto">
-                                    <div class="flex items-center gap-2">
-                                        <div
-                                            class="w-8 h-8 rounded-full bg-indigo-100 flex items-center justify-center font-bold text-xs text-indigo-700">
-                                            KH</div>
-                                        <span class="text-xs font-bold">Prof. Kamrul Hasan</span>
-                                    </div>
-                                </div>
-                            </article>
-                        </div>
-                    </div>
-                </div>
+
+<!-- COMMUNITIES VIEW -->
+<div id="communities-view" class="view-section hidden opacity-0 transition-opacity duration-300">
+
+    <!-- Hero Banner -->
+    <div id="cv-hero">
+        <span id="cv-hero-badge">
+            <span class="material-symbols-outlined" style="font-size:14px;vertical-align:middle;">groups</span>
+            UIU Communities
+        </span>
+        <h1 id="cv-hero-title">Find Your Tribe</h1>
+        <p id="cv-hero-sub">Join clubs, share research, and stay connected with the UIU family.</p>
+        <div id="cv-search-wrap">
+            <span class="material-symbols-outlined" id="cv-search-icon">search</span>
+            <input id="cv-search-input" type="text" placeholder="Search communities…"
+                   oninput="cvFilter(this.value)" autocomplete="off">
+        </div>
+    </div>
+
+    <!-- Stats Strip -->
+    <div id="cv-stats-strip">
+        <div class="cv-stat">
+            <span class="cv-stat-num">15</span>
+            <span class="cv-stat-lbl">Communities</span>
+        </div>
+        <div class="cv-stat-divider"></div>
+        <div class="cv-stat">
+            <span class="cv-stat-num">27k+</span>
+            <span class="cv-stat-lbl">Total Members</span>
+        </div>
+        <div class="cv-stat-divider"></div>
+        <div class="cv-stat">
+            <span class="cv-stat-num" id="cv-joined-count">0</span>
+            <span class="cv-stat-lbl">You've Joined</span>
+        </div>
+    </div>
+
+    <!-- Filter Pills -->
+    <div id="cv-filters">
+        <button class="cv-pill cv-pill-active" onclick="cvSetFilter('all',this)">All</button>
+        <button class="cv-pill" onclick="cvSetFilter('joined',this)">
+            <span class="material-symbols-outlined" style="font-size:13px;vertical-align:middle;">check_circle</span> Joined
+        </button>
+        <button class="cv-pill" onclick="cvSetFilter('tech',this)">
+            <span class="material-symbols-outlined" style="font-size:13px;vertical-align:middle;">code</span> Tech &amp; Science
+        </button>
+        <button class="cv-pill" onclick="cvSetFilter('arts',this)">
+            <span class="material-symbols-outlined" style="font-size:13px;vertical-align:middle;">palette</span> Arts &amp; Culture
+        </button>
+        <button class="cv-pill" onclick="cvSetFilter('sports',this)">
+            <span class="material-symbols-outlined" style="font-size:13px;vertical-align:middle;">sports_soccer</span> Sports &amp; Gaming
+        </button>
+    </div>
+
+    <!-- Main Two-Column Layout -->
+    <div id="cv-main-grid">
+
+        <!-- LEFT: Community Cards -->
+        <div id="cv-left-col">
+            <div class="cv-col-header">
+                <h2 class="cv-col-title">
+                    <span class="material-symbols-outlined icon-filled" style="font-size:18px;color:#a14000;vertical-align:middle;">groups</span>
+                    Trending Communities
+                </h2>
+                <span id="cv-comm-count" class="cv-col-meta">15 communities</span>
             </div>
+
+            <!-- Empty state -->
+            <div id="cv-empty" style="display:none;text-align:center;padding:2.5rem 1rem;">
+                <span class="material-symbols-outlined" style="font-size:3rem;color:#cbd5e1;display:block;margin-bottom:.5rem;">search_off</span>
+                <p style="font-size:.85rem;color:#94a3b8;font-weight:600;">No communities found.</p>
+            </div>
+
+            <!-- Cards grid -->
+            <div id="communities-list-container" class="cv-cards-grid">
+                <!-- Injected by renderCommunitiesList() -->
+            </div>
+        </div>
+
+        <!-- RIGHT: Featured Research -->
+        <div id="cv-right-col">
+            <div class="cv-col-header">
+                <h2 class="cv-col-title">
+                    <span class="material-symbols-outlined icon-filled" style="font-size:18px;color:#a14000;vertical-align:middle;">science</span>
+                    Featured Research
+                </h2>
+                <span class="cv-col-meta">8 papers</span>
+            </div>
+
+            <div class="cv-research-grid">
+
+                <article class="cv-research-card cv-r-orange">
+                    <h3 class="cv-r-title">Sustainable AI: Optimization for Low-Resource Languages</h3>
+                    <p class="cv-r-desc">Research exploring transformer models for regional dialects like Sylheti and Chakma to preserve linguistic diversity.</p>
+                    <div class="cv-r-footer">
+                        <div class="cv-r-avatar cv-ra-orange">AK</div>
+                        <span class="cv-r-author">Dr. Ahmed Kabir</span>
+                        <span class="cv-r-tag">AI / NLP</span>
+                    </div>
+                </article>
+
+                <article class="cv-research-card cv-r-blue">
+                    <h3 class="cv-r-title">Renewable Energy: Solar Micro-Grids in Rural Bangladesh</h3>
+                    <p class="cv-r-desc">Developing scalable and affordable solar energy solutions for off-grid communities in the coastal regions.</p>
+                    <div class="cv-r-footer">
+                        <div class="cv-r-avatar cv-ra-blue">SI</div>
+                        <span class="cv-r-author">Prof. Syed Islam</span>
+                        <span class="cv-r-tag">Energy</span>
+                    </div>
+                </article>
+
+                <article class="cv-research-card cv-r-emerald">
+                    <h3 class="cv-r-title">Smart Traffic Management System using IoT</h3>
+                    <p class="cv-r-desc">A novel approach to reduce traffic congestion in Dhaka city utilizing IoT-based real-time data analysis.</p>
+                    <div class="cv-r-footer">
+                        <div class="cv-r-avatar cv-ra-emerald">RR</div>
+                        <span class="cv-r-author">Dr. Rubaiya Rahman</span>
+                        <span class="cv-r-tag">IoT</span>
+                    </div>
+                </article>
+
+                <article class="cv-research-card cv-r-purple">
+                    <h3 class="cv-r-title">Impact of Microfinance on Female Entrepreneurs</h3>
+                    <p class="cv-r-desc">An empirical study analyzing the economic empowerment of women through micro-credit in semi-urban areas.</p>
+                    <div class="cv-r-footer">
+                        <div class="cv-r-avatar cv-ra-purple">FH</div>
+                        <span class="cv-r-author">Dr. Fahima Hossain</span>
+                        <span class="cv-r-tag">Economics</span>
+                    </div>
+                </article>
+
+                <article class="cv-research-card cv-r-amber">
+                    <h3 class="cv-r-title">Next-Gen Robotics in Agriculture</h3>
+                    <p class="cv-r-desc">Implementing automated farming machinery to increase crop yield and monitor soil health across rural farms.</p>
+                    <div class="cv-r-footer">
+                        <div class="cv-r-avatar cv-ra-amber">MS</div>
+                        <span class="cv-r-author">Dr. Mahmudul Shojib</span>
+                        <span class="cv-r-tag">Robotics</span>
+                    </div>
+                </article>
+
+                <article class="cv-research-card cv-r-teal">
+                    <h3 class="cv-r-title">Blockchain for Transparent Supply Chains</h3>
+                    <p class="cv-r-desc">Investigating decentralized ledgers to ensure ethical sourcing in the ready-made garment (RMG) sector.</p>
+                    <div class="cv-r-footer">
+                        <div class="cv-r-avatar cv-ra-teal">TJ</div>
+                        <span class="cv-r-author">Dr. Tanvir Jahan</span>
+                        <span class="cv-r-tag">Blockchain</span>
+                    </div>
+                </article>
+
+                <article class="cv-research-card cv-r-rose">
+                    <h3 class="cv-r-title">Urban Air Quality Prediction Models</h3>
+                    <p class="cv-r-desc">Machine learning frameworks to forecast PM2.5 levels using real-time meteorological and vehicular data.</p>
+                    <div class="cv-r-footer">
+                        <div class="cv-r-avatar cv-ra-rose">NA</div>
+                        <span class="cv-r-author">Dr. Nadia Ahmed</span>
+                        <span class="cv-r-tag">ML / Env</span>
+                    </div>
+                </article>
+
+                <article class="cv-research-card cv-r-indigo">
+                    <h3 class="cv-r-title">Cybersecurity in E-Governance</h3>
+                    <p class="cv-r-desc">A comprehensive analysis of vulnerabilities in public sector digital services and strategies for protection.</p>
+                    <div class="cv-r-footer">
+                        <div class="cv-r-avatar cv-ra-indigo">KH</div>
+                        <span class="cv-r-author">Prof. Kamrul Hasan</span>
+                        <span class="cv-r-tag">Security</span>
+                    </div>
+                </article>
+
+            </div><!-- /.cv-research-grid -->
+        </div><!-- /#cv-right-col -->
+
+    </div><!-- /#cv-main-grid -->
+</div>
+<!-- END COMMUNITIES VIEW -->
+
 
             <!-- EVENTS VIEW -->
             <div id="events-view" class="view-section hidden opacity-0 transition-opacity duration-300">
