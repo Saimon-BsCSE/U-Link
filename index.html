@@ -132,7 +132,7 @@
                             <input
                                 class="w-full bg-surface-container-high border-none rounded-xl px-4 py-3 focus:ring-2 focus:ring-primary-container/40 transition-all"
                                 id="login-pass" placeholder="••••••••" required="" type="password" minlength="8"
-                                maxlength="20">
+                                maxlength="8">
                         </div>
                         <button
                             class="w-full bg-primary-container text-on-primary-container font-bold py-4 rounded-full shadow-lg shadow-primary-container/20 hover:scale-[1.02] active:scale-95 transition-all mt-4"
@@ -308,7 +308,7 @@
         </header>
         <!-- SideNavBar -->
         <aside
-            class="hidden lg:flex flex-col p-4 gap-2 h-screen w-72 fixed left-0 top-8 bg-slate-50 dark:bg-slate-950 pt-20 overflow-y-auto hide-scrollbar">
+            class="hidden lg:flex flex-col p-4 pb-8 gap-2 h-[calc(100vh-2rem)] w-72 fixed left-0 top-8 bg-slate-50 dark:bg-slate-950 pt-20 overflow-y-auto hide-scrollbar">
             <!-- User Profile Card in Sidebar -->
             <div class="mb-4 px-2">
                 <button onclick="switchTab('profile')"
@@ -356,27 +356,27 @@
                     <span class="font-medium">Communities</span>
                 </a>
                 <a class="side-nav-link flex items-center gap-3 px-4 py-3 text-slate-500 dark:text-slate-400 hover:text-orange-600 hover:bg-orange-50 dark:hover:bg-orange-900/10 rounded-full transition-all cursor-pointer"
-                    onclick="openChat('102')">
+                    onclick="switchTab('messages')" data-tab="messages">
                     <span class="material-symbols-outlined" data-icon="chat">chat</span>
                     <span class="font-medium">Messages</span>
                 </a>
             </nav>
             <div class="mt-auto flex flex-col gap-1 border-t border-slate-200 dark:border-slate-800 pt-4">
                 <button
-                    class="mx-4 mb-4 bg-primary-container text-on-primary-container py-3 px-6 rounded-full font-bold shadow-lg shadow-primary-container/20 flex items-center justify-center gap-2 active:scale-95 transition-transform"
+                    class="mx-4 mb-5 bg-gradient-to-r from-primary to-orange-500 hover:from-orange-600 hover:to-orange-400 text-white py-3 px-6 rounded-full font-bold shadow-[0_8px_15px_-4px_rgba(243,109,33,0.4)] hover:shadow-[0_12px_20px_-4px_rgba(243,109,33,0.5)] flex items-center justify-center gap-2 active:scale-95 transition-all group/create"
                     onclick="focusCreatePost()">
-                    <span class="material-symbols-outlined icon-filled">add</span>
+                    <span class="material-symbols-outlined icon-filled group-hover/create:rotate-90 transition-transform duration-300">add</span>
                     Create Post
                 </button>
-                <a class="side-nav-link flex items-center gap-3 px-4 py-2 text-slate-500 dark:text-slate-400 hover:text-orange-600 hover:bg-orange-50 dark:hover:bg-orange-900/10 rounded-full transition-all text-sm cursor-pointer"
+                <a class="side-nav-link flex items-center gap-3 px-5 py-3 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-all text-[15px] font-medium cursor-pointer group"
                     onclick="switchTab('settings')" data-tab="settings">
-                    <span class="material-symbols-outlined text-lg" data-icon="settings">settings</span>
+                    <span class="material-symbols-outlined text-[20px] group-hover:rotate-45 transition-transform duration-300" data-icon="settings">settings</span>
                     <span class="">Settings</span>
                 </a>
                 <button
-                    class="flex items-center gap-3 px-4 py-2 text-slate-500 dark:text-slate-400 hover:text-orange-600 hover:bg-orange-50 dark:hover:bg-orange-900/10 rounded-full transition-all text-sm w-full text-left"
+                    class="flex items-center gap-3 px-5 py-3 text-slate-500 dark:text-slate-400 hover:text-red-600 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-full transition-all text-[15px] font-medium w-full text-left group"
                     onclick="logout()">
-                    <span class="material-symbols-outlined text-lg" data-icon="logout">logout</span>
+                    <span class="material-symbols-outlined text-[20px] group-hover:translate-x-1 transition-transform duration-300" data-icon="logout">logout</span>
                     <span class="">Logout</span>
                 </button>
             </div>
@@ -397,40 +397,52 @@
                 <div class="max-w-2xl mx-auto relative z-10">
                     <!-- Create Post Form -->
                     <div
-                        class="bg-white/80 dark:bg-slate-800/80 backdrop-blur-xl rounded-2xl p-5 shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:shadow-none mb-8 border border-white dark:border-slate-700/50 relative overflow-hidden group">
+                        class="bg-white dark:bg-slate-800/90 backdrop-blur-2xl rounded-[1.5rem] p-6 shadow-[0_10px_40px_-10px_rgba(0,0,0,0.08)] dark:shadow-[0_10px_40px_-10px_rgba(0,0,0,0.3)] mb-8 border border-slate-100 dark:border-slate-700/60 relative overflow-visible group transition-all hover:shadow-[0_10px_50px_-5px_rgba(243,109,33,0.15)]">
+                        <div class="absolute -top-10 -right-10 w-32 h-32 bg-gradient-to-br from-primary to-rose-400 rounded-full blur-[60px] opacity-10 group-hover:opacity-20 transition-opacity pointer-events-none"></div>
                         <div
                             class="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent dark:via-white/5 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000 pointer-events-none">
                         </div>
                         <div class="flex gap-4 relative z-10">
-                            <img id="post-user-pic" src="https://ui-avatars.com/api/?name=User&background=random"
-                                class="w-12 h-12 rounded-full object-cover shadow-sm border-2 border-white dark:border-slate-700">
-                            <div class="flex-1">
+                            <div class="relative">
+                                <img id="post-user-pic" src="https://ui-avatars.com/api/?name=User&background=random"
+                                    class="w-12 h-12 rounded-full object-cover shadow-sm border-2 border-white dark:border-slate-800 relative z-10 transition-transform group-hover:scale-105">
+                            </div>
+                            <div class="flex-1 flex flex-col">
                                 <textarea id="post-text" rows="2"
-                                    class="w-full bg-slate-50 dark:bg-slate-900/50 rounded-xl px-4 py-3 border border-transparent focus:border-orange-300 dark:focus:border-orange-500/30 focus:ring-4 focus:ring-orange-100 dark:focus:ring-orange-900/20 text-[15px] placeholder:text-slate-400 dark:placeholder:text-slate-500 resize-none transition-all outline-none"
+                                    class="w-full bg-slate-50/50 dark:bg-slate-900/50 rounded-[1.125rem] px-5 py-4 border border-slate-200/60 dark:border-slate-700/60 focus:border-orange-400 dark:focus:border-orange-500/50 focus:ring-[4px] focus:ring-orange-100 dark:focus:ring-orange-900/30 focus:bg-white dark:focus:bg-slate-900 text-[16px] font-medium placeholder:text-slate-400 dark:placeholder:text-slate-500 resize-none transition-all outline-none"
                                     placeholder="What's happening on campus today?"></textarea>
+                                
                                 <!-- Image Preview -->
                                 <div id="image-preview-container"
-                                    class="hidden relative mt-3 rounded-xl overflow-hidden shadow-inner border border-slate-200 dark:border-slate-700">
+                                    class="hidden relative mt-4 rounded-[1.125rem] overflow-hidden shadow-inner border border-slate-200 dark:border-slate-700/80 group/img">
                                     <img id="image-preview" src=""
-                                        class="w-full max-h-64 object-cover opacity-90 hover:opacity-100 transition-opacity">
+                                        class="w-full max-h-72 object-cover opacity-95 group-hover/img:opacity-100 transition-opacity group-hover/img:scale-[1.02] duration-300">
+                                    <div class="absolute inset-0 bg-gradient-to-b from-black/30 to-transparent opacity-0 group-hover/img:opacity-100 transition-opacity"></div>
                                     <button onclick="removeImage()"
-                                        class="absolute top-3 right-3 p-1.5 bg-black/60 text-white rounded-full hover:bg-black hover:scale-110 active:scale-95 transition-all backdrop-blur-md shadow-lg">
-                                        <span class="material-symbols-outlined text-sm">close</span>
+                                        class="absolute top-4 right-4 p-2 bg-black/50 text-white rounded-full hover:bg-rose-500 hover:scale-110 active:scale-95 transition-all backdrop-blur-md shadow-lg border border-white/20">
+                                        <span class="material-symbols-outlined text-[16px]">close</span>
                                     </button>
                                 </div>
-                                <div
-                                    class="flex justify-between items-center mt-3 pt-3 border-t border-slate-100 dark:border-slate-700/60">
+                                
+                                <div class="flex justify-between items-center mt-4 pt-4 border-t border-slate-100 dark:border-slate-700/50">
                                     <div class="flex gap-2">
                                         <input type="file" id="post-image-input" accept="image/*" class="hidden"
                                             onchange="previewImage(event, 'home')">
                                         <button onclick="document.getElementById('post-image-input').click()"
-                                            class="p-2.5 text-primary hover:bg-orange-50 dark:hover:bg-orange-900/20 rounded-xl transition-colors flex items-center justify-center gap-2 font-bold text-sm">
-                                            <span class="material-symbols-outlined text-xl">image</span>
-                                            <span class="hidden sm:inline">Add Photo</span>
+                                            class="px-4 py-2 text-slate-500 dark:text-slate-400 hover:text-primary hover:bg-orange-50 dark:hover:bg-orange-900/20 rounded-xl transition-all flex items-center justify-center gap-2.5 font-bold text-[14px] border border-transparent hover:border-orange-100 dark:hover:border-orange-800/50 active:scale-95">
+                                            <span class="material-symbols-outlined text-[20px] text-green-500">image</span>
+                                            <span class="hidden sm:inline">Photo / Video</span>
+                                        </button>
+                                        <button class="px-4 py-2 text-slate-500 dark:text-slate-400 hover:text-blue-500 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-xl transition-all flex items-center justify-center gap-2.5 font-bold text-[14px] border border-transparent hover:border-blue-100 dark:hover:border-blue-800/50 active:scale-95">
+                                            <span class="material-symbols-outlined text-[20px] text-blue-500">sentiment_satisfied</span>
+                                            <span class="hidden sm:inline">Feeling</span>
                                         </button>
                                     </div>
                                     <button onclick="submitPost('home')"
-                                        class="bg-gradient-to-r from-orange-500 to-primary hover:to-orange-600 text-white font-extrabold py-2 px-8 rounded-xl shadow-lg shadow-orange-500/30 hover:shadow-orange-500/50 active:scale-95 transition-all text-sm tracking-wide">Post</button>
+                                        class="bg-gradient-to-r from-primary to-orange-500 hover:from-orange-600 hover:to-orange-400 text-white font-extrabold py-2.5 px-8 rounded-xl shadow-[0_8px_20px_-6px_rgba(243,109,33,0.5)] hover:shadow-[0_12px_25px_-6px_rgba(243,109,33,0.6)] active:scale-95 transition-all text-[15px] tracking-wide flex items-center gap-2 group/btn">
+                                        <span>Post</span>
+                                        <span class="material-symbols-outlined text-[18px] group-hover/btn:translate-x-1 transition-transform">send</span>
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -2176,184 +2188,165 @@
                 </div>
             </div>
 
-
-<!-- COMMUNITIES VIEW -->
-<div id="communities-view" class="view-section hidden opacity-0 transition-opacity duration-300">
-
-    <!-- Hero Banner -->
-    <div id="cv-hero">
-        <span id="cv-hero-badge">
-            <span class="material-symbols-outlined" style="font-size:14px;vertical-align:middle;">groups</span>
-            UIU Communities
-        </span>
-        <h1 id="cv-hero-title">Find Your Tribe</h1>
-        <p id="cv-hero-sub">Join clubs, share research, and stay connected with the UIU family.</p>
-        <div id="cv-search-wrap">
-            <span class="material-symbols-outlined" id="cv-search-icon">search</span>
-            <input id="cv-search-input" type="text" placeholder="Search communities…"
-                   oninput="cvFilter(this.value)" autocomplete="off">
-        </div>
-    </div>
-
-    <!-- Stats Strip -->
-    <div id="cv-stats-strip">
-        <div class="cv-stat">
-            <span class="cv-stat-num">15</span>
-            <span class="cv-stat-lbl">Communities</span>
-        </div>
-        <div class="cv-stat-divider"></div>
-        <div class="cv-stat">
-            <span class="cv-stat-num">27k+</span>
-            <span class="cv-stat-lbl">Total Members</span>
-        </div>
-        <div class="cv-stat-divider"></div>
-        <div class="cv-stat">
-            <span class="cv-stat-num" id="cv-joined-count">0</span>
-            <span class="cv-stat-lbl">You've Joined</span>
-        </div>
-    </div>
-
-    <!-- Filter Pills -->
-    <div id="cv-filters">
-        <button class="cv-pill cv-pill-active" onclick="cvSetFilter('all',this)">All</button>
-        <button class="cv-pill" onclick="cvSetFilter('joined',this)">
-            <span class="material-symbols-outlined" style="font-size:13px;vertical-align:middle;">check_circle</span> Joined
-        </button>
-        <button class="cv-pill" onclick="cvSetFilter('tech',this)">
-            <span class="material-symbols-outlined" style="font-size:13px;vertical-align:middle;">code</span> Tech &amp; Science
-        </button>
-        <button class="cv-pill" onclick="cvSetFilter('arts',this)">
-            <span class="material-symbols-outlined" style="font-size:13px;vertical-align:middle;">palette</span> Arts &amp; Culture
-        </button>
-        <button class="cv-pill" onclick="cvSetFilter('sports',this)">
-            <span class="material-symbols-outlined" style="font-size:13px;vertical-align:middle;">sports_soccer</span> Sports &amp; Gaming
-        </button>
-    </div>
-
-    <!-- Main Two-Column Layout -->
-    <div id="cv-main-grid">
-
-        <!-- LEFT: Community Cards -->
-        <div id="cv-left-col">
-            <div class="cv-col-header">
-                <h2 class="cv-col-title">
-                    <span class="material-symbols-outlined icon-filled" style="font-size:18px;color:#a14000;vertical-align:middle;">groups</span>
-                    Trending Communities
-                </h2>
-                <span id="cv-comm-count" class="cv-col-meta">15 communities</span>
+            <!-- COMMUNITIES VIEW -->
+            <div id="communities-view" class="view-section hidden opacity-0 transition-opacity duration-300">
+                <div class="grid grid-cols-1 xl:grid-cols-12 gap-8">
+                    <div class="xl:col-span-4">
+                        <div class="flex items-center justify-between mb-6">
+                            <h2 class="text-xl font-extrabold tracking-tight">Trending Communities</h2>
+                            <span class="material-symbols-outlined text-on-surface-variant/40">info</span>
+                        </div>
+                        <div id="communities-list-container" class="flex flex-col gap-4">
+                            <!-- Injected by renderCommunitiesList() -->
+                        </div>
+                    </div>
+                    <div class="xl:col-span-8">
+                        <div class="flex items-center justify-between mb-6">
+                            <h2 class="text-xl font-extrabold tracking-tight">Featured Research</h2>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <article
+                                class="bg-surface-container-lowest p-6 rounded-xl border-l-4 border-primary shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between">
+                                <div>
+                                    <h3 class="text-lg font-bold mb-3">Sustainable AI: Optimization for
+                                        Low-Resource Languages</h3>
+                                    <p class="text-sm text-on-surface-variant mb-4">Research exploring
+                                        transformer models for regional dialects like Sylheti and Chakma to preserve
+                                        linguistic diversity.</p>
+                                </div>
+                                <div class="flex items-center justify-between pt-4 border-t border-slate-100 mt-auto">
+                                    <div class="flex items-center gap-2">
+                                        <div
+                                            class="w-8 h-8 rounded-full bg-orange-100 flex items-center justify-center font-bold text-xs text-orange-700">
+                                            AK</div>
+                                        <span class="text-xs font-bold">Dr. Ahmed Kabir</span>
+                                    </div>
+                                </div>
+                            </article>
+                            <article
+                                class="bg-surface-container-lowest p-6 rounded-xl border-l-4 border-secondary shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between">
+                                <div>
+                                    <h3 class="text-lg font-bold mb-3">Renewable Energy: Solar Micro-Grids in
+                                        Rural Bangladesh</h3>
+                                    <p class="text-sm text-on-surface-variant mb-4">Developing scalable and
+                                        affordable solar energy solutions for off-grid communities in the coastal
+                                        regions.</p>
+                                </div>
+                                <div class="flex items-center justify-between pt-4 border-t border-slate-100 mt-auto">
+                                    <div class="flex items-center gap-2">
+                                        <div
+                                            class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center font-bold text-xs text-blue-700">
+                                            SI</div>
+                                        <span class="text-xs font-bold">Prof. Syed Islam</span>
+                                    </div>
+                                </div>
+                            </article>
+                            <article
+                                class="bg-surface-container-lowest p-6 rounded-xl border-l-4 border-emerald-500 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between">
+                                <div>
+                                    <h3 class="text-lg font-bold mb-3">Smart Traffic Management System using
+                                        IoT</h3>
+                                    <p class="text-sm text-on-surface-variant mb-4">A novel approach to reduce
+                                        traffic congestion in Dhaka city utilizing IoT-based real-time data analysis.
+                                    </p>
+                                </div>
+                                <div class="flex items-center justify-between pt-4 border-t border-slate-100 mt-auto">
+                                    <div class="flex items-center gap-2">
+                                        <div
+                                            class="w-8 h-8 rounded-full bg-emerald-100 flex items-center justify-center font-bold text-xs text-emerald-700">
+                                            RR</div>
+                                        <span class="text-xs font-bold">Dr. Rubaiya Rahman</span>
+                                    </div>
+                                </div>
+                            </article>
+                            <article
+                                class="bg-surface-container-lowest p-6 rounded-xl border-l-4 border-purple-500 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between">
+                                <div>
+                                    <h3 class="text-lg font-bold mb-3">Impact of Microfinance on Female
+                                        Entrepreneurs</h3>
+                                    <p class="text-sm text-on-surface-variant mb-4">An empirical study
+                                        analyzing the economic empowerment of women through micro-credit in semi-urban
+                                        areas.</p>
+                                </div>
+                                <div class="flex items-center justify-between pt-4 border-t border-slate-100 mt-auto">
+                                    <div class="flex items-center gap-2">
+                                        <div
+                                            class="w-8 h-8 rounded-full bg-purple-100 flex items-center justify-center font-bold text-xs text-purple-700">
+                                            FH</div>
+                                        <span class="text-xs font-bold">Dr. Fahima Hossain</span>
+                                    </div>
+                                </div>
+                            </article>
+                            <article
+                                class="bg-surface-container-lowest p-6 rounded-xl border-l-4 border-amber-500 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between">
+                                <div>
+                                    <h3 class="text-lg font-bold mb-3">Next-Gen Robotics in Agriculture</h3>
+                                    <p class="text-sm text-on-surface-variant mb-4">Implementing automated farming
+                                        machinery to increase crop yield and monitor soil health across rural farms.</p>
+                                </div>
+                                <div class="flex items-center justify-between pt-4 border-t border-slate-100 mt-auto">
+                                    <div class="flex items-center gap-2">
+                                        <div
+                                            class="w-8 h-8 rounded-full bg-amber-100 flex items-center justify-center font-bold text-xs text-amber-700">
+                                            MS</div>
+                                        <span class="text-xs font-bold">Dr. Mahmudul Shojib</span>
+                                    </div>
+                                </div>
+                            </article>
+                            <article
+                                class="bg-surface-container-lowest p-6 rounded-xl border-l-4 border-teal-500 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between">
+                                <div>
+                                    <h3 class="text-lg font-bold mb-3">Blockchain for Transparent Supply Chains</h3>
+                                    <p class="text-sm text-on-surface-variant mb-4">Investigating the use of
+                                        decentralized ledgers to ensure ethical sourcing in the ready-made garment (RMG)
+                                        sector.</p>
+                                </div>
+                                <div class="flex items-center justify-between pt-4 border-t border-slate-100 mt-auto">
+                                    <div class="flex items-center gap-2">
+                                        <div
+                                            class="w-8 h-8 rounded-full bg-teal-100 flex items-center justify-center font-bold text-xs text-teal-700">
+                                            TJ</div>
+                                        <span class="text-xs font-bold">Dr. Tanvir Jahan</span>
+                                    </div>
+                                </div>
+                            </article>
+                            <article
+                                class="bg-surface-container-lowest p-6 rounded-xl border-l-4 border-rose-500 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between">
+                                <div>
+                                    <h3 class="text-lg font-bold mb-3">Urban Air Quality Prediction Models</h3>
+                                    <p class="text-sm text-on-surface-variant mb-4">Machine learning frameworks to
+                                        forecast PM2.5 levels using real-time meteorological and vehicular data.</p>
+                                </div>
+                                <div class="flex items-center justify-between pt-4 border-t border-slate-100 mt-auto">
+                                    <div class="flex items-center gap-2">
+                                        <div
+                                            class="w-8 h-8 rounded-full bg-rose-100 flex items-center justify-center font-bold text-xs text-rose-700">
+                                            NA</div>
+                                        <span class="text-xs font-bold">Dr. Nadia Ahmed</span>
+                                    </div>
+                                </div>
+                            </article>
+                            <article
+                                class="bg-surface-container-lowest p-6 rounded-xl border-l-4 border-indigo-500 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between">
+                                <div>
+                                    <h3 class="text-lg font-bold mb-3">Cybersecurity in E-Governance</h3>
+                                    <p class="text-sm text-on-surface-variant mb-4">A comprehensive analysis of
+                                        vulnerabilities in public sector digital services and strategies for robust
+                                        protection.</p>
+                                </div>
+                                <div class="flex items-center justify-between pt-4 border-t border-slate-100 mt-auto">
+                                    <div class="flex items-center gap-2">
+                                        <div
+                                            class="w-8 h-8 rounded-full bg-indigo-100 flex items-center justify-center font-bold text-xs text-indigo-700">
+                                            KH</div>
+                                        <span class="text-xs font-bold">Prof. Kamrul Hasan</span>
+                                    </div>
+                                </div>
+                            </article>
+                        </div>
+                    </div>
+                </div>
             </div>
-
-            <!-- Empty state -->
-            <div id="cv-empty" style="display:none;text-align:center;padding:2.5rem 1rem;">
-                <span class="material-symbols-outlined" style="font-size:3rem;color:#cbd5e1;display:block;margin-bottom:.5rem;">search_off</span>
-                <p style="font-size:.85rem;color:#94a3b8;font-weight:600;">No communities found.</p>
-            </div>
-
-            <!-- Cards grid -->
-            <div id="communities-list-container" class="cv-cards-grid">
-                <!-- Injected by renderCommunitiesList() -->
-            </div>
-        </div>
-
-        <!-- RIGHT: Featured Research -->
-        <div id="cv-right-col">
-            <div class="cv-col-header">
-                <h2 class="cv-col-title">
-                    <span class="material-symbols-outlined icon-filled" style="font-size:18px;color:#a14000;vertical-align:middle;">science</span>
-                    Featured Research
-                </h2>
-                <span class="cv-col-meta">8 papers</span>
-            </div>
-
-            <div class="cv-research-grid">
-
-                <article class="cv-research-card cv-r-orange">
-                    <h3 class="cv-r-title">Sustainable AI: Optimization for Low-Resource Languages</h3>
-                    <p class="cv-r-desc">Research exploring transformer models for regional dialects like Sylheti and Chakma to preserve linguistic diversity.</p>
-                    <div class="cv-r-footer">
-                        <div class="cv-r-avatar cv-ra-orange">AK</div>
-                        <span class="cv-r-author">Dr. Ahmed Kabir</span>
-                        <span class="cv-r-tag">AI / NLP</span>
-                    </div>
-                </article>
-
-                <article class="cv-research-card cv-r-blue">
-                    <h3 class="cv-r-title">Renewable Energy: Solar Micro-Grids in Rural Bangladesh</h3>
-                    <p class="cv-r-desc">Developing scalable and affordable solar energy solutions for off-grid communities in the coastal regions.</p>
-                    <div class="cv-r-footer">
-                        <div class="cv-r-avatar cv-ra-blue">SI</div>
-                        <span class="cv-r-author">Prof. Syed Islam</span>
-                        <span class="cv-r-tag">Energy</span>
-                    </div>
-                </article>
-
-                <article class="cv-research-card cv-r-emerald">
-                    <h3 class="cv-r-title">Smart Traffic Management System using IoT</h3>
-                    <p class="cv-r-desc">A novel approach to reduce traffic congestion in Dhaka city utilizing IoT-based real-time data analysis.</p>
-                    <div class="cv-r-footer">
-                        <div class="cv-r-avatar cv-ra-emerald">RR</div>
-                        <span class="cv-r-author">Dr. Rubaiya Rahman</span>
-                        <span class="cv-r-tag">IoT</span>
-                    </div>
-                </article>
-
-                <article class="cv-research-card cv-r-purple">
-                    <h3 class="cv-r-title">Impact of Microfinance on Female Entrepreneurs</h3>
-                    <p class="cv-r-desc">An empirical study analyzing the economic empowerment of women through micro-credit in semi-urban areas.</p>
-                    <div class="cv-r-footer">
-                        <div class="cv-r-avatar cv-ra-purple">FH</div>
-                        <span class="cv-r-author">Dr. Fahima Hossain</span>
-                        <span class="cv-r-tag">Economics</span>
-                    </div>
-                </article>
-
-                <article class="cv-research-card cv-r-amber">
-                    <h3 class="cv-r-title">Next-Gen Robotics in Agriculture</h3>
-                    <p class="cv-r-desc">Implementing automated farming machinery to increase crop yield and monitor soil health across rural farms.</p>
-                    <div class="cv-r-footer">
-                        <div class="cv-r-avatar cv-ra-amber">MS</div>
-                        <span class="cv-r-author">Dr. Mahmudul Shojib</span>
-                        <span class="cv-r-tag">Robotics</span>
-                    </div>
-                </article>
-
-                <article class="cv-research-card cv-r-teal">
-                    <h3 class="cv-r-title">Blockchain for Transparent Supply Chains</h3>
-                    <p class="cv-r-desc">Investigating decentralized ledgers to ensure ethical sourcing in the ready-made garment (RMG) sector.</p>
-                    <div class="cv-r-footer">
-                        <div class="cv-r-avatar cv-ra-teal">TJ</div>
-                        <span class="cv-r-author">Dr. Tanvir Jahan</span>
-                        <span class="cv-r-tag">Blockchain</span>
-                    </div>
-                </article>
-
-                <article class="cv-research-card cv-r-rose">
-                    <h3 class="cv-r-title">Urban Air Quality Prediction Models</h3>
-                    <p class="cv-r-desc">Machine learning frameworks to forecast PM2.5 levels using real-time meteorological and vehicular data.</p>
-                    <div class="cv-r-footer">
-                        <div class="cv-r-avatar cv-ra-rose">NA</div>
-                        <span class="cv-r-author">Dr. Nadia Ahmed</span>
-                        <span class="cv-r-tag">ML / Env</span>
-                    </div>
-                </article>
-
-                <article class="cv-research-card cv-r-indigo">
-                    <h3 class="cv-r-title">Cybersecurity in E-Governance</h3>
-                    <p class="cv-r-desc">A comprehensive analysis of vulnerabilities in public sector digital services and strategies for protection.</p>
-                    <div class="cv-r-footer">
-                        <div class="cv-r-avatar cv-ra-indigo">KH</div>
-                        <span class="cv-r-author">Prof. Kamrul Hasan</span>
-                        <span class="cv-r-tag">Security</span>
-                    </div>
-                </article>
-
-            </div><!-- /.cv-research-grid -->
-        </div><!-- /#cv-right-col -->
-
-    </div><!-- /#cv-main-grid -->
-</div>
-<!-- END COMMUNITIES VIEW -->
-
 
             <!-- EVENTS VIEW -->
             <div id="events-view" class="view-section hidden opacity-0 transition-opacity duration-300">
@@ -2633,6 +2626,104 @@
                                 </div>
                             </div>
 
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Messages View -->
+            <div id="messages-view" class="view-section hidden opacity-0 transition-opacity duration-300">
+                <div class="max-w-none w-full h-[calc(100vh-195px)] flex bg-white/60 dark:bg-slate-900/60 backdrop-blur-2xl rounded-[2rem] overflow-hidden shadow-[0_20px_60px_-15px_rgba(0,0,0,0.1)] border border-white/40 dark:border-slate-700/50">
+                    <!-- Sidebar: Contact List -->
+                    <div class="w-1/3 max-w-[400px] border-r border-slate-200/50 dark:border-slate-700/50 flex flex-col bg-slate-50/50 dark:bg-slate-800/30">
+                        <div class="p-5 border-b border-slate-200/50 dark:border-slate-700/50 flex justify-between items-center relative overflow-hidden">
+                            <!-- Background gradient for sidebar header -->
+                            <div class="absolute inset-0 bg-gradient-to-r from-orange-100/50 to-rose-100/30 dark:from-orange-900/20 dark:to-rose-900/10 pointer-events-none"></div>
+                            <h2 class="text-2xl font-black text-slate-800 dark:text-slate-200 tracking-tight relative z-10">Messages</h2>
+                            <div class="flex gap-2 relative z-10">
+                                <button class="p-2.5 rounded-full bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 transition-all shadow-sm border border-slate-100 dark:border-slate-700 flex items-center justify-center hover:scale-105 active:scale-95 text-slate-600 dark:text-slate-300" onclick="refreshMessagesList()" title="Refresh">
+                                    <span class="material-symbols-outlined text-[18px]">refresh</span>
+                                </button>
+                                <button class="p-2.5 rounded-full bg-gradient-to-r from-primary to-orange-500 hover:from-orange-600 hover:to-orange-400 text-white transition-all shadow-md flex items-center justify-center hover:scale-105 active:scale-95" onclick="startNewMessage()" title="New Message">
+                                    <span class="material-symbols-outlined text-[18px]">edit_square</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="p-3 bg-transparent border-b border-slate-200/50 dark:border-slate-700/50">
+                            <div class="relative flex items-center bg-white dark:bg-slate-800/80 rounded-2xl px-4 py-2.5 group focus-within:ring-2 focus-within:ring-primary/40 focus-within:shadow-md transition-all border border-slate-100 dark:border-slate-700">
+                                <span class="material-symbols-outlined text-[20px] text-slate-400 group-focus-within:text-primary transition-colors mr-2">search</span>
+                                <input class="bg-transparent border-none focus:ring-0 text-[13px] w-full outline-none placeholder:text-slate-400 font-medium text-slate-700 dark:text-slate-200" placeholder="Search direct messages..." type="text" id="messages-search-input" oninput="handleMessagesSearch()">
+                            </div>
+                        </div>
+                        <div id="messages-contact-list" class="flex-1 overflow-y-auto hide-scrollbar flex flex-col p-2 space-y-1">
+                            <!-- Populated by JS -->
+                        </div>
+                    </div>
+                    <!-- Main Chat Area -->
+                    <div class="w-2/3 flex flex-col bg-slate-50 dark:bg-slate-900 relative">
+                        <!-- Abstract chat background pattern -->
+                        <div class="absolute inset-0 opacity-[0.03] dark:opacity-[0.05] pointer-events-none mix-blend-multiply dark:mix-blend-lighten" style="background-image: radial-gradient(#a14000 1.5px, transparent 1.5px); background-size: 24px 24px;"></div>
+                        
+                        <!-- Default empty state -->
+                        <div id="messages-empty-state" class="flex-1 flex flex-col items-center justify-center text-center p-8 absolute inset-0 z-10 bg-slate-50/80 dark:bg-slate-900/80 backdrop-blur-sm">
+                            <div class="w-32 h-32 bg-gradient-to-tr from-primary to-rose-400 rounded-full flex items-center justify-center mb-6 text-white shadow-[0_15px_40px_-5px_rgba(243,109,33,0.4)] animate-bounce" style="animation-duration: 3s;">
+                                <span class="material-symbols-outlined text-6xl icon-filled">forum</span>
+                            </div>
+                            <h3 class="text-3xl font-black text-slate-800 dark:text-slate-100 mb-3 tracking-tight">Your Direct Messages</h3>
+                            <p class="text-[15px] text-slate-500 dark:text-slate-400 max-w-sm leading-relaxed font-medium">Select a conversation or start a new one to seamlessly connect with friends and peers.</p>
+                        </div>
+                        
+                        <!-- Active Chat Header -->
+                        <div id="messages-active-header" class="hidden p-4 border-b border-slate-200/70 dark:border-slate-700/70 flex justify-between items-center z-20 sticky top-0 bg-white/70 dark:bg-slate-900/70 backdrop-blur-xl shadow-sm">
+                            <div class="flex items-center gap-4 cursor-pointer group" onclick="openPublicProfile(state.activeMessagesUserId)">
+                                <div class="relative">
+                                    <img id="messages-active-pic" src="" class="w-12 h-12 rounded-full object-cover border-[3px] border-white dark:border-slate-800 shadow-md group-hover:scale-105 transition-all">
+                                    <div class="absolute bottom-0 right-0 w-3.5 h-3.5 bg-green-500 border-2 border-white dark:border-slate-800 rounded-full shadow-sm"></div>
+                                </div>
+                                <div class="flex flex-col justify-center">
+                                    <h3 id="messages-active-name" class="font-bold text-[16px] group-hover:text-primary transition-colors text-slate-800 dark:text-slate-100 leading-tight">Name</h3>
+                                    <p class="text-[11px] text-green-600 dark:text-green-400 font-bold mt-0.5 tracking-wider uppercase flex items-center gap-1"><span class="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse"></span> Active Now</p>
+                                </div>
+                            </div>
+                            <div class="flex gap-2">
+                                <button class="p-2.5 bg-white dark:bg-slate-800 hover:bg-orange-50 dark:hover:bg-orange-900/20 rounded-full text-primary transition-all shadow-sm border border-slate-100 dark:border-slate-700 flex items-center justify-center hover:scale-105 active:scale-95" onclick="alert('Starting voice call with ' + document.getElementById('messages-active-name').innerText)">
+                                    <span class="material-symbols-outlined text-[20px] icon-filled">call</span>
+                                </button>
+                                <button class="p-2.5 bg-white dark:bg-slate-800 hover:bg-orange-50 dark:hover:bg-orange-900/20 rounded-full text-primary transition-all shadow-sm border border-slate-100 dark:border-slate-700 flex items-center justify-center hover:scale-105 active:scale-95" onclick="alert('Starting video call with ' + document.getElementById('messages-active-name').innerText)">
+                                    <span class="material-symbols-outlined text-[20px] icon-filled">videocam</span>
+                                </button>
+                                <div class="w-px h-8 bg-slate-200 dark:bg-slate-700 my-auto mx-2 rounded-full"></div>
+                                <button class="p-2.5 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-full text-slate-500 transition-all shadow-sm border border-slate-100 dark:border-slate-700 flex items-center justify-center hover:scale-105 active:scale-95" onclick="alert('Showing chat info...')">
+                                    <span class="material-symbols-outlined text-[20px]">info</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Messages Container -->
+                        <div id="messages-active-body" class="hidden flex-1 overflow-y-auto p-6 flex flex-col gap-4 scroll-smooth z-10">
+                            <!-- Messages go here -->
+                        </div>
+
+                        <!-- Chat Input -->
+                        <div id="messages-active-input" class="hidden p-4 bg-white/70 dark:bg-slate-900/70 backdrop-blur-xl border-t border-slate-200/70 dark:border-slate-700/70 flex items-center gap-3 z-20 shadow-[0_-5px_20px_rgba(0,0,0,0.02)]">
+                            <input type="file" id="message-attachment" class="hidden" accept="image/*,video/*,.pdf,.doc,.docx">
+                            <button class="p-2.5 text-slate-500 hover:text-primary hover:bg-orange-50 dark:hover:bg-orange-900/20 rounded-full transition-all flex items-center justify-center group bg-white dark:bg-slate-800 shadow-sm border border-slate-100 dark:border-slate-700 hover:scale-105 active:scale-95" title="Add Attachment" onclick="document.getElementById('message-attachment').click()">
+                                <span class="material-symbols-outlined text-[20px]">add</span>
+                            </button>
+                            <button class="p-2.5 text-slate-500 hover:text-primary hover:bg-orange-50 dark:hover:bg-orange-900/20 rounded-full transition-all flex items-center justify-center group bg-white dark:bg-slate-800 shadow-sm border border-slate-100 dark:border-slate-700 hover:scale-105 active:scale-95" title="Send Photo" onclick="document.getElementById('message-attachment').click()">
+                                <span class="material-symbols-outlined text-[20px]">photo_camera</span>
+                            </button>
+                            <div class="flex-1 relative flex items-center group">
+                                <input type="text" id="messages-input-field" placeholder="Type a message..." 
+                                    class="w-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-full pl-6 pr-14 py-3.5 text-[14px] focus:ring-4 focus:ring-primary/10 focus:border-primary/40 outline-none transition-all placeholder:text-slate-400 font-medium shadow-sm text-slate-800 dark:text-slate-100"
+                                    onkeypress="if(event.key === 'Enter') sendMessagesViewMessage()">
+                                <button class="absolute right-3 p-2 text-slate-400 hover:text-primary transition-all flex items-center justify-center hover:scale-110 active:scale-95" onclick="alert('Emoji picker coming soon!')">
+                                    <span class="material-symbols-outlined text-[20px]">sentiment_satisfied</span>
+                                </button>
+                            </div>
+                            <button class="p-3.5 bg-gradient-to-r from-primary to-orange-500 hover:from-orange-600 hover:to-orange-400 text-white rounded-full transition-all flex items-center justify-center shadow-[0_8px_20px_-5px_rgba(243,109,33,0.5)] hover:shadow-[0_8px_25px_-5px_rgba(243,109,33,0.6)] hover:scale-105 active:scale-95" onclick="sendMessagesViewMessage()" title="Send Message">
+                                <span class="material-symbols-outlined text-[20px] icon-filled ml-0.5">send</span>
+                            </button>
                         </div>
                     </div>
                 </div>
