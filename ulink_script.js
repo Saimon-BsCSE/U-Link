@@ -95,6 +95,7 @@ const state = {
         { id: 13, type: "event", text: "Dr. Laila Zaman invited you to 'Startup Pitch Deck Competition'.", read: true }
     ],
     friends: ["101", "103", "104", "109", "110", "111", "112", "113", "114", "115"],
+    friendRequests: ["102", "106", "107", "119", "122", "129", "133"],  // incoming requests
     joinedCommunities: [], // Definitively empty so join logic works natively
     pendingCommunities: [],
     contactsExpanded: false,
@@ -599,6 +600,7 @@ let activeCommunityId = null;
 let currentOtherUserId = null;
 let uploadedImageBase64 = "";
 let activeFriendsTab = 'all';
+let selectedFeeling = { home: '', profile: '', community: '' };
 
 
 // --- Authentication ---
@@ -710,7 +712,7 @@ function switchTab(tabId) {
             renderMessagesViewList();
         } else {
             document.getElementById('right-sidebar').classList.remove('hidden');
-            document.getElementById('right-sidebar').classList.add('xl:flex');
+            
         }
     }
 
@@ -824,9 +826,79 @@ function removeImage(source = 'home') {
     }
 }
 
+// --- Feeling Picker ---
+function toggleFeelingDropdown(source) {
+    const dropdown = document.getElementById(`feeling-dropdown-${source}`);
+    if (!dropdown) return;
+    const isHidden = dropdown.classList.contains('hidden');
+    // Close all feeling dropdowns first
+    document.querySelectorAll('[id^="feeling-dropdown-"]').forEach(d => d.classList.add('hidden'));
+    if (isHidden) {
+        dropdown.classList.remove('hidden');
+        // Close if clicking outside
+        setTimeout(() => {
+            function outsideClick(e) {
+                if (!dropdown.contains(e.target) && e.target.id !== `feeling-btn-${source}` && !document.getElementById(`feeling-btn-${source}`)?.contains(e.target)) {
+                    dropdown.classList.add('hidden');
+                    document.removeEventListener('click', outsideClick);
+                }
+            }
+            document.addEventListener('click', outsideClick);
+        }, 0);
+    }
+}
+
+function selectFeeling(feeling, source) {
+    selectedFeeling[source] = feeling;
+    const textEl = document.getElementById(`feeling-text-${source}`);
+    const iconEl = document.getElementById(`feeling-icon-${source}`);
+
+    if (textEl) {
+        textEl.textContent = feeling;
+        // Remove 'hidden' class regardless of breakpoint variant
+        textEl.classList.remove('hidden', 'sm:inline');
+        textEl.style.display = 'inline';
+    }
+    if (iconEl) {
+        iconEl.classList.add('hidden');
+        iconEl.style.display = 'none';
+    }
+    // Close dropdown
+    const dropdown = document.getElementById(`feeling-dropdown-${source}`);
+    if (dropdown) dropdown.classList.add('hidden');
+}
+
+function resetFeeling(source) {
+    selectedFeeling[source] = '';
+    const textEl = document.getElementById(`feeling-text-${source}`);
+    const iconEl = document.getElementById(`feeling-icon-${source}`);
+
+    if (textEl) {
+        // Restore default text if available
+        const defaultText = textEl.getAttribute('data-default') || '';
+        textEl.textContent = defaultText;
+        textEl.style.display = '';
+        // Re-add the original classes
+        if (source === 'home') {
+            textEl.classList.add('hidden', 'sm:inline');
+        } else {
+            textEl.classList.add('hidden');
+            textEl.style.display = 'none';
+        }
+    }
+    if (iconEl) {
+        iconEl.classList.remove('hidden');
+        iconEl.style.display = '';
+    }
+}
+
 function submitPost(source = 'home') {
-    const textId = source === 'home' ? 'post-text' : 'post-text-profile';
-    const text = document.getElementById(textId).value.trim();
+    const textId = source === 'home' ? 'post-text' : (source === 'profile' ? 'post-text-profile' : 'post-text');
+    const textEl = document.getElementById(textId);
+    if (!textEl) return;
+    let text = textEl.value.trim();
+    const feeling = selectedFeeling[source];
+    if (feeling) text = text ? `${text} — feeling ${feeling}` : `feeling ${feeling}`;
     if (!text && !uploadedImageBase64) return;
 
     const newPost = {
@@ -843,10 +915,11 @@ function submitPost(source = 'home') {
     state.posts.unshift(newPost);
     state.user.postsCount++;
 
-    // Reset
-    document.getElementById('post-text').value = "";
-    if (document.getElementById('post-text-profile')) document.getElementById('post-text-profile').value = "";
-    removeImage();
+    // Reset the correct textarea
+    textEl.value = "";
+    // Reset image for the correct source
+    removeImage(source);
+    resetFeeling(source);
 
     if (activeTab === 'home') renderFeed();
     if (activeTab === 'profile') renderUserPosts();
@@ -933,7 +1006,7 @@ function createPostHTML(post) {
                 </div>
                 <span class="text-sm font-bold ${likeClass}">${post.likes}</span>
             </button>
-            <button onclick="toggleComments('${post.id}')" class="flex items-center gap-2 text-slate-500 dark:text-slate-400 group flex-1 justify-center sm:flex-none sm:justify-start">
+            <button onclick="toggleComments(this)" class="flex items-center gap-2 text-slate-500 dark:text-slate-400 group flex-1 justify-center sm:flex-none sm:justify-start">
                 <div class="p-2 rounded-full group-hover:bg-blue-50 dark:group-hover:bg-blue-900/20 transition-colors">
                   <span class="material-symbols-outlined text-2xl">chat_bubble_outline</span>
                 </div>
@@ -941,13 +1014,13 @@ function createPostHTML(post) {
             </button>
         </div>
         <!-- Comments Section -->
-        <div id="comments-${post.id}" class="hidden mt-4 pt-4 border-t border-surface-container-highest/30">
+        <div class="post-comments-section hidden mt-4 pt-4 border-t border-surface-container-highest/30">
             <div class="max-h-40 overflow-y-auto mb-3 pr-1 hide-scrollbar">
                 ${commentsHtml}
             </div>
             <div class="flex gap-2">
-                <input type="text" id="comment-input-${post.id}" class="flex-1 bg-surface-container-high border-none rounded-full px-4 py-2 text-sm focus:ring-1 focus:ring-primary outline-none" placeholder="Write a comment...">
-                <button onclick="submitComment(${post.id})" class="bg-primary text-white p-2 rounded-full w-9 h-9 flex items-center justify-center hover:bg-primary/90 transition-colors active:scale-95">
+                <input type="text" class="post-comment-input flex-1 bg-surface-container-high border-none rounded-full px-4 py-2 text-sm focus:ring-1 focus:ring-primary outline-none" placeholder="Write a comment...">
+                <button onclick="submitComment('${post.id}', this)" class="bg-primary text-white p-2 rounded-full w-9 h-9 flex items-center justify-center hover:bg-primary/90 transition-colors active:scale-95">
                     <span class="material-symbols-outlined text-sm">send</span>
                 </button>
             </div>
@@ -996,19 +1069,30 @@ function toggleLike(postId, btn) {
     }
 }
 
-function toggleComments(postId) {
-    const commentsDiv = document.getElementById(`comments-${postId}`);
-    if (commentsDiv) {
-        commentsDiv.classList.toggle('hidden');
+function toggleComments(btn) {
+    // Use relative DOM traversal to avoid duplicate ID issues across home/profile views
+    const postCard = btn.closest('.bg-gradient-to-br');
+    if (postCard) {
+        const commentsDiv = postCard.querySelector('.post-comments-section');
+        if (commentsDiv) {
+            commentsDiv.classList.toggle('hidden');
+            // Focus the comment input when opened
+            if (!commentsDiv.classList.contains('hidden')) {
+                const input = commentsDiv.querySelector('.post-comment-input');
+                if (input) setTimeout(() => input.focus(), 50);
+            }
+        }
     }
 }
 
-function submitComment(postId) {
-    const input = document.getElementById(`comment-input-${postId}`);
-    const text = input.value.trim();
+function submitComment(postId, btn) {
+    // Use relative DOM traversal to avoid duplicate ID issues
+    const postCard = btn.closest('.bg-gradient-to-br');
+    const input = postCard ? postCard.querySelector('.post-comment-input') : null;
+    const text = input ? input.value.trim() : '';
     if (!text) return;
 
-    const post = state.posts.find(p => p.id === postId);
+    const post = state.posts.find(p => String(p.id) === String(postId));
     if (post) {
         if (!post.commentsList) post.commentsList = [];
         post.commentsList.push({
@@ -1018,13 +1102,24 @@ function submitComment(postId) {
             text: text
         });
         post.comments = post.commentsList.length;
-        input.value = "";
-        if (activeTab === 'home') renderFeed();
-        if (activeTab === 'profile') renderUserPosts();
-        if (activeTab === 'other-profile' && currentOtherUserId) openPublicProfile(currentOtherUserId);
+        input.value = '';
 
-        // Keep comments open after rendering
-        setTimeout(() => toggleComments(postId), 10);
+        // Update only the comments list within this specific post card (no full re-render needed)
+        const commentsListDiv = postCard.querySelector('.max-h-40');
+        if (commentsListDiv) {
+            const newComment = document.createElement('div');
+            newComment.className = 'bg-surface-container-high rounded-xl p-3 mb-2 border border-slate-100 dark:border-slate-800';
+            newComment.innerHTML = `<span class="font-extrabold text-xs mr-1 cursor-pointer hover:underline text-primary" onclick="openPublicProfile('${state.user.id}')">${state.user.name}</span><span class="text-sm text-slate-700 dark:text-slate-300 font-medium">${post.commentsList[post.commentsList.length - 1].text}</span>`;
+            commentsListDiv.appendChild(newComment);
+            commentsListDiv.scrollTop = commentsListDiv.scrollHeight;
+        }
+
+        // Also update the comment count in the button
+        const commentBtn = postCard.querySelector('[onclick^="toggleComments"]');
+        if (commentBtn) {
+            const countSpan = commentBtn.querySelector('span.text-sm.font-bold');
+            if (countSpan) countSpan.textContent = post.comments;
+        }
     }
 }
 
@@ -1060,7 +1155,7 @@ document.addEventListener('click', (e) => {
     if (!e.target.closest('#search-dropdown') && !e.target.closest('#search-input')) {
         document.getElementById('search-dropdown').classList.add('hidden');
     }
-    if (!e.target.closest('#notifications-panel') && !e.target.closest('[onclick="toggleNotifications()"]')) {
+    if (!e.target.closest('#notifications-panel') && !e.target.closest('#notif-bell-btn')) {
         document.getElementById('notifications-panel').classList.add('hidden');
     }
 });
@@ -1113,22 +1208,22 @@ function closePublicProfile() { } // Stub for compatibility
 function renderMessagesViewList(query = '') {
     const container = document.getElementById('messages-contact-list');
     container.innerHTML = '';
-    
+
     // Get unique users from chat history or fallback to friends if empty
     let chatUserIds = Object.keys(state.chatHistory);
     if (chatUserIds.length === 0) chatUserIds = state.friends.slice(0, 5); // Just show some friends initially
-    
+
     let users = chatUserIds.map(id => MOCK_USERS.find(u => u.id === id)).filter(Boolean);
-    
+
     if (query) {
         users = users.filter(u => u.name.toLowerCase().includes(query.toLowerCase()));
     }
-    
+
     container.innerHTML = users.map(user => {
         const history = state.chatHistory[user.id] || [];
         const lastMsg = history.length > 0 ? history[history.length - 1].text : 'Start chatting...';
         const isMe = history.length > 0 && history[history.length - 1].sender === 'me';
-        
+
         return `<div class="p-3 hover:bg-white dark:hover:bg-slate-700/50 rounded-2xl cursor-pointer transition-all flex gap-3 items-center border border-transparent hover:border-slate-200 dark:hover:border-slate-600 hover:shadow-sm" onclick="openMessagesViewChat('${user.id}')">
             <div class="relative">
                 <img src="${user.pic}" class="w-12 h-12 rounded-full object-cover border-2 border-white dark:border-slate-800 shadow-[0_2px_5px_rgba(0,0,0,0.05)]">
@@ -1154,10 +1249,10 @@ function refreshMessagesList() {
         btn.classList.add('animate-spin');
         setTimeout(() => btn.classList.remove('animate-spin'), 500);
     }
-    
+
     // Shuffle friends artificially for demonstration
     state.friends.sort(() => Math.random() - 0.5);
-    
+
     document.getElementById('messages-search-input').value = '';
     renderMessagesViewList();
 }
@@ -1175,9 +1270,9 @@ function startNewMessage() {
 function openMessagesViewChat(userId) {
     const user = MOCK_USERS.find(u => u.id === userId);
     if (!user) return;
-    
+
     state.activeMessagesUserId = userId;
-    
+
     // Hide empty state, show active chat
     document.getElementById('messages-empty-state').classList.add('hidden');
     document.getElementById('messages-active-header').classList.remove('hidden');
@@ -1186,11 +1281,11 @@ function openMessagesViewChat(userId) {
     document.getElementById('messages-active-body').classList.add('flex');
     document.getElementById('messages-active-input').classList.remove('hidden');
     document.getElementById('messages-active-input').classList.add('flex');
-    
+
     // Set Header
     document.getElementById('messages-active-pic').src = user.pic;
     document.getElementById('messages-active-name').innerText = user.name;
-    
+
     renderMessagesViewBody();
     setTimeout(() => document.getElementById('messages-input-field').focus(), 100);
 }
@@ -1198,7 +1293,7 @@ function openMessagesViewChat(userId) {
 function renderMessagesViewBody() {
     const container = document.getElementById('messages-active-body');
     const history = state.chatHistory[state.activeMessagesUserId] || [];
-    
+
     if (history.length === 0) {
         const user = MOCK_USERS.find(u => u.id === state.activeMessagesUserId);
         container.innerHTML = `<div class="text-center w-full my-auto flex flex-col items-center justify-center opacity-70">
@@ -1208,7 +1303,7 @@ function renderMessagesViewBody() {
         </div>`;
         return;
     }
-    
+
     container.innerHTML = history.map(msg => {
         const isMe = msg.sender === 'me';
         if (isMe) {
@@ -1227,19 +1322,19 @@ function renderMessagesViewBody() {
             </div>`;
         }
     }).join('');
-    
+
     // Scroll to bottom
     container.scrollTop = container.scrollHeight;
 }
 
 function generateAutoReply(text) {
     const lowerText = text.toLowerCase();
-    
+
     // Greetings
     if (lowerText.match(/\\b(hi|hello|hey|sup)\\b/)) {
         const replies = ["Hi there! How's your day going?", "Hello! What's up?", "Hey! Need anything?", "Hi! Doing well?"];
         return replies[Math.floor(Math.random() * replies.length)];
-    } 
+    }
     // How are you
     else if (lowerText.includes("how are you") || lowerText.includes("how r u") || lowerText.includes("hows it going")) {
         const replies = ["I'm doing well, just trying to focus on my assignments. You?", "Been a bit busy, but I'm good! How about you?", "Doing great! The weather is nice today."];
@@ -1294,26 +1389,26 @@ function sendMessagesViewMessage() {
     const input = document.getElementById('messages-input-field');
     const text = input.value.trim();
     if (!text || !state.activeMessagesUserId) return;
-    
+
     if (!state.chatHistory[state.activeMessagesUserId]) {
         state.chatHistory[state.activeMessagesUserId] = [];
     }
-    
+
     state.chatHistory[state.activeMessagesUserId].push({ sender: 'me', text: text });
     input.value = "";
-    
+
     renderMessagesViewBody();
     renderMessagesViewList(); // update sidebar latest msg
-    
+
     const botReply = generateAutoReply(text);
-    
+
     // Simulate typing and reply
     setTimeout(() => {
         if (state.activeMessagesUserId) {
             state.chatHistory[state.activeMessagesUserId].push({ sender: 'them', text: 'Typing...' });
             renderMessagesViewBody();
             renderMessagesViewList();
-            
+
             setTimeout(() => {
                 const hist = state.chatHistory[state.activeMessagesUserId];
                 if (hist && hist.length > 0 && hist[hist.length - 1].text === 'Typing...') {
@@ -1415,71 +1510,308 @@ function sendChatMessage() {
 }
 
 // --- Social Actions & Notifications ---
+
+// Track which requests we've already fired the auto-accept for
+const _pendingAutoAccepts = new Set();
+// Active notification tab
+let activeNotifTab = 'all';
+
+/* ── Icon / meta helpers ─────────────────────────────── */
+const NOTIF_META = {
+    like: { icon: 'favorite', dot: 'notif-dot-like', label: 'Like' },
+    request: { icon: 'person_add', dot: 'notif-dot-request', label: 'Request' },
+    group: { icon: 'groups', dot: 'notif-dot-group', label: 'Group' },
+    event: { icon: 'event', dot: 'notif-dot-event', label: 'Event' },
+    comment: { icon: 'chat_bubble', dot: 'notif-dot-comment', label: 'Comment' },
+    mention: { icon: 'alternate_email', dot: 'notif-dot-mention', label: 'Mention' },
+    system: { icon: 'check_circle', dot: 'notif-dot-system', label: 'System' },
+};
+
+function getNotifMeta(type) {
+    return NOTIF_META[type] || NOTIF_META.system;
+}
+
+function timeAgo(offset = 0) {
+    const mins = [2, 5, 11, 18, 32, 47, 58];
+    const hrs = [1, 2, 3, 5];
+    const pick = v => v[Math.floor(Math.random() * v.length)];
+    if (offset > 8) return `${pick(hrs)}h ago`;
+    return `${pick(mins)}m ago`;
+}
+
+/* ── sendFriendRequest ──────────────────────────────── */
 function sendFriendRequest(userId, btnElement) {
     if (btnElement) {
-        btnElement.innerText = "Requested";
-        btnElement.classList.add("bg-surface-container-high", "text-on-surface", "cursor-default");
-        btnElement.classList.remove("bg-primary", "text-white", "hover:scale-105", "active:scale-95");
+        btnElement.innerHTML = `<span class="material-symbols-outlined text-[15px]">schedule</span> Requested`;
+        btnElement.classList.add('opacity-80', 'cursor-default');
+        btnElement.classList.remove('bg-primary', 'hover:scale-105', 'active:scale-95');
         btnElement.onclick = null;
-    } else {
-        alert("Friend request sent!");
     }
+    _scheduleMockAccept(userId);
 }
 
+/* ── Auto-accept simulation ──────────────────────────── */
+function _scheduleMockAccept(userId) {
+    if (_pendingAutoAccepts.has(userId)) return;
+    _pendingAutoAccepts.add(userId);
+
+    const delay = 4000 + Math.random() * 1000; // 4-5 seconds
+
+    setTimeout(() => {
+        const user = MOCK_USERS.find(u => u.id === userId);
+        if (!user) return;
+
+        // 1. Add as friend
+        if (!state.friends.includes(userId)) {
+            state.friends.push(userId);
+        }
+        // Remove from pending requests list if present
+        state.friendRequests = state.friendRequests.filter(id => id !== userId);
+
+        // 2. Push an "accepted" notification
+        const notifId = Date.now();
+        state.notifications.unshift({
+            id: notifId,
+            type: 'system',
+            subtype: 'accepted',
+            text: `${user.name} accepted your friend request! You are now connected. 🎉`,
+            fromId: userId,
+            pic: user.pic,
+            read: false,
+            ts: 'Just now'
+        });
+
+        // 3. Update badge & re-render if panel is open
+        updateNotificationsBadge();
+        const panel = document.getElementById('notifications-panel');
+        if (panel && !panel.classList.contains('hidden')) {
+            renderNotifications();
+        }
+
+        // 4. Update friends count in UI
+        updateUI();
+        if (activeTab === 'friends') renderFriendsView();
+
+        // 5. Show real-time toast
+        _showAcceptedToast(user);
+    }, delay);
+}
+
+/* ── Toast system ─────────────────────────────────────── */
+function _showAcceptedToast(user) {
+    const container = document.getElementById('toast-container');
+    if (!container) return;
+
+    const id = `toast-${Date.now()}`;
+    const div = document.createElement('div');
+    div.id = id;
+    div.className = 'toast-notif toast-accepted';
+    div.innerHTML = `
+        <div class="relative flex-shrink-0">
+            <img src="${user.pic}" alt="${user.name}"
+                 class="w-11 h-11 rounded-full object-cover border-2 border-green-200 shadow"
+                 onerror="this.src='https://ui-avatars.com/api/?name=${encodeURIComponent(user.name)}&background=random'">
+            <span class="absolute -bottom-0.5 -right-0.5 w-4 h-4 bg-green-500 rounded-full flex items-center justify-center shadow border border-white">
+                <span class="material-symbols-outlined text-white text-[10px]" style="font-variation-settings:'FILL' 1">check</span>
+            </span>
+        </div>
+        <div class="flex-1 min-w-0">
+            <p class="text-[13px] font-black text-slate-800 dark:text-slate-100 leading-snug">${user.name} accepted your request!</p>
+            <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">${user.role} · ${user.dept} · You are now friends 🎉</p>
+            <button onclick="openPublicProfile('${user.id}'); _dismissToast('${id}')"
+                class="mt-2 text-[11px] font-bold text-green-600 dark:text-green-400 hover:underline active:scale-95 transition-all">
+                View Profile →
+            </button>
+        </div>
+        <button onclick="_dismissToast('${id}')"
+            class="flex-shrink-0 p-1 rounded-full hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors -mt-1 -mr-1">
+            <span class="material-symbols-outlined text-slate-400 text-[16px]">close</span>
+        </button>
+    `;
+    container.appendChild(div);
+
+    // Auto-dismiss after 5 s
+    setTimeout(() => _dismissToast(id), 5000);
+}
+
+function _dismissToast(id) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.classList.add('toast-dismiss');
+    el.addEventListener('animationend', () => el.remove(), { once: true });
+}
+
+/* ── toggleNotifications ─────────────────────────────── */
 function toggleNotifications() {
     const panel = document.getElementById('notifications-panel');
+    const isHidden = panel.classList.contains('hidden');
     panel.classList.toggle('hidden');
-    if (!panel.classList.contains('hidden')) {
+    if (isHidden) {
+        // Trigger animation by removing and re-adding
+        panel.style.animation = 'none';
+        requestAnimationFrame(() => {
+            panel.style.animation = '';
+        });
         renderNotifications();
+        // Mark requests-tab badge
+        _updateNotifTabBadges();
     }
 }
 
+/* ── Tab switching ──────────────────────────────────── */
+function switchNotifTab(tab) {
+    activeNotifTab = tab;
+    ['all', 'requests', 'activity'].forEach(t => {
+        const btn = document.getElementById(`ntab-${t}`);
+        if (!btn) return;
+        if (t === tab) {
+            btn.classList.add('notif-tab-active');
+            btn.classList.remove('text-slate-500', 'dark:text-slate-400',
+                'hover:bg-slate-100', 'dark:hover:bg-slate-800', 'bg-orange-500', 'text-white');
+        } else {
+            btn.classList.remove('notif-tab-active', 'bg-orange-500', 'text-white');
+            btn.classList.add('text-slate-500', 'hover:bg-slate-100');
+        }
+    });
+    renderNotifications();
+}
+
+/* ── Badge helpers ──────────────────────────────────── */
 function updateNotificationsBadge() {
     const unread = state.notifications.filter(n => !n.read).length;
     const badge = document.getElementById('notif-badge');
+    if (!badge) return;
     if (unread > 0) {
         badge.classList.remove('hidden');
+        badge.textContent = unread > 9 ? '9+' : unread;
     } else {
         badge.classList.add('hidden');
+        badge.textContent = '';
+    }
+    // Also update the count pill inside the panel header
+    const pill = document.getElementById('notif-count-pill');
+    if (pill) {
+        if (unread > 0) {
+            pill.classList.remove('hidden');
+            pill.textContent = `${unread} new`;
+        } else {
+            pill.classList.add('hidden');
+        }
+    }
+    _updateNotifTabBadges();
+}
+
+function _updateNotifTabBadges() {
+    const reqCount = state.notifications.filter(n => n.type === 'request' && !n.read).length;
+    const reqBadge = document.getElementById('ntab-requests-badge');
+    if (reqBadge) {
+        if (reqCount > 0) {
+            reqBadge.classList.remove('hidden');
+            reqBadge.textContent = reqCount;
+        } else {
+            reqBadge.classList.add('hidden');
+        }
     }
 }
 
+/* ── renderNotifications ─────────────────────────────── */
 function renderNotifications() {
     const list = document.getElementById('notifications-list');
-    if (state.notifications.length === 0) {
-        list.innerHTML = `<div class="p-4 text-center text-sm text-on-surface-variant">No notifications</div>`;
+    if (!list) return;
+
+    // Filter by active tab
+    let notifs = state.notifications;
+    if (activeNotifTab === 'requests') {
+        notifs = notifs.filter(n => n.type === 'request' || n.subtype === 'accepted');
+    } else if (activeNotifTab === 'activity') {
+        notifs = notifs.filter(n => n.type !== 'request' && n.subtype !== 'accepted');
+    }
+
+    if (notifs.length === 0) {
+        list.innerHTML = `
+            <div class="flex flex-col items-center justify-center py-12 text-center px-6">
+                <span class="material-symbols-outlined text-slate-300 dark:text-slate-600 text-5xl mb-3">notifications_off</span>
+                <p class="text-sm font-bold text-slate-400 dark:text-slate-500">No notifications here</p>
+                <p class="text-xs text-slate-400 dark:text-slate-600 mt-1">You're all caught up! 🎉</p>
+            </div>`;
         return;
     }
 
-    list.innerHTML = state.notifications.map(n => {
-        const bg = n.read ? '' : 'bg-surface-container-low';
-        let actionText = '';
+    list.innerHTML = notifs.map((n, idx) => {
+        const meta = getNotifMeta(n.type);
+        const isNew = !n.read;
+        const pic = n.pic || (n.fromId ? (MOCK_USERS.find(u => u.id === n.fromId) || {}).pic : null);
+        const ts = n.ts || timeAgo(idx);
+
+        // Avatar: user pic if available, else icon
+        const avatarHtml = pic
+            ? `<img src="${pic}" alt="" class="w-10 h-10 rounded-full object-cover border-2 ${isNew ? 'border-orange-200' : 'border-slate-100 dark:border-slate-700'} flex-shrink-0 shadow-sm"
+                   onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">`
+            : '';
+        const iconFallback = `
+            <div class="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 ${isNew ? 'bg-orange-100 dark:bg-orange-900/40' : 'bg-slate-100 dark:bg-slate-800'}" ${pic ? 'style="display:none"' : ''}>
+                <span class="material-symbols-outlined text-[18px] ${isNew ? 'text-orange-500' : 'text-slate-400'}" style="font-variation-settings:'FILL' 1">${meta.icon}</span>
+            </div>`;
+
+        // Action buttons for incoming requests
+        let actionHtml = '';
         if (n.type === 'request' && !n.read) {
-            actionText = `
-            <div class="mt-2 flex gap-2">
-                <button onclick="acceptRequest(${n.id}, '${n.fromId}')" class="px-3 py-1 bg-primary text-white text-xs font-bold rounded shadow hover:bg-primary/90">Accept</button>
-                <button onclick="rejectRequest(${n.id})" class="px-3 py-1 bg-surface-container-high text-on-surface text-xs font-bold rounded hover:bg-surface-variant">Reject</button>
-            </div>
-        `;
+            actionHtml = `
+                <div class="flex gap-2 mt-2.5">
+                    <button onclick="acceptRequest(${n.id}, '${n.fromId}')"
+                        class="flex-1 py-1.5 bg-gradient-to-r from-primary to-orange-500 hover:from-orange-600 hover:to-orange-400 text-white text-[12px] font-bold rounded-xl shadow-sm active:scale-95 transition-all flex items-center justify-center gap-1">
+                        <span class="material-symbols-outlined text-[14px]">person_check</span> Accept
+                    </button>
+                    <button onclick="rejectRequest(${n.id})"
+                        class="flex-1 py-1.5 bg-slate-100 dark:bg-slate-700 hover:bg-red-50 dark:hover:bg-red-900/20 hover:text-red-600 text-slate-500 dark:text-slate-400 text-[12px] font-bold rounded-xl active:scale-95 transition-all flex items-center justify-center gap-1">
+                        <span class="material-symbols-outlined text-[14px]">close</span> Decline
+                    </button>
+                </div>`;
         }
+
+        // "Accepted" system notification gets a special look
+        const isAccepted = n.subtype === 'accepted';
+        const wrapperClass = isNew
+            ? 'notif-item-unread'
+            : 'hover:bg-slate-50 dark:hover:bg-slate-800/60';
+
         return `
-        <div class="p-3 border-b border-surface-container-highest hover:bg-surface-container-high transition-colors ${bg}">
-            <p class="text-sm font-medium leading-tight">${n.text}</p>
-            ${actionText}
-        </div>
-    `;
+        <div class="relative px-4 py-3.5 border-b border-slate-100/80 dark:border-slate-700/40 transition-colors cursor-pointer ${wrapperClass}"
+             onclick="markNotifRead(${n.id})">
+            <div class="flex gap-3 items-start">
+                <div class="relative flex-shrink-0">
+                    ${avatarHtml}${iconFallback}
+                    <!-- Type dot -->
+                    <span class="absolute -bottom-0.5 -right-0.5 w-3.5 h-3.5 rounded-full border-2 border-white dark:border-slate-900 shadow-sm ${isAccepted ? 'notif-dot-system' : meta.dot}"></span>
+                </div>
+                <div class="flex-1 min-w-0">
+                    <p class="text-[13px] ${isNew ? 'font-semibold text-slate-800 dark:text-slate-100' : 'font-medium text-slate-600 dark:text-slate-400'} leading-snug">${n.text}</p>
+                    <p class="text-[11px] ${isNew ? 'text-orange-500 font-bold' : 'text-slate-400 dark:text-slate-500'} mt-1">${ts}</p>
+                    ${actionHtml}
+                </div>
+                ${isNew ? `<span class="flex-shrink-0 w-2 h-2 rounded-full bg-orange-500 shadow-sm shadow-orange-300 mt-1.5"></span>` : ''}
+            </div>
+        </div>`;
     }).join('');
+}
+
+/* ── Individual actions ─────────────────────────────── */
+function markNotifRead(notifId) {
+    const notif = state.notifications.find(n => n.id === notifId);
+    if (notif) notif.read = true;
+    updateNotificationsBadge();
+    renderNotifications();
 }
 
 function acceptRequest(notifId, userId) {
     const notif = state.notifications.find(n => n.id === notifId);
     if (notif) notif.read = true;
-    if (!state.friends.includes(userId)) {
-        state.friends.push(userId);
-    }
+    if (!state.friends.includes(userId)) state.friends.push(userId);
+    state.friendRequests = state.friendRequests.filter(id => id !== userId);
     updateUI();
     updateNotificationsBadge();
     renderNotifications();
+    if (activeTab === 'friends') renderFriendsView();
 }
 
 function rejectRequest(notifId) {
@@ -1494,6 +1826,7 @@ function markAllRead() {
     updateNotificationsBadge();
     renderNotifications();
 }
+
 
 // --- Profile Editing ---
 function toggleEditProfile() {
@@ -1839,10 +2172,11 @@ function renderPeopleYouMayKnow() {
 }
 
 function handlePymkAdd(userId, btn) {
-    sendFriendRequest(userId, null);
-    btn.innerHTML = '<span class="material-symbols-outlined text-sm">check_circle</span> Requested';
+    btn.innerHTML = '<span class="material-symbols-outlined text-sm">schedule</span> Requested';
     btn.disabled = true;
     btn.classList.add('opacity-60', 'cursor-not-allowed');
+    // Schedule mock auto-accept
+    _scheduleMockAccept(userId);
     // Refresh after a short delay so friended users disappear from PYMK
     setTimeout(() => {
         renderPeopleYouMayKnow();
@@ -1855,28 +2189,27 @@ function handlePymkAdd(userId, btn) {
 function switchFriendsTab(tab) {
     activeFriendsTab = tab;
 
-    // Update tab styling
-    document.getElementById('friends-tab-all').className = tab === 'all'
-        ? "px-4 py-2 bg-primary text-white rounded-full text-sm font-bold shadow-sm transition-all active:scale-95"
-        : "px-4 py-2 bg-surface-container-high text-on-surface rounded-full text-sm font-bold hover:bg-surface-container-highest transition-all active:scale-95";
+    const activeClass = "px-4 py-2 bg-primary text-white rounded-full text-sm font-bold shadow-sm transition-all active:scale-95";
+    const inactiveClass = "px-4 py-2 bg-surface-container-high text-on-surface rounded-full text-sm font-bold hover:bg-surface-container-highest transition-all active:scale-95";
+    const inactiveClassFlex = "px-4 py-2 bg-surface-container-high text-on-surface rounded-full text-sm font-bold hover:bg-surface-container-highest transition-all active:scale-95 flex items-center gap-2";
 
-    document.getElementById('friends-tab-pymk').className = tab === 'pymk'
-        ? "px-4 py-2 bg-primary text-white rounded-full text-sm font-bold shadow-sm transition-all active:scale-95"
-        : "px-4 py-2 bg-surface-container-high text-on-surface rounded-full text-sm font-bold hover:bg-surface-container-highest transition-all active:scale-95";
+    document.getElementById('friends-tab-all').className = tab === 'all' ? activeClass : inactiveClass;
+    document.getElementById('friends-tab-requests').className = tab === 'requests' ? activeClass + ' flex items-center gap-2' : inactiveClassFlex;
+    document.getElementById('friends-tab-pymk').className = tab === 'pymk' ? activeClass : inactiveClass;
 
-    // Toggle panels
-    if (tab === 'all') {
-        document.getElementById('friends-panel-all').classList.remove('hidden');
-        document.getElementById('friends-panel-pymk').classList.add('hidden');
-    } else {
-        document.getElementById('friends-panel-all').classList.add('hidden');
-        document.getElementById('friends-panel-pymk').classList.remove('hidden');
-    }
+    document.getElementById('friends-panel-all').classList.toggle('hidden', tab !== 'all');
+    document.getElementById('friends-panel-requests').classList.toggle('hidden', tab !== 'requests');
+    document.getElementById('friends-panel-pymk').classList.toggle('hidden', tab !== 'pymk');
 
     renderFriendsView();
 }
 
 function renderFriendsView() {
+    // Always sync the requests badge
+    const reqCount = state.friendRequests.length;
+    const badge = document.getElementById('requests-badge');
+    if (badge) badge.textContent = reqCount;
+
     if (activeFriendsTab === 'all') {
         const friendsList = MOCK_USERS.filter(u => state.friends.includes(u.id));
         const grid = document.getElementById('friends-grid');
@@ -1897,14 +2230,16 @@ function renderFriendsView() {
                         <p class="text-[11px] text-slate-500 mb-4">${u.role === 'Student' ? u.role + ' · ' + u.dept + ' · Batch ' + u.batch : u.role + ' · ' + u.dept}</p>
                         <div class="mt-auto w-full flex gap-2">
                             <button onclick="openChat('${u.id}')" class="flex-1 bg-surface-container-high hover:bg-surface-container-highest text-on-surface py-1.5 rounded-lg text-xs font-bold transition-colors">Message</button>
-                            <button class="bg-surface-container-high hover:bg-red-100 hover:text-red-600 text-slate-500 w-8 flex items-center justify-center rounded-lg transition-colors"><span class="material-symbols-outlined text-[1rem]">person_remove</span></button>
+                            <button onclick="removeFriend('${u.id}', this)" class="bg-surface-container-high hover:bg-red-100 hover:text-red-600 text-slate-500 w-8 flex items-center justify-center rounded-lg transition-colors" title="Remove Friend"><span class="material-symbols-outlined text-[1rem]">person_remove</span></button>
                         </div>
                     </div>
                 </div>
             `).join('');
         }
+    } else if (activeFriendsTab === 'requests') {
+        renderFriendRequestsPanel();
     } else {
-        const recommendations = MOCK_USERS.filter(u => !state.friends.includes(u.id) && u.id !== state.user.id);
+        const recommendations = MOCK_USERS.filter(u => !state.friends.includes(u.id) && u.id !== state.user.id && !state.friendRequests.includes(u.id));
         const grid = document.getElementById('pymk-grid');
 
         grid.innerHTML = recommendations.map(u => `
@@ -1922,6 +2257,150 @@ function renderFriendsView() {
             </div>
         `).join('');
     }
+}
+
+function renderFriendRequestsPanel() {
+    const grid = document.getElementById('requests-grid');
+    const empty = document.getElementById('requests-empty');
+    const subtitle = document.getElementById('requests-subtitle');
+    const acceptAllBtn = document.getElementById('accept-all-btn');
+
+    const requesters = MOCK_USERS.filter(u => state.friendRequests.includes(u.id));
+    const count = requesters.length;
+
+    subtitle.textContent = count > 0 ? `${count} pending request${count > 1 ? 's' : ''}` : 'No pending requests';
+
+    if (count === 0) {
+        grid.innerHTML = '';
+        empty.classList.remove('hidden');
+        acceptAllBtn.classList.add('hidden');
+        return;
+    }
+
+    empty.classList.add('hidden');
+    acceptAllBtn.classList.remove('hidden');
+
+    // Mutual friends count (mock: random 1-8)
+    const getMutuals = (id) => ((parseInt(id) * 3) % 9) + 1;
+
+    grid.innerHTML = requesters.map(u => `
+        <div id="req-card-${u.id}" class="bg-white dark:bg-slate-800 rounded-2xl overflow-hidden shadow-sm border border-slate-100 dark:border-slate-700/60 hover:shadow-md transition-all group flex flex-col">
+            <!-- Cover banner -->
+            <div class="h-20 bg-gradient-to-r from-orange-400 via-rose-400 to-pink-400 relative">
+                <div class="absolute inset-0 opacity-30" style="background-image: radial-gradient(rgba(255,255,255,0.4) 1px, transparent 1px); background-size: 14px 14px;"></div>
+                <img src="${u.pic}" alt="${u.name}"
+                    class="w-20 h-20 rounded-full object-cover border-4 border-white dark:border-slate-800 absolute -bottom-10 left-1/2 -translate-x-1/2 shadow-lg group-hover:scale-105 transition-transform cursor-pointer"
+                    onclick="openPublicProfile('${u.id}')">
+            </div>
+            <!-- Info -->
+            <div class="pt-12 pb-5 px-5 flex-1 flex flex-col items-center text-center">
+                <h3 class="font-extrabold text-[15px] text-slate-800 dark:text-slate-100 cursor-pointer hover:text-primary transition-colors" onclick="openPublicProfile('${u.id}')">${u.name}</h3>
+                <p class="text-[12px] text-slate-500 dark:text-slate-400 mt-0.5">
+                    ${u.role === 'Student' ? u.dept + ' · Batch ' + u.batch : u.role + ' · ' + u.dept}
+                </p>
+                <!-- Mutual friends -->
+                <div class="flex items-center gap-1.5 mt-2 text-[11px] text-slate-500 dark:text-slate-400">
+                    <span class="material-symbols-outlined text-[14px] text-orange-400">group</span>
+                    <span>${getMutuals(u.id)} mutual friends</span>
+                </div>
+                <!-- Action buttons -->
+                <div class="mt-4 w-full flex flex-col gap-2">
+                    <button onclick="acceptFriendRequest('${u.id}')" id="accept-btn-${u.id}"
+                        class="w-full bg-gradient-to-r from-primary to-orange-500 hover:from-orange-600 hover:to-orange-400 text-white py-2.5 rounded-xl font-bold text-sm shadow-md shadow-orange-200 dark:shadow-orange-900/30 hover:shadow-orange-300/50 active:scale-95 transition-all flex items-center justify-center gap-2">
+                        <span class="material-symbols-outlined text-[17px]">person_check</span> Accept
+                    </button>
+                    <button onclick="rejectFriendRequest('${u.id}')" id="reject-btn-${u.id}"
+                        class="w-full bg-slate-100 dark:bg-slate-700 hover:bg-rose-50 dark:hover:bg-rose-900/30 text-slate-600 dark:text-slate-300 hover:text-rose-600 dark:hover:text-rose-400 py-2.5 rounded-xl font-bold text-sm active:scale-95 transition-all flex items-center justify-center gap-2 border border-slate-200 dark:border-slate-600 hover:border-rose-200">
+                        <span class="material-symbols-outlined text-[17px]">person_remove</span> Decline
+                    </button>
+                    <button onclick="openPublicProfile('${u.id}')"
+                        class="w-full py-2 rounded-xl font-semibold text-[12px] text-slate-400 hover:text-primary transition-colors flex items-center justify-center gap-1">
+                        <span class="material-symbols-outlined text-[14px]">open_in_new</span> View Profile
+                    </button>
+                </div>
+            </div>
+        </div>
+    `).join('');
+}
+
+function acceptFriendRequest(userId) {
+    const card = document.getElementById(`req-card-${userId}`);
+    const acceptBtn = document.getElementById(`accept-btn-${userId}`);
+    const rejectBtn = document.getElementById(`reject-btn-${userId}`);
+
+    // Button loading state
+    acceptBtn.disabled = true;
+    acceptBtn.innerHTML = `<span class="material-symbols-outlined text-[17px] animate-spin">progress_activity</span> Accepting...`;
+
+    setTimeout(() => {
+        // Move from requests → friends
+        state.friendRequests = state.friendRequests.filter(id => id !== userId);
+        state.friends.push(userId);
+
+        // Animate card out
+        card.style.transition = 'all 0.4s ease';
+        card.style.transform = 'scale(0.85)';
+        card.style.opacity = '0';
+        setTimeout(() => {
+            card.remove();
+            renderFriendRequestsPanel();
+            showToast(`✅ Friend request accepted! You are now connected.`);
+        }, 400);
+    }, 600);
+}
+
+function rejectFriendRequest(userId) {
+    const card = document.getElementById(`req-card-${userId}`);
+    const rejectBtn = document.getElementById(`reject-btn-${userId}`);
+
+    rejectBtn.disabled = true;
+    rejectBtn.innerHTML = `<span class="material-symbols-outlined text-[17px]">close</span> Declining...`;
+
+    setTimeout(() => {
+        state.friendRequests = state.friendRequests.filter(id => id !== userId);
+
+        card.style.transition = 'all 0.35s ease';
+        card.style.transform = 'scale(0.85)';
+        card.style.opacity = '0';
+        setTimeout(() => {
+            card.remove();
+            renderFriendRequestsPanel();
+            showToast(`Request declined.`);
+        }, 350);
+    }, 500);
+}
+
+function acceptAllRequests() {
+    const ids = [...state.friendRequests];
+    if (ids.length === 0) return;
+
+    // Accept all at once
+    ids.forEach(id => {
+        state.friends.push(id);
+    });
+    state.friendRequests = [];
+
+    // Animate all cards out
+    ids.forEach(id => {
+        const card = document.getElementById(`req-card-${id}`);
+        if (card) {
+            card.style.transition = 'all 0.35s ease';
+            card.style.transform = 'scale(0.85)';
+            card.style.opacity = '0';
+        }
+    });
+
+    setTimeout(() => {
+        renderFriendRequestsPanel();
+        showToast(`🎉 You accepted ${ids.length} friend request${ids.length > 1 ? 's' : ''}!`);
+    }, 400);
+}
+
+function removeFriend(userId, btn) {
+    if (!confirm('Remove this friend?')) return;
+    state.friends = state.friends.filter(id => id !== userId);
+    renderFriendsView();
+    showToast('Friend removed.');
 }
 
 // --- Communities View & Profile ---
