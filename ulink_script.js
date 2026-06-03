@@ -2853,8 +2853,7 @@ function toggleDarkMode(isDark) {
 // Initialize theme on load
 (function initTheme() {
     const savedTheme = localStorage.getItem('theme');
-    const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-    const isDark = savedTheme === 'dark' || (!savedTheme && prefersDark);
+    const isDark = savedTheme === 'dark';
 
     if (isDark) {
         document.documentElement.classList.add('dark');
