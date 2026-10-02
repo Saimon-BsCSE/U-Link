@@ -1,0 +1,143 @@
+# =============================================================================
+#  U-Link - Apache configuration for the document root
+# =============================================================================
+#  Requirements: mod_rewrite (the SPA fallback below).
+#  Everything here is optional: the application also runs on PHP's built-in
+#  server (./scripts/dev.sh), which ignores this file entirely.
+# =============================================================================
+
+Options -Indexes -MultiViews
+DirectoryIndex index.html
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # ---------------------------------------------------------------------
+    # 1. Never serve the application's own files
+    # ---------------------------------------------------------------------
+    # .env holds the database password; config/, scripts/ and .dev/ hold the
+    # schema, the installer and a private database server. None of them are
+    # part of the web app, so they get a 403 rather than being rewritten into
+    # index.html (which would still leak whether they exist).
+    RewriteRule ^(?:config|scripts|logs|\.dev)/ - [F,L]
+    RewriteRule ^(?:\.env|\.git)  - [F,L]
+    RewriteRule ^router\.php$    - [F,L]
+
+    # Compensating controls for hosts that map the document root elsewhere or
+    # ignore the rules above. mod_authz_core is Apache 2.4; on 2.2 the
+    # RewriteRule above is the protection and this block is skipped rather than
+    # turning every response into a 500.
+    <IfModule mod_authz_core.c>
+        <FilesMatch "^\.(?:env|htaccess|htpasswd|git|dev-)">
+            Require all denied
+        </FilesMatch>
+    </IfModule>
+
+    # ---------------------------------------------------------------------
+    # 2. Development endpoints are off by default
+    # ---------------------------------------------------------------------
+    # /api/test/   - health check and database introspection
+    # /api/init/   - the HTTP installer
+    # Both are reachable from the command line instead:
+    #   ./scripts/dev.sh php config/install.php --seed
+    #   ./scripts/dev.sh php api/test/health-check.php
+    #
+    # To expose them over HTTP, create the marker file (handy for a staging
+    # box where you want an uptime check):
+    #   touch .dev-endpoints-enabled
+    RewriteCond %{DOCUMENT_ROOT}/.dev-endpoints-enabled !-f
+    RewriteRule ^api/(?:test|init)/ - [F,L]
+
+    # ---------------------------------------------------------------------
+    # 3. Single page application fallback
+    # ---------------------------------------------------------------------
+    # Real files and directories win; /api/* is left alone so a missing
+    # endpoint answers 404 as JSON instead of returning the HTML shell.
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_URI} !^/(?:api|uploads)/
+    RewriteRule ^ index.html [L]
+</IfModule>
+
+# =============================================================================
+#  Headers
+# =============================================================================
+# mod_headers is not always compiled in, and an unguarded `Header` directive
+# makes Apache answer 500 for the whole site, so everything is conditional.
+<IfModule mod_headers.c>
+    Header always set X-Content-Type-Options "nosniff"
+    Header always set X-Frame-Options "SAMEORIGIN"
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+    Header always set Cross-Origin-Opener-Policy "same-origin"
+
+    Permissions-Policy "geolocation=(), microphone=(), camera=(), payment=(), usb=()"
+
+    # Uploads are user supplied. Serve them inert: never sniffed as script,
+    # never framed, and never treated as a same-origin document.
+    <FilesMatch "\.(?:jpe?g|png|gif|webp|svg)$">
+        Header always set X-Content-Type-Options "nosniff"
+        Header always set Content-Security-Policy "default-src 'none'; sandbox"
+        Header always set Cross-Origin-Resource-Policy "same-origin"
+    </FilesMatch>
+
+    # HSTS only over TLS. config/config.php sends the same header on API
+    # responses when ULINK_HSTS=1; the browser treats it as host wide, so one
+    # response is enough - this just covers the statically served shell.
+    Header always set Strict-Transport-Security "max-age=31536000" "expr=%{HTTPS} == 'on'"
+</IfModule>
+
+# =============================================================================
+#  Compression and caching
+# =============================================================================
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/css text/javascript \
+        application/javascript application/json image/svg+xml
+</IfModule>
+
+# The shell must never be cached, or a deploy looks like it did not happen.
+<FilesMatch "index\.html$">
+    <IfModule mod_headers.c>
+        Header always set Cache-Control "no-cache, must-revalidate"
+    </IfModule>
+</FilesMatch>
+
+# Fingerprinted uploads are immutable; everything else is revalidated.
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresByType image/jpeg  "access plus 30 days"
+    ExpiresByType image/png   "access plus 30 days"
+    ExpiresByType image/gif   "access plus 30 days"
+    ExpiresByType image/webp  "access plus 30 days"
+    ExpiresByType text/css    "access plus 1 hour"
+    ExpiresByType application/javascript "access plus 1 hour"
+</IfModule>
+
+# =============================================================================
+#  PHP
+# =============================================================================
+<IfModule mod_php.c>
+    php_flag display_errors Off
+    php_flag log_errors On
+    php_value upload_max_filesize 8M
+    php_value post_max_size 10M
+    php_value memory_limit 128M
+
+    # Errors belong in the log, never in a JSON response body.
+    php_flag display_startup_errors Off
+</IfModule>
+
+# =============================================================================
+#  Content-Security-Policy
+# =============================================================================
+#  Deliberately left disabled. The app loads its CSS and the icon font from
+#  cdn.tailwindcss.com and fonts.gstatic.com, so the policy has to name every
+#  one of them and any drift silently breaks the styling. Verify it against
+#  a real deployment before switching it on:
+#
+#    Header always set Content-Security-Policy "default-src 'self'; \
+#      script-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com; \
+#      style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.tailwindcss.com; \
+#      font-src 'self' data: https://fonts.gstatic.com; \
+#      img-src 'self' data: blob: https:; \
+#      connect-src 'self' https://cdn.tailwindcss.com; \
+#      frame-ancestors 'self'; base-uri 'self'; form-action 'self'"

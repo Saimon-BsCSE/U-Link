@@ -1,0 +1,22 @@
+# =============================================================================
+#  uploads/messages/ - private message attachments
+# =============================================================================
+#  Nothing in this directory is ever fetched directly. Attachments are streamed
+#  by api/messages/attachment.php, which checks that the requester is one of the
+#  two people in the thread before it reads a byte.
+#
+#  The parent uploads/.htaccess already denies every non-image extension, but a
+#  picture would still be served here to anyone holding the URL - and a URL that
+#  leaks once stays leaked. Denying the whole directory closes that for the
+#  image case too.
+# =============================================================================
+
+Options -Indexes -ExecCGI
+
+<IfModule mod_authz_core.c>
+    Require all denied
+</IfModule>
+<IfModule !mod_authz_core.c>
+    Order allow,deny
+    Deny from all
+</IfModule>

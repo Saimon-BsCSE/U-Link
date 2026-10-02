@@ -1,0 +1,643 @@
+/*
+   U-Link - custom CSS (ulink.css)
+
+   Two things live here:
+
+   1. The design tokens. index.html maps every custom Tailwind colour to
+      rgb(var(--ulink-<name>) / <alpha-value>) so that all ~700 uses of
+      bg-surface-container-high, text-on-surface-variant, primary/10 and so on
+      pick up the value for the active theme without a single extra class. The
+      palette below is a Material 3 scheme; the dark block is the same ramp with
+      the surface and "on-" roles inverted.
+
+   2. Hand-written rules that Tailwind utilities cannot express.
+
+   The previous version hard-coded the light palette directly into the Tailwind
+   config. Every token therefore stayed at its light value in dark mode, so the
+   page kept its #f8f9fa background while the text switched to #f1f5f9 - washed
+   out and unreadable rather than merely untidy.
+ */
+
+/* ── Design tokens ─────────────────────────────────────────────── */
+
+:root {
+    --ulink-error-container: 255 218 214;
+    --ulink-secondary-container: 218 225 227;
+    --ulink-on-surface-variant: 88 66 56;
+    --ulink-on-tertiary-fixed-variant: 0 75 112;
+    --ulink-error: 186 26 26;
+    --ulink-on-tertiary-fixed: 0 30 47;
+    --ulink-inverse-primary: 255 182 148;
+    --ulink-on-primary-fixed: 53 16 0;
+    --ulink-on-primary-fixed-variant: 123 47 0;
+    --ulink-background: 248 249 250;
+    --ulink-surface-tint: 161 64 0;
+    --ulink-on-secondary-fixed: 22 29 31;
+    --ulink-tertiary-container: 0 158 228;
+    --ulink-primary-fixed-dim: 255 182 148;
+    --ulink-tertiary-fixed: 202 230 255;
+    --ulink-outline-variant: 224 192 178;
+    --ulink-on-tertiary-container: 0 49 74;
+    --ulink-inverse-on-surface: 240 241 242;
+    --ulink-secondary-fixed: 221 228 230;
+    --ulink-primary-fixed: 255 219 204;
+    --ulink-on-secondary-fixed-variant: 65 72 74;
+    --ulink-on-secondary: 255 255 255;
+    --ulink-on-primary: 255 255 255;
+    --ulink-on-error: 255 255 255;
+    --ulink-primary-container: 243 109 33;
+    --ulink-on-secondary-container: 93 100 102;
+    --ulink-tertiary-fixed-dim: 140 205 255;
+    --ulink-surface-container: 237 238 239;
+    --ulink-inverse-surface: 46 49 50;
+    --ulink-secondary: 88 96 98;
+    --ulink-primary: 161 64 0;
+    --ulink-surface-container-low: 243 244 245;
+    --ulink-surface-container-high: 231 232 233;
+    --ulink-on-background: 25 28 29;
+    --ulink-on-tertiary: 255 255 255;
+    --ulink-surface-container-lowest: 255 255 255;
+    --ulink-on-primary-container: 83 29 0;
+    --ulink-surface-container-highest: 225 227 228;
+    --ulink-secondary-fixed-dim: 193 200 202;
+    --ulink-outline: 140 113 102;
+    --ulink-surface-variant: 225 227 228;
+    --ulink-surface-bright: 248 249 250;
+    --ulink-tertiary: 0 100 147;
+    --ulink-surface: 248 249 250;
+    --ulink-surface-dim: 217 218 219;
+    --ulink-on-surface: 25 28 29;
+    --ulink-on-error-container: 147 0 10;
+    /* Call-to-action gradient. Both stops are fixed because a gradient reports a
+       transparent background-color to getComputedStyle, so nothing downstream -
+       the linter, an audit script, a browser extension - can see the fill.
+       White on #a14000 is 6.7:1 and on #c2410c 5.2:1. */
+    --ulink-cta-from: 161 64 0;
+    --ulink-cta-to: 194 65 12;
+    --ulink-on-cta: 255 255 255;
+}
+
+/* Applied to <html> by toggleDarkMode() in ulink_script.js. */
+.dark {
+    --ulink-primary: 255 182 140;
+    --ulink-on-primary: 78 38 0;
+    --ulink-primary-container: 109 52 19;
+    --ulink-on-primary-container: 255 219 204;
+    --ulink-inverse-primary: 161 64 0;
+    --ulink-secondary: 195 199 201;
+    --ulink-on-secondary: 45 49 51;
+    --ulink-secondary-container: 67 71 74;
+    --ulink-on-secondary-container: 223 227 229;
+    --ulink-tertiary: 140 205 255;
+    --ulink-on-tertiary: 0 53 73;
+    --ulink-tertiary-container: 0 75 112;
+    --ulink-on-tertiary-container: 202 230 255;
+    --ulink-error: 255 180 171;
+    --ulink-on-error: 105 0 5;
+    --ulink-error-container: 147 0 10;
+    --ulink-on-error-container: 255 218 214;
+    --ulink-background: 11 15 20;
+    --ulink-on-background: 226 232 240;
+    --ulink-surface: 11 15 20;
+    --ulink-surface-dim: 11 15 20;
+    --ulink-surface-bright: 52 56 61;
+    --ulink-surface-container-lowest: 6 10 14;
+    --ulink-surface-container-low: 17 22 28;
+    --ulink-surface-container: 21 26 33;
+    --ulink-surface-container-high: 30 36 44;
+    --ulink-surface-container-highest: 40 46 55;
+    --ulink-on-surface: 226 232 240;
+    --ulink-on-surface-variant: 213 194 183;
+    --ulink-surface-variant: 65 71 77;
+    --ulink-outline: 158 142 130;
+    --ulink-outline-variant: 83 67 60;
+    --ulink-inverse-surface: 226 232 240;
+    --ulink-inverse-on-surface: 46 49 50;
+    --ulink-surface-tint: 255 182 140;
+    --ulink-primary-fixed: 109 52 19;
+    --ulink-primary-fixed-dim: 161 64 0;
+    --ulink-on-primary-fixed: 255 219 204;
+    --ulink-on-primary-fixed-variant: 255 182 140;
+    --ulink-secondary-fixed: 67 71 74;
+    --ulink-secondary-fixed-dim: 67 71 74;
+    --ulink-on-secondary-fixed: 226 232 240;
+    --ulink-on-secondary-fixed-variant: 195 199 201;
+    --ulink-tertiary-fixed: 0 75 112;
+    --ulink-tertiary-fixed-dim: 0 100 147;
+    --ulink-on-tertiary-fixed: 202 230 255;
+    --ulink-on-tertiary-fixed-variant: 140 205 255;
+    /* Material 3 inverts the primary role in dark mode: the fill becomes a light
+       tone so it can carry a near-black label. Pairing white text with this
+       scheme's #ffb68c primary would be 1.9:1, so the label flips with it. */
+    --ulink-cta-from: 255 182 140;
+    --ulink-cta-to: 255 138 76;
+    --ulink-on-cta: 61 26 0;
+}
+
+/* ── Base ─────────────────────────────────────────────────── */
+body {
+    font-family: 'Inter', sans-serif;
+}
+
+/* ── Navigation ───────────────────────────────────────────── */
+.glass-nav {
+    backdrop-filter: blur(20px);
+}
+
+/* ── Material Icons ───────────────────────────────────────── */
+.material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+
+/* Filled variant – used on the active "explore" icon and the
+   "add" icon inside the Create Post button */
+.icon-filled {
+    font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+
+/* ── Scrollbar ────────────────────────────────────────────── */
+.hide-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+
+.hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+/* ── Auth page ────────────────────────────────────────────── */
+.auth-image-overlay {
+    background: linear-gradient(to top, rgb(var(--ulink-primary) / 0.8) 0%, transparent 60%);
+}
+
+/* Brand headline on the auth left panel */
+.brand-title-color {
+    color: #f33404;
+}
+
+/* ── Logo sizing ──────────────────────────────────────────── */
+/* Login form logo */
+.logo-login {
+    max-height: 120px;
+    width: auto;
+}
+
+/* Register form logo */
+.logo-register {
+    max-height: 100px;
+    width: auto;
+}
+
+/* Top navigation bar logo – larger variant */
+.logo-nav-lg {
+    max-width: 140px;
+    height: 3.5rem;
+    /* h-14 */
+}
+
+/* Sidebar logo (kept for reference) */
+.logo-sidebar {
+    max-width: 120px;
+}
+
+/* ── Friend cards on the Friends page ─────────────────────── */
+.friend-card {
+    background: rgb(var(--ulink-surface-container-lowest));
+    border-radius: 1rem;
+    overflow: hidden;
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.07);
+    transition: transform 0.2s, box-shadow 0.2s;
+    cursor: default;
+}
+
+.friend-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgb(var(--ulink-primary) / 0.18);
+}
+
+
+
+
+/* ── Right Sidebar ─────────────────────────────────────────── */
+
+/* Card wrapper used in every right-sidebar section */
+.right-sidebar-card {
+    background: rgb(var(--ulink-surface-container-lowest));
+    border-radius: 1rem;
+    padding: 1rem;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+}
+
+
+
+/* Contact row (active users) */
+.contact-row {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    padding: 0.45rem 0.5rem;
+    border-radius: 0.75rem;
+    cursor: pointer;
+    transition: background 0.15s;
+    position: relative;
+}
+
+.contact-row:hover {
+    background: rgb(var(--ulink-surface-container-high));
+}
+
+/* Green "online" dot */
+.contact-online-dot {
+    position: absolute;
+    bottom: 6px;
+    left: 34px;
+    width: 10px;
+    height: 10px;
+    background: #22c55e;
+    border-radius: 50%;
+    border: 2px solid rgb(var(--ulink-surface-container-lowest));
+    flex-shrink: 0;
+}
+
+/* Event card row */
+.right-event-card {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.5rem 0.5rem;
+    border-radius: 0.75rem;
+    cursor: pointer;
+    transition: background 0.15s;
+}
+
+.right-event-card:hover {
+    background: rgb(var(--ulink-surface-container-high));
+}
+
+/* Calendar date badge inside event card */
+.right-event-date {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 2.8rem;
+    height: 2.8rem;
+    background: rgb(var(--ulink-primary) / 0.12);
+    border-radius: 0.6rem;
+    flex-shrink: 0;
+    border: 1px solid rgb(var(--ulink-primary) / 0.28);
+}
+
+/* Trending item row */
+.right-trending-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.4rem 0.5rem;
+    border-radius: 0.75rem;
+    cursor: pointer;
+    transition: background 0.15s;
+}
+
+.right-trending-item:hover {
+    background: rgb(var(--ulink-surface-container-high));
+}
+
+/* Rank badge */
+.right-trending-rank {
+    width: 1.5rem;
+    height: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgb(var(--ulink-primary) / 0.14);
+    color: rgb(var(--ulink-primary));
+    border-radius: 50%;
+    font-size: 0.65rem;
+    font-weight: 800;
+    flex-shrink: 0;
+}
+
+/* People-you-may-know single suggestion */
+.pymk-card {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    padding: 0.4rem 0.4rem;
+    border-radius: 0.75rem;
+    transition: background 0.15s;
+    cursor: default;
+}
+
+.pymk-card:hover {
+    background: rgb(var(--ulink-surface-container-high));
+}
+
+/* ── Like Animation ────────────────────────────────────────── */
+@keyframes heartBeat {
+    0% {
+        transform: scale(1);
+    }
+
+    15% {
+        transform: scale(1.3);
+    }
+
+    30% {
+        transform: scale(1);
+    }
+
+    45% {
+        transform: scale(1.3);
+    }
+
+    60% {
+        transform: scale(1);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+.like-animation {
+    animation: heartBeat 0.5s ease-in-out;
+}
+
+/* ── Blur Blob Animations ────────────────────────────────────────── */
+@keyframes blob {
+    0% {
+        transform: translate(0px, 0px) scale(1);
+    }
+
+    33% {
+        transform: translate(30px, -50px) scale(1.1);
+    }
+
+    66% {
+        transform: translate(-20px, 20px) scale(0.9);
+    }
+
+    100% {
+        transform: translate(0px, 0px) scale(1);
+    }
+}
+
+.animate-blob {
+    animation: blob 8s infinite alternate cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.animation-delay-2000 {
+    animation-delay: 2s;
+}
+
+.animation-delay-4000 {
+    animation-delay: 4s;
+}
+
+/* ── Notification Panel ───────────────────────────────── */
+#notifications-panel {
+    animation: notif-slide-in 0.22s cubic-bezier(0.34, 1.56, 0.64, 1);
+    transform-origin: top right;
+}
+
+@keyframes notif-slide-in {
+    from {
+        opacity: 0;
+        transform: scale(0.92) translateY(-6px);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+.notif-item-unread {
+    background: linear-gradient(135deg, rgb(var(--ulink-primary) / 0.14) 0%, transparent 100%);
+    position: relative;
+}
+
+.notif-item-unread::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 3px;
+    height: 60%;
+    background: linear-gradient(to bottom, #f97316, #e11d48);
+    border-radius: 0 2px 2px 0;
+}
+
+/* ── Toast Notifications ──────────────────────────────── */
+.toast-notif {
+    pointer-events: all;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    background: rgb(var(--ulink-surface-container-high));
+    border-radius: 16px;
+    padding: 14px 16px;
+    box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.35), 0 0 0 1px rgb(var(--ulink-outline) / 0.25);
+    min-width: 310px;
+    max-width: 360px;
+    border-left: 4px solid #f97316;
+    animation: toast-in 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    position: relative;
+    overflow: hidden;
+}
+
+
+
+.toast-notif::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(to right, #f97316, #e11d48);
+    animation: toast-progress 4.5s linear forwards;
+    transform-origin: left;
+}
+
+.toast-notif.toast-accepted {
+    border-left-color: #22c55e;
+}
+
+.toast-notif.toast-accepted::after {
+    background: linear-gradient(to right, #22c55e, #16a34a);
+    animation: toast-progress 4.5s linear forwards;
+}
+
+.toast-dismiss {
+    animation: toast-out 0.32s ease-in forwards;
+}
+
+@keyframes toast-in {
+    from {
+        opacity: 0;
+        transform: translateX(120%) scale(0.85);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0) scale(1);
+    }
+}
+
+@keyframes toast-out {
+    from {
+        opacity: 1;
+        transform: translateX(0) scale(1);
+        max-height: 120px;
+    }
+
+    to {
+        opacity: 0;
+        transform: translateX(110%) scale(0.85);
+        max-height: 0;
+        padding: 0;
+        margin: 0;
+    }
+}
+
+@keyframes toast-progress {
+    from {
+        transform: scaleX(1);
+    }
+
+    to {
+        transform: scaleX(0);
+    }
+}
+
+/* Notif tab active state */
+.notif-tab-active {
+    /* Same cta tokens as the buttons: the old fixed #f97316 -> #e11d48 ramp put
+       white text at 2.8:1 on a 12px bold label. */
+    background: linear-gradient(135deg,
+        rgb(var(--ulink-cta-from)), rgb(var(--ulink-cta-to))) !important;
+    color: rgb(var(--ulink-on-cta)) !important;
+    box-shadow: 0 3px 10px -2px rgb(var(--ulink-cta-to) / 0.45);
+}
+
+/* Notif icon dots per type */
+.notif-dot-like {
+    background: #ec4899;
+}
+
+.notif-dot-request {
+    background: #f97316;
+}
+
+.notif-dot-group {
+    background: #8b5cf6;
+}
+
+.notif-dot-event {
+    background: #0ea5e9;
+}
+
+.notif-dot-comment {
+    background: #10b981;
+}
+
+.notif-dot-mention {
+    background: #f59e0b;
+}
+
+.notif-dot-system {
+    background: #22c55e;
+}
+/* ── Dark-mode hardening ──────────────────────────────────────── */
+/* Tell the browser to render native controls (select popups, scrollbars,
+   autofill) in the matching palette. Without this a dark page still opens a
+   white <select> menu and the dark text inside it can wash out. */
+:root {
+    color-scheme: light;
+}
+
+.dark {
+    color-scheme: dark;
+}
+
+/* ── Preferences applied to <html> by ULinkSettings.apply() ───── */
+
+/* Compact feed: tighten the vertical rhythm of the post lists. The containers
+   use a `gap-6` utility, so the override has to win with !important - which is
+   acceptable for a preference the user explicitly chose to override the
+   default spacing. */
+.compact-feed #feed-container,
+.compact-feed #my-posts-container {
+    gap: 0.75rem !important;
+}
+
+.compact-feed #feed-container > *,
+.compact-feed #my-posts-container > * {
+    padding-top: 1rem !important;
+    padding-bottom: 1rem !important;
+}
+
+/* Reduce motion: honour the preference chosen in Settings without relying on
+   the OS-level media query, which many people never configure. */
+.reduce-motion *,
+.reduce-motion *::before,
+.reduce-motion *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+}
+
+/* Also respect the operating system setting for people who never open Settings. */
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.001ms !important;
+    }
+}
+
+/* ── Infinite feed ─────────────────────────────────────────────── */
+
+/* Spinner shown while the next page of posts is loading. */
+.ulink-spinner {
+    display: inline-block;
+    width: 1.75rem;
+    height: 1.75rem;
+    border-radius: 9999px;
+    border: 3px solid rgb(var(--ulink-primary) / 0.2);
+    border-top-color: rgb(var(--ulink-primary));
+    animation: ulink-spin 0.7s linear infinite;
+}
+
+@keyframes ulink-spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Divider inserted when the feed recycles already-loaded posts. */
+.feed-cycle-divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.6rem 1rem;
+    margin: 0.25rem 0;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: rgb(var(--ulink-on-surface-variant));
+    border-top: 1px dashed rgb(var(--ulink-outline-variant) / 0.7);
+    border-bottom: 1px dashed rgb(var(--ulink-outline-variant) / 0.7);
+}
+
+/* Keep post media stable while it loads so the feed does not jump. */
+.post-media img {
+    aspect-ratio: 16 / 10;
+}

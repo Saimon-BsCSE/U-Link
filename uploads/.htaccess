@@ -1,0 +1,59 @@
+# =============================================================================
+#  uploads/ - user supplied files
+# =============================================================================
+#  Every file here was written by the application from bytes it decoded with
+#  getimagesize(), stored under a content hash and given an extension derived
+#  from the actual image type. This file is the second lock: even if a future
+#  upload bug lets something through, nothing under uploads/ may be executed,
+#  served as markup, or treated as a script.
+# =============================================================================
+
+Options -Indexes -ExecCGI
+
+# Turn every handler off for this directory. A .htaccess that parses as
+# anything but plain text is enough to get code execution, so the handlers are
+# removed as well as the extensions blocked below.
+<IfModule mod_mime.c>
+    RemoveHandler .php .phtml .php3 .php4 .php5 .php7 .php8 .phar .cgi .pl .py .sh .shtml
+    RemoveType .php .phtml .php3 .php4 .php5 .php7 .php8 .phar
+    AddType text/plain .php .phtml .php3 .php4 .php5 .php7 .php8 .phar .html .htm .svg
+</IfModule>
+
+# mod_php / mod_cgi are configured per-directory, so this only takes effect on
+# hosts that run PHP that way (php-fpm and the built-in server are unaffected).
+<IfModule mod_php.c>
+    php_flag engine off
+</IfModule>
+<IfModule mod_php7.c>
+    php_flag engine off
+</IfModule>
+<IfModule mod_php5.c>
+    php_flag engine off
+</IfModule>
+
+<FilesMatch "(?i)\.(?:php\d?|phtml|phar|cgi|pl|py|rb|sh|bash|exe|so|htaccess|htpasswd|ini|log|sql|md|sh|bat|cmd|com|cjs|jar|war)$">
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        Order allow,deny
+        Deny from all
+    </IfModule>
+</FilesMatch>
+
+# Only the image types the app actually writes are served. Anything else in
+# here is a bug or an attack, so it gets a 404 instead of a download.
+<FilesMatch "(?i)\.(?:jpe?g|png|gif|webp)$">
+    <IfModule mod_headers.c>
+        Header always set X-Content-Type-Options "nosniff"
+        Header always set Content-Security-Policy "default-src 'none'; sandbox"
+        Header always set Cross-Origin-Resource-Policy "same-origin"
+        Header always set Content-Disposition "inline"
+    </IfModule>
+</FilesMatch>
+
+<FilesMatch "(?i)\.(?!jpe?g|png|gif|webp$)[a-z0-9]+$">
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+</FilesMatch>
