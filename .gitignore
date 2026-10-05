@@ -26,3 +26,30 @@ __pycache__/
 Thumbs.db
 .idea/
 .vscode/
+
+# User uploads are runtime data, never repository content. The .htaccess guards
+# sitting next to them ARE repository content, so these rules match file
+# extensions rather than the directories: git does not descend into an excluded
+# directory, so a rule aimed at uploads/*/ would make the guards impossible to
+# re-include and they would silently stop being committed.
+#
+# This extension list is closed and mirrors the two allowlists in
+# config/bootstrap.php - ulink_image_type_from_binary() stores jpg/png/gif/webp
+# and ulink_document_type_from_binary() stores pdf/doc/docx/xls/xlsx/ppt/pptx/
+# rtf/zip/txt/csv/json. Widening either allowlist means widening this list.
+/uploads/**/*.jpg
+/uploads/**/*.png
+/uploads/**/*.gif
+/uploads/**/*.webp
+/uploads/**/*.pdf
+/uploads/**/*.doc
+/uploads/**/*.docx
+/uploads/**/*.xls
+/uploads/**/*.xlsx
+/uploads/**/*.ppt
+/uploads/**/*.pptx
+/uploads/**/*.rtf
+/uploads/**/*.zip
+/uploads/**/*.txt
+/uploads/**/*.csv
+/uploads/**/*.json
