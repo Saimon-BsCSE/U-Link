@@ -1,0 +1,90 @@
+# Publishes the U-Link frontend to GitHub Pages as a self-contained demo.
+#
+# GitHub Pages serves static files only: it cannot execute api/*.php and it has
+# no database. This deploys just the browser half of the app - index.html, the
+# three scripts, the stylesheet and Asserts/ - plus scripts/pages/demo-mode.js,
+# which reports a signed-in session and stubs the transport so the SPA falls back
+# to the mock arrays it already ships with.
+#
+# That fallback is the app's own design, not a new one: ULink.isLive starts false
+# and every render function prefers the live store but falls back to the bundled
+# mocks when it is false. The adapter only supplies the way in, because the sign-in
+# screen would otherwise be a dead end on a host with no API.
+#
+# Nothing in the application source changes: the adapter is copied into the staged
+# _site/ tree and referenced from there, and the copy under scripts/ is 403 to the
+# web per the root .htaccess. Run ./setup.sh for a real database-backed instance.
+
+name: Deploy demo to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Never let two deploys race; let the newest finish.
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/configure-pages@v5
+        with:
+          # Auto-enable Pages for this repo on the first run (no-ops once on).
+          # If the repo blocks automation, enable it once in
+          # Settings -> Pages -> Source -> GitHub Actions.
+          enablement: true
+
+      - name: Stage static site
+        run: |
+          set -euo pipefail
+          rm -rf _site
+          mkdir -p _site/js
+
+          # Only the browser half of the app. api/, config/, scripts/, router.php
+          # and .htaccess are deliberately not copied: Pages cannot run PHP, and
+          # publishing config/ would put the schema and the installer's paths in a
+          # public static site.
+          cp index.html ulink.css ulink_script.js utilities.js backend_integration.js _site/
+          cp -r Asserts _site/
+
+          # Pages must serve the raw files: without this, Jekyll drops anything
+          # under a path starting with an underscore.
+          touch _site/.nojekyll
+
+          # The offline adapter, served next to the scripts it wraps.
+          cp scripts/pages/demo-mode.js _site/js/demo-mode.js
+
+          # Load it immediately after backend_integration.js: the overrides have to
+          # land before that file's DOMContentLoaded bootstrap asks for a session.
+          # Every asset path in the app is already relative, so the build works
+          # unchanged from the /U-Link/ subpath Pages serves it on.
+          sed -i 's#<script src="backend_integration.js"></script>#&\n    <script src="js/demo-mode.js"></script>#' _site/index.html
+          grep -q 'js/demo-mode.js' _site/index.html
+
+          echo "staged files:"
+          find _site -type f | sort
+          echo
+          echo "deliberately excluded:"
+          printf '  %s\n' api/ config/ scripts/ router.php .htaccess .env.example
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+      - id: deployment
+        uses: actions/deploy-pages@v4
