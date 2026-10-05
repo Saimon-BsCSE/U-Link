@@ -17,8 +17,9 @@
 #   ULINK_FTP_DIR       the document root, e.g. /htdocs or public_html
 #   ULINK_FTP_SCHEME    ftp or ftps (default ftp)
 #
-# Until ULINK_FTP_HOST exists the job is *skipped*, not failed, so the repository
-# stays green while the account is still being set up.
+# Until ULINK_FTP_HOST exists the first step records configured=false and every
+# other step is skipped, so the run is green and explains itself with a notice
+# instead of failing a job that cannot succeed by construction.
 #
 # Uploads are never mirrored with --delete on purpose. .env and
 # .dev-endpoints-enabled exist only on the host, and a recursive delete would
@@ -43,15 +44,34 @@ concurrency:
 
 jobs:
   deploy:
-    # No credentials yet means nothing to deploy to. Skipping keeps every push
-    # green instead of failing a job that cannot succeed by construction.
-    if: ${{ secrets.ULINK_FTP_HOST != '' }}
     runs-on: ubuntu-latest
 
     steps:
+      # Whether a host is configured has to be decided by a step, not by a job
+      # level `if`: the secrets context is not available in jobs.<id>.if, and
+      # referencing it there makes GitHub reject the whole file with
+      # "Unrecognized named-value: 'secrets'" before any job is created. A step
+      # output is the supported way to pass the answer on.
+      - name: Check for host credentials
+        id: creds
+        env:
+          HOST: ${{ secrets.ULINK_FTP_HOST }}
+        run: |
+          if [ -z "$HOST" ]; then
+            echo "configured=false" >> "$GITHUB_OUTPUT"
+            echo "::notice::No shared host is configured, so there is nothing to deploy to."
+            echo "Add the FTP secrets listed at the top of this workflow to enable deployment."
+            echo "The secrets go under Settings -> Secrets and variables -> Actions."
+            echo "See SHARED-HOSTING.md for the full procedure."
+          else
+            echo "configured=true" >> "$GITHUB_OUTPUT"
+          fi
+
       - uses: actions/checkout@v4
+        if: steps.creds.outputs.configured == 'true'
 
       - name: Stage the deployable tree
+        if: steps.creds.outputs.configured == 'true'
         run: |
           set -euo pipefail
           rm -rf _deploy
@@ -88,6 +108,7 @@ jobs:
           printf '  %s\n' .git .github scripts logs .dev .idea .env setup.sh router.php '*.md' 'uploads/* (images)'
 
       - name: Upload over FTP
+        if: steps.creds.outputs.configured == 'true'
         env:
           ULINK_FTP_HOST: ${{ secrets.ULINK_FTP_HOST }}
           ULINK_FTP_PORT: ${{ secrets.ULINK_FTP_PORT }}
@@ -132,6 +153,7 @@ jobs:
           echo "uploaded $count files to $base"
 
       - name: Summary
+        if: steps.creds.outputs.configured == 'true'
         run: |
           {
             echo "### Deployed to shared host"
