@@ -6,6 +6,13 @@ has to match something in `config/config.php`, the constant is named.
 For local development see `README.md` and `QUICKSTART.md` — this document is
 about putting the app on a real server.
 
+> **No root, no shell?** This document assumes you administer the server: your own
+> nginx or Apache, systemd units, `php-fpm`, and a MySQL you can create databases
+> in. On free shared hosting none of that is available. See
+> [`SHARED-HOSTING.md`](SHARED-HOSTING.md) instead, and
+> [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml) for the
+> push-to-deploy workflow that goes with it.
+
 ---
 
 ## 1. Requirements

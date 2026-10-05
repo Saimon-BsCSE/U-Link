@@ -1,0 +1,151 @@
+# Deploys the real application to a shared host that runs PHP + MySQL.
+#
+# GitHub Pages (pages.yml) is static-only and cannot execute api/*.php, so it is
+# the demo. This is the other half: a real database-backed instance that updates
+# itself on every push, which is what "connected to GitHub" has to mean for a PHP
+# app - there is no hosting on github.com that will run this.
+#
+# The app suits shared hosting well: no build step, no Composer, no package
+# manager. What ships is exactly the files a browser and PHP need.
+#
+# Requires repository secrets (Settings -> Secrets and variables -> Actions):
+#
+#   ULINK_FTP_HOST      e.g. ftp.example.com
+#   ULINK_FTP_PORT      21 for FTP, 990 for FTPS
+#   ULINK_FTP_USER      the FTP account from the host's control panel
+#   ULINK_FTP_PASSWORD  that account's password
+#   ULINK_FTP_DIR       the document root, e.g. /htdocs or public_html
+#   ULINK_FTP_SCHEME    ftp or ftps (default ftp)
+#
+# Until ULINK_FTP_HOST exists the job is *skipped*, not failed, so the repository
+# stays green while the account is still being set up.
+#
+# Uploads are never mirrored with --delete on purpose. .env and
+# .dev-endpoints-enabled exist only on the host, and a recursive delete would
+# remove them along with the per-file upload guards. See SHARED-HOSTING.md.
+
+name: Deploy to shared host
+
+on:
+  push:
+    branches: [main]
+    paths-ignore:
+      - '**/*.md'
+      - '.github/workflows/deploy.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: shared-host-deploy
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    # No credentials yet means nothing to deploy to. Skipping keeps every push
+    # green instead of failing a job that cannot succeed by construction.
+    if: ${{ secrets.ULINK_FTP_HOST != '' }}
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Stage the deployable tree
+        run: |
+          set -euo pipefail
+          rm -rf _deploy
+          mkdir -p _deploy
+
+          # The whole browser half plus the whole PHP half. These five files and
+          # Asserts/ are what index.html actually loads; api/ and config/ are the
+          # application and the schema.
+          cp index.html ulink.css ulink_script.js utilities.js backend_integration.js _deploy/
+          cp -r Asserts api _deploy/
+
+          # config/ is unreachable over HTTP (the root .htaccess 403s it) but the
+          # installer reads config/schema.sql and config/seed.php from it, so it
+          # has to be uploaded even though nobody may ever fetch it.
+          cp -r config _deploy/
+
+          # The SPA fallback and the directory guards.
+          cp .htaccess _deploy/
+
+          # Only the upload *guards* from uploads/. The images tracked there are
+          # local demo residue, and re-uploading them would overwrite whatever a
+          # real user has uploaded to the same name. Nothing in config/seed.php
+          # references them, so a fresh host does not miss them.
+          mkdir -p _deploy/uploads
+          find uploads -name '.htaccess' -print0 | while IFS= read -r -d '' guard; do
+            target="_deploy/${guard#uploads/}"
+            mkdir -p "$(dirname "$target")"
+            cp "$guard" "$target"
+          done
+
+          echo "staged $(find _deploy -type f | wc -l) files"
+          echo
+          echo "not deployed:"
+          printf '  %s\n' .git .github scripts logs .dev .idea .env setup.sh router.php '*.md' 'uploads/* (images)'
+
+      - name: Upload over FTP
+        env:
+          ULINK_FTP_HOST: ${{ secrets.ULINK_FTP_HOST }}
+          ULINK_FTP_PORT: ${{ secrets.ULINK_FTP_PORT }}
+          ULINK_FTP_USER: ${{ secrets.ULINK_FTP_USER }}
+          ULINK_FTP_PASSWORD: ${{ secrets.ULINK_FTP_PASSWORD }}
+          ULINK_FTP_DIR: ${{ secrets.ULINK_FTP_DIR }}
+          ULINK_FTP_SCHEME: ${{ secrets.ULINK_FTP_SCHEME }}
+        run: |
+          set -euo pipefail
+
+          scheme="${ULINK_FTP_SCHEME:-ftp}"
+          port="${ULINK_FTP_PORT:-21}"
+          base="${scheme}://${ULINK_FTP_HOST}:${port}${ULINK_FTP_DIR}"
+
+          # curl takes the credentials as a process argument, so a password
+          # containing quotes or backslashes cannot be mangled by a nested shell
+          # the way it would be inside an lftp/ssh command string.
+          case "$scheme" in
+            ftps) tls=(--ssl-reqd) ;;
+            ftp)  tls=() ;;
+            *) echo "ULINK_FTP_SCHEME must be ftp or ftps, got '$scheme'" >&2; exit 1 ;;
+          esac
+
+          if [ -z "${ULINK_FTP_DIR:-}" ]; then
+            echo "ULINK_FTP_DIR is not set" >&2; exit 1
+          fi
+
+          count=0
+          # -print0/read -d '' so a filename with a space - Asserts/ has several,
+          # e.g. "Dr. Ahmed Kabir.jpeg" - is never split into two paths. %P is the
+          # path with the leading ./ already removed, which is what we send.
+          while IFS= read -r -d '' rel; do
+            curl --fail --silent --show-error \
+                 --user "${ULINK_FTP_USER}:${ULINK_FTP_PASSWORD}" \
+                 "${tls[@]}" \
+                 --ftp-create-dirs \
+                 --upload-file "_deploy/$rel" \
+                 "$base/$rel"
+            count=$((count + 1))
+          done < <(find _deploy -type f -printf '%P\0')
+
+          echo "uploaded $count files to $base"
+
+      - name: Summary
+        run: |
+          {
+            echo "### Deployed to shared host"
+            echo
+            echo "Commit \`${GITHUB_SHA:0:7}\` uploaded over ${{ secrets.ULINK_FTP_SCHEME || 'ftp' }}."
+            echo
+            echo "Schema and demo data are **not** applied by this workflow: shared hosting has"
+            echo "no shell, so the CLI installer cannot run. Apply them once from a browser:"
+            echo
+            echo '```'
+            echo "curl -s \"https://<your-host>/api/init/setup.php?token=\$SETUP_TOKEN&seed=1\""
+            echo '```'
+            echo
+            echo "That endpoint is refused unless the marker file \`.dev-endpoints-enabled\` exists"
+            echo "in the document root. Create it, run the command, then delete it again."
+            echo "Full instructions: SHARED-HOSTING.md"
+          } >> "$GITHUB_STEP_SUMMARY"
