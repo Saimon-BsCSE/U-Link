@@ -5326,6 +5326,13 @@ async function handleJoinCommunity(communityId) {
         state.pendingCommunities = state.pendingCommunities.filter(id => String(id) !== String(communityId));
         state.joinedCommunities.push(communityId);
 
+        // The card in the Communities list decides its own Join/Joined label from
+        // state.joinedCommunities when it is built, so without a re-render here
+        // the list keeps offering "Join" for a community now joined - and clicking
+        // it again takes the leave branch, which looks like a button that does
+        // the wrong thing. The live path above already re-renders the list.
+        renderCommunitiesList();
+
         if (String(activeCommunityId) === String(communityId)) {
             _setCommunityJoinButton(communityId, true);
             renderCommunityFeed(communityId);

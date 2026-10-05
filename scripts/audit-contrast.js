@@ -8,7 +8,11 @@
  * Run it from the browser console with the app logged in:
  *
  *     fetch('/scripts/audit-contrast.js').then(r => r.text())
- *         .then(src => eval(src))().then(console.log)
+ *         .then(src => eval(src)).then(console.log)
+ *
+ * The file is a bare invoked arrow, so its completion value - a promise - is what
+ * eval returns. Calling that result as eval(src)() throws, because a promise is
+ * not a function.
  *
  * Why it is not a static analysis pass:
  *
@@ -247,6 +251,22 @@
     const parts = [];
     for (const el of document.querySelectorAll('body, body *')) {
       const cs = getComputedStyle(el);
+      /*
+       * Elements running a perpetual animation are skipped. #notif-badge carries
+       * Tailwind's animate-pulse, which oscillates opacity on a 2s infinite loop,
+       * so including it meant no two samples 120ms apart could ever match: settle()
+       * timed out on all 48 view scans, every one of them was reported "unstable",
+       * and the scan then ran against a page that had not stopped moving - the
+       * exact situation this function exists to prevent. Animation that transforms
+       * rather than paints (the background "blob" divs) was already invisible to
+       * this signature, so nothing is lost by skipping them uniformly. The cost is
+       * that a perpetually animating element's contrast is never certified, which
+       * is honest: its ratio changes frame to frame and has no single answer.
+       */
+      if (cs.animationName !== 'none'
+          && cs.animationIterationCount.split(',').some((n) => n.trim() === 'infinite')) {
+        continue;
+      }
       parts.push(cs.color, cs.backgroundColor, cs.backgroundImage, cs.opacity);
     }
     return parts.join('|');
